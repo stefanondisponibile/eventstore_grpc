@@ -49,7 +49,7 @@ Running the container will populate the `./certs` directory with the certificate
 The `./certs/ca/ca.crt` is the certificate that the gRPC client needs, so make sure to pass it as a `rootCertificate=<your-path>` connection string option (or you may want to install the certificate in your system as an alternative).
 
 ## TODOs:
-- [ ] Implement `$all` stream operations 👷.
+- [X] Implement `$all` stream operations 👷.
 - [ ] Implement `projections` operations 👷‍♀️.
 - [ ] Implement `persistent/subscription` operations 👷🏿.
 - [ ] Consider using [`src` code structure](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure) 🤔.

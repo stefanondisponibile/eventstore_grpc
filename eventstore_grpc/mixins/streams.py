@@ -2,7 +2,7 @@
 Streams Mixins.
 """
 
-from typing import Union, List
+from typing import Union, List, Dict
 from eventstore_grpc.streams import append, read, delete, tombstone
 from eventstore_grpc import event_data, constants
 from eventstore_grpc.proto import streams_pb2_grpc
@@ -36,23 +36,38 @@ class Streams:
         stream: str,
         count: int = None,
         from_revision: Union[int, str] = constants.START,
-        options: dict = {},
+        options: dict = None,
         **kwargs
     ):
         """Reads events from a stream."""
+        options = options or {}
         options.update(
             {"from_revision": from_revision}
         )  # TODO: Also the functional api should use from_revision as a param. (and maybe all the options?)
         stub = streams_pb2_grpc.StreamsStub(self.channel)
-        result = read.read_stream(stub, stream=stream, count=count, options=options, **kwargs)
+        result = read.read_stream(
+            stub, stream=stream, count=count, options=options, **kwargs
+        )
         return result
 
-    def delete_stream(
+    def read_from_all(
         self,
-        stream: str,
-        expected_version: Union[int, str],
+        from_position: Union[Dict[str, int], str] = constants.START,
+        count: int = None,
+        direction: str = None,
         **kwargs
     ):
+        stub = streams_pb2_grpc.StreamsStub(self.channel)
+        result = read.read_from_all(
+            stub,
+            from_position=from_position,
+            count=count,
+            direction=direction,
+            **kwargs
+        )
+        return result
+
+    def delete_stream(self, stream: str, expected_version: Union[int, str], **kwargs):
         """Deletes a stream."""
         stub = streams_pb2_grpc.StreamsStub(self.channel)
         result = delete.delete_stream(
@@ -61,10 +76,7 @@ class Streams:
         return result
 
     def tombstone_stream(
-        self,
-        stream: str,
-        expected_version: Union[int, str],
-        **kwargs
+        self, stream: str, expected_version: Union[int, str], **kwargs
     ):
         """Tombstones a stream."""
         stub = streams_pb2_grpc.StreamsStub(self.channel)

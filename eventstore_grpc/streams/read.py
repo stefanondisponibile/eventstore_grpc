@@ -3,7 +3,7 @@ Read Events from Streams.
 """
 
 import sys
-from typing import Dict, Iterator
+from typing import Dict, Iterator, Union
 from eventstore_grpc import constants
 from eventstore_grpc.proto import streams_pb2, streams_pb2_grpc, shared_pb2
 
@@ -13,7 +13,7 @@ def read_from_stream(
     stream: str,
     count: int,
     options: Dict,  # TODO: use from_revision as a parameter.
-    **kwargs
+    **kwargs,
 ) -> Iterator[streams_pb2.ReadResp]:
     """Reads events from an Event Stream.
 
@@ -81,5 +81,47 @@ def read_from_stream(
     elif direction == "backwards":
         req_options.read_direction = streams_pb2.ReadReq.Options.ReadDirection.Backwards
     request.options.CopyFrom(req_options)
+    response = stub.Read(request, **kwargs)
+    return response
+
+
+def read_from_all(
+    stub: streams_pb2_grpc.StreamsStub,
+    from_position: Union[Dict[str, int], str] = constants.START,
+    count: int = None,
+    direction: str = None,
+    **kwargs,
+):
+    request = streams_pb2.ReadReq()
+    options = streams_pb2.ReadReq.Options()
+    uuid_option = streams_pb2.ReadReq.Options.UUIDOption()
+    uuid_option.string.CopyFrom(shared_pb2.Empty())
+    all_options = streams_pb2.ReadReq.Options.AllOptions()
+    if from_position.upper() == constants.START:
+        all_options.start.CopyFrom(shared_pb2.Empty())
+    elif from_position.upper() == constants.END:
+        all_options.end.CopyFrom(shared_pb2.Empty())
+    elif isinstance(from_position, dict):
+        pos = streams_pb2.ReadReq.Options.Position()
+        pos.commit_position = from_position["commit_position"]
+        pos.prepare_position = from_position["prepare_position"]
+        all_options.position.CopyFrom(pos)
+    else:
+        raise ValueError(f"Invalid 'from_position': {from_position}")
+    options.count = count or sys.maxsize
+    options.all.CopyFrom(all_options)
+    options.uuid_option.CopyFrom(uuid_option)
+    options.no_filter.CopyFrom(shared_pb2.Empty())
+    default_direction = (
+        "backwards" if from_position.upper() == constants.END else "forwards"
+    )
+    direction = direction or default_direction
+    if direction == "forwards":
+        options.read_direction = streams_pb2.ReadReq.Options.ReadDirection.Forwards
+    elif direction == "backwards":
+        options.read_direction = streams_pb2.ReadReq.Options.ReadDirection.Backwards
+    else:
+        raise ValueError(f"Invalid direction: {direction}")
+    request.options.CopyFrom(options)
     response = stub.Read(request, **kwargs)
     return response
