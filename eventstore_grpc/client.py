@@ -65,6 +65,7 @@ class ClientBase(abc.ABC):
 
 class EventStoreDBClient(
     mixins.Streams,
+    mixins.Projections,
     mixins.Users,
     mixins.Operations,
     mixins.Gossip,
