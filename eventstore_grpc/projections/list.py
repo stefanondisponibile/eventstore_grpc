@@ -17,7 +17,7 @@ def list_continuous_projections(
 
 def list_one_time_projections(
     stub: projections_pb2_grpc.ProjectionsStub, **kwargs
-) -> Iterable[projections_pb2_grpc.StatisticsResp]:
+) -> Iterable[projections_pb2.StatisticsResp]:
     """Lists one time projections."""
     request = projections_pb2.StatisticsReq()
     options = projections_pb2.StatisticsReq.Options()
