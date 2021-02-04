@@ -121,7 +121,7 @@ class Projections:
         return result
 
     def get_projection_result(
-        self, name: str, from_partition: Optional[str] = None ** kwargs
+        self, name: str, from_partition: Optional[str] = None, **kwargs
     ) -> projections_pb2.ResultResp:
         """Gets a projection result."""
         stub = projections_pb2_grpc.ProjectionsStub(self.channel)
