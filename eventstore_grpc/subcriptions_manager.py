@@ -3,6 +3,7 @@
 from typing import Sequence, Optional, Callable, Iterable
 from eventstore_grpc.subscription import Subscription
 
+
 class SubscriptionsManager:
     """A Subscription Manager."""
 
@@ -18,7 +19,9 @@ class SubscriptionsManager:
         if stream_name in self._subscriptions:
             raise ValueError(f"{stream_name} already subscribed.")
 
-        self._subscriptions[stream_name] = Subscription(stream=stream, handler=handler, name=stream_name)
+        self._subscriptions[stream_name] = Subscription(
+            stream=stream, handler=handler, name=stream_name
+        )
         self._start_subscription(stream_name)
         return self
 
