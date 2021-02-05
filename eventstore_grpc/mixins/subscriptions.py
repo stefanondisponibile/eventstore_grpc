@@ -11,7 +11,7 @@ class Subscriptions:
 
     def _initialize_subscriptions_manager(self):
         self._subscriptions_manager = subscriptions.SubscriptionsManager(self.channel)
-
+    
     def subscribe_to_stream(
         self,
         stream: str,
@@ -52,7 +52,6 @@ class Subscriptions:
         handler: Optional[Callable] = None,
         **kwargs,
     ):
-        print(stream)
         subscription_id = self._subscriptions_manager.subscribe_persistent(
             stream=stream, group_name=group_name, buffer_size=buffer_size, handler=handler, **kwargs
         )

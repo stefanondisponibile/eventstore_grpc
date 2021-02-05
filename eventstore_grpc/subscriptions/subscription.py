@@ -36,7 +36,9 @@ class Subscription(threading.Thread):
         else:
             grpc_request = self._requests_stream
         self.responses_stream = self._stub.Read(grpc_request, **self.call_options)
+        # print(f"\033[38;5;42mBefore starting iteration...\033[0m")
         for response in self.responses_stream:
+            # print(f"\033[38;5;42mResponse => {response}\033[0m")
             self._requests_stream.update(response)
             if self._stub is not None and not self.subscribed:
                 print(f"Cancel stream subscribtion to {self.name}")

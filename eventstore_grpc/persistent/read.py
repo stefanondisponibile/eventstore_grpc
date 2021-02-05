@@ -25,8 +25,11 @@ def options_request(
 def ack_request(read_resp: persistent_pb2.ReadResp):
     if not read_resp.HasField("event"):
         raise ValueError(f"Invalid ReadResp: {read_resp}")
-    request = persistent_pb2.ReadReq.Ack()
-    request.ids.append(read_resp.event.event.id)
+    request = persistent_pb2.ReadReq()
+    ack = persistent_pb2.ReadReq.Ack()
+    ack.ids.append(read_resp.event.event.id)
+    request.ack.CopyFrom(ack)
+    print(request)
     return request
 
 
@@ -37,10 +40,12 @@ def nack_request(
 ):
     if not read_resp.HasField("event"):
         raise ValueError(f"Invalid ReadResp: {read_resp}")
-    request = persistent_pb2.ReadReq.Nack()
-    request.ids.append(reqd_resp.event.event.id)
+    request = persistent_pb2.ReadReq()
+    nack = persistent_pb2.ReadReq.Nack()
+    nack.ids.append(reqd_resp.event.event.id)
     action = action or "Unknown"
     reason = reason or "Unknown"
-    request.action = persistent_pb2.ReadReq.Nack.Action[action]
-    request.reason = reason
+    nack.action = persistent_pb2.ReadReq.Nack.Action[action]
+    nack.reason = reason
+    request.nack.CopyFrom(nack)
     return request

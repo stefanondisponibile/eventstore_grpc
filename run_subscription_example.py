@@ -14,15 +14,15 @@ client = EventStoreDBClient(conn_str)
 # In case you need authentication for a specific user...
 credentials = None
 default_user = {"username": "admin", "password": "changeit"}
-credentials = base_options.as_credentials(**default_user)
+credentials = base_options.as_credentials(**default_user, requires_leader=True)
+
+client.delete_stream("some-stream", expected_version="ANY")
 
 # Write some events...
 n_events = 20
 events = [JSONEventData(f"Event-{i + 1}", {"idx": i + 1}) for i in range(n_events)]
 stream_name = "some-stream"
 result = client.append_to_stream(stream_name, expected_version="ANY", events=events)
-
-print(result)
 
 client._initialize_subscriptions_manager()
 
@@ -53,22 +53,23 @@ def handler(*args, **kwargs):
     print()
 
 
-client.subscribe_to_stream(stream=stream_name, handler=handler, credentials=credentials)
+# client.subscribe_to_stream(stream=stream_name, handler=handler, credentials=credentials)
 
 other_stream = "other-stream"
 
-client.subscribe_to_stream(stream=other_stream, handler=handler, credentials=credentials)
+# client.subscribe_to_stream(stream=other_stream, handler=handler, credentials=credentials)
 
 def all_handler(task):
     print(f"\033[38;5;226m$all handler is handling event '{task.event.event.id.string}'...\033[0m")
 
-client.subscribe_to_all(credentials=credentials, handler=all_handler)
+# client.subscribe_to_all(credentials=credentials, handler=all_handler)
 
 def persistent_handler(task):
-    print(task)
     print(f"\033[38;5;226mPersistent handler is handling event '{task.event.event.id.string}'...\033[0m")
 
-# client.subscribe_persistent(stream="some-stream", group_name="foo", handler=persistent_handler, credentials=credentials)
+
+# client.create_persistent_subscription(stream="some-stream", group_name="some-group", credentials=credentials)
+client.subscribe_persistent(stream="some-stream", group_name="some-group", handler=persistent_handler, buffer_size=200, credentials=credentials)
 
 for i in range(n_events):
     # time.sleep(2)

@@ -6,6 +6,7 @@ import threading
 import queue as q
 from typing import Union, Callable, Iterable, Optional
 from eventstore_grpc import streams, persistent
+import time
 
 
 class RequestsStream:
@@ -26,14 +27,21 @@ class RequestsStream:
         return self
 
     def __next__(self):
-        if self._queue.empty() and self._tasks.empty():
-            raise StopIteration
-        
+        print("NEXT was called...")
+        # if self._queue.empty() and self._tasks.empty():
+        #     raise StopIteration
+        while self._queue.empty():
+            print(f"\033[38;5;45mThe queue is empty...\033[0m")
+            time.sleep(5)
         next_element = self._queue.get()
         self._queue.task_done()
+        print(f"\033[38;5;45m---- to server --->\033[0m")
+        print(f"\033[38;5;45m{next_element}\033[0m")
         return next_element
     
     def handle_task(self, task):
+        print("\033[38;5;79mReceived message:\033[0m")
+        print(f"\033[38;5;79m{task}\033[0m")
         if self._handle_task is not None:
             with RequestsStream._lock:
                 try:
@@ -46,7 +54,11 @@ class RequestsStream:
                     result = None
                 if self._persistent:
                     if task.HasField("event"):
-                        self._queue.put(persistent.ack_request(task))
+                        ack_request = persistent.ack_request(task)
+                        print("\033[38;5;79mack_request:\033[0m")
+                        print(f"\033[38;5;79m{ack_request}\033[0m")
+                        print("\033[38;5;79mPutting request on the queue...\033[0m")
+                        self._queue.put(ack_request)
                 self._results.append(result)
 
 
