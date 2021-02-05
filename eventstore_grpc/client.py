@@ -69,6 +69,7 @@ class EventStoreDBClient(
     mixins.Users,
     mixins.Operations,
     mixins.Gossip,
+    mixins.Subscriptions,
     ClientBase,
 ):
     pass

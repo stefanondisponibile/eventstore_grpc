@@ -56,6 +56,9 @@ class EventData(abc.ABC):
     def __repr__(self):
         return f"{self.__class__.__name__}(**{self.__dict__!r})"
 
+    def __str__(self):
+        return f"{self.type} => {self.data}"
+
     @property
     def data_content_type(self):
         return "application/json" if self.is_json else "application/octet-stream"

@@ -1,0 +1,67 @@
+"""
+Subscriptions Mixin.
+"""
+
+from typing import Union, Optional, Dict, Callable
+from eventstore_grpc import constants, subscriptions
+
+
+class Subscriptions:
+    """Handles Subscriptions operations."""
+
+    def _initialize_subscriptions_manager(self):
+        self._subscriptions_manager = subscriptions.SubscriptionsManager(self.channel)
+
+    def subscribe_to_stream(
+        self,
+        stream: str,
+        from_revision: Union[str, int] = constants.START,
+        resolve_link_to_s: bool = False,
+        handler: Optional[Callable] = None,
+        **kwargs,
+    ):
+        subscription_id = self._subscriptions_manager.subscribe_to_stream(
+            stream=stream,
+            from_revision=from_revision,
+            resolve_link_to_s=resolve_link_to_s,
+            handler=handler,
+            **kwargs,
+        )
+        return subscription_id
+
+    def subscribe_to_all(
+        self,
+        resolve_link_to_s: bool = False,
+        filters: Optional[Dict] = None,
+        handler: Optional[Callable] = None,
+        **kwargs,
+    ):  
+        subscription_id = self._subscriptions_manager.subscribe_to_all(
+            resolve_link_to_s=resolve_link_to_s,
+            filters=filters,
+            handler=handler,
+            **kwargs,
+        )
+        return subscription_id
+
+    def subscribe_persistent(
+        self,
+        stream: str,
+        group_name: str,
+        buffer_size: int = 10,
+        handler: Optional[Callable] = None,
+        **kwargs,
+    ):
+        print(stream)
+        subscription_id = self._subscriptions_manager.subscribe_persistent(
+            stream=stream, group_name=group_name, buffer_size=buffer_size, handler=handler, **kwargs
+        )
+        return subscription_id
+
+    def unsubscribe(self, subscription_id: str):
+        return self._subscriptions_manager.unsubscribe(subscription_id)
+    
+    def unsubscribe_all(self):
+        for k in self._subscriptions_manager.subscription_ids:
+            self.unsubscribe(k)
+            
