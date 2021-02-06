@@ -62,6 +62,11 @@ class ClientBase(abc.ABC):
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.connection_string}')"
 
+    def close(self):
+        if getattr(self, "_subscriptions_manager", None):
+            self.unsubscribe_all()
+        self.channel.close()
+
 
 class EventStoreDBClient(
     mixins.Streams,

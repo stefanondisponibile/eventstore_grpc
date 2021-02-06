@@ -65,21 +65,32 @@ def all_handler(task):
 # client.subscribe_to_all(credentials=credentials, handler=all_handler)
 
 def persistent_handler(task):
-    print(f"\033[38;5;226mPersistent handler is handling event '{task.event.event.id.string}'...\033[0m")
-
+    print(f"\033[38;5;226m####################\033[0m")
+    if task.HasField("subscription_confirmation"):
+        print(f"\033[38;5;226mSubscription confirmation handler was triggered.\033[0m")
+    else:  
+        print(f"\033[38;5;226mPersistent handler triggered on event '{task.event.event.id.string}'...\033[0m")
+    print(f"\033[38;5;226m####################\033[0m")
 
 # client.create_persistent_subscription(stream="some-stream", group_name="some-group", credentials=credentials)
+# time.sleep(3)
+
 client.subscribe_persistent(stream="some-stream", group_name="some-group", handler=persistent_handler, buffer_size=200, credentials=credentials)
 
 for i in range(n_events):
     # time.sleep(2)
     event = JSONEventData(f"Stream-Event-{i + 1}", {"idx": i + 1, "type": "streaming"})
     stream = random.choice([stream_name, other_stream])
-    print(f"\033[38;5;219mAppending new event to stream {stream}: {event}\033[0m")
-    client.append_to_stream(stream, expected_version="ANY", events=event)
+    # print(f"\033[38;5;219mAppending new event to stream {stream}: {event}\033[0m")
+    # client.append_to_stream(stream, expected_version="ANY", events=event)
 
 while True:
-    time.sleep(10)
-
-client.unsubscribe_all()
-client.channel.close()
+    try:
+        time.sleep(1)
+        if not client._subscriptions_manager._registry:
+            client.unsubscribe_all()
+            client.channel.close()
+            break
+    except KeyboardInterrupt:
+        client.close()
+        break

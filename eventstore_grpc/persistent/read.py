@@ -29,7 +29,6 @@ def ack_request(read_resp: persistent_pb2.ReadResp):
     ack = persistent_pb2.ReadReq.Ack()
     ack.ids.append(read_resp.event.event.id)
     request.ack.CopyFrom(ack)
-    print(request)
     return request
 
 

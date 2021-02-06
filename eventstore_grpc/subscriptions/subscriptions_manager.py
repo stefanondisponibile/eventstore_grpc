@@ -82,7 +82,7 @@ class SubscriptionsManager:
         # Create a new Subscription object.
         stub = self._streams_stub
         subscription = Subscription(
-            requests_stream=requests_stream, stub=stub, name=stream, **kwargs
+            requests_stream=requests_stream, stub=stub, manager=self, name=stream, **kwargs
         )
         # Register the object to the manager.
         subscription_id = self.register(subscription, id_=stream)
@@ -109,7 +109,7 @@ class SubscriptionsManager:
         stub = self._streams_stub
         name = "$all"
         subscription = Subscription(
-            requests_stream=requests_stream, stub=stub, name=name, **kwargs
+            requests_stream=requests_stream, stub=stub, manager=self, name=name, **kwargs
         )
         # Register the object to the manager.
         subscription_id = self.register(subscription, id_=name)
@@ -136,7 +136,7 @@ class SubscriptionsManager:
         stub = self._persistent_stub
         name = f"{stream}-{group_name}"
         subscription = Subscription(
-            requests_stream=requests_stream, stub=stub, name=name, **kwargs
+            requests_stream=requests_stream, stub=stub, manager=self, name=name, **kwargs
         )
         # Register the object to the manager.
         subscription_id = self.register(subscription, id_=name)
@@ -147,8 +147,10 @@ class SubscriptionsManager:
     def unsubscribe(self, stream_name: str, timeout: int = 5):
         """Unsubscribes from a stream."""
         if stream_name not in self._registry:
-            raise ValueError(f"Subscription not found: {stream_name}")
+            print(f"Subscription not found: {stream_name}")
+            return None
 
-        subscription = self._registry.pop(stream_name)
-        subscription.subscribed = False
+        subscription: Subscription = self._registry.pop(stream_name)
+        subscription.revoke()
+        print("\033[38;5;190mSubscription revoked.\033[0m")
         return subscription.join(timeout=timeout)

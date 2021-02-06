@@ -4,14 +4,25 @@ Subscriptions Mixin.
 
 from typing import Union, Optional, Dict, Callable
 from eventstore_grpc import constants, subscriptions
+import signal
 
 
 class Subscriptions:
     """Handles Subscriptions operations."""
 
     def _initialize_subscriptions_manager(self):
-        self._subscriptions_manager = subscriptions.SubscriptionsManager(self.channel)
+        if getattr(self, "_subscriptions_manager", None) is None:
+            self._subscriptions_manager = subscriptions.SubscriptionsManager(
+                self.channel
+            )
+            signal.signal(signal.SIGINT, self.kill)
+            signal.signal(signal.SIGTERM, self.kill)
     
+    def kill(self, signum, frame):
+        print("\033[38;5;120mGracefully shutting down...\033[0m")
+        self.unsubscribe_all()
+
+
     def subscribe_to_stream(
         self,
         stream: str,
@@ -20,6 +31,7 @@ class Subscriptions:
         handler: Optional[Callable] = None,
         **kwargs,
     ):
+        self._initialize_subscriptions_manager()
         subscription_id = self._subscriptions_manager.subscribe_to_stream(
             stream=stream,
             from_revision=from_revision,
@@ -35,7 +47,8 @@ class Subscriptions:
         filters: Optional[Dict] = None,
         handler: Optional[Callable] = None,
         **kwargs,
-    ):  
+    ):
+        self._initialize_subscriptions_manager()
         subscription_id = self._subscriptions_manager.subscribe_to_all(
             resolve_link_to_s=resolve_link_to_s,
             filters=filters,
@@ -52,15 +65,21 @@ class Subscriptions:
         handler: Optional[Callable] = None,
         **kwargs,
     ):
+        self._initialize_subscriptions_manager()
         subscription_id = self._subscriptions_manager.subscribe_persistent(
-            stream=stream, group_name=group_name, buffer_size=buffer_size, handler=handler, **kwargs
+            stream=stream,
+            group_name=group_name,
+            buffer_size=buffer_size,
+            handler=handler,
+            **kwargs,
         )
         return subscription_id
 
     def unsubscribe(self, subscription_id: str):
+        self._initialize_subscriptions_manager()
         return self._subscriptions_manager.unsubscribe(subscription_id)
-    
+
     def unsubscribe_all(self):
+        self._initialize_subscriptions_manager()
         for k in self._subscriptions_manager.subscription_ids:
             self.unsubscribe(k)
-            
