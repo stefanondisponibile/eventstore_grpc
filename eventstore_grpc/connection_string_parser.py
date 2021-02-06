@@ -8,17 +8,95 @@ esdb+discover://pippo1.pluto:2113,pippo2.pluto:2113,pippo3.pluto:2113?Tls=true
 
 from typing import Tuple, Dict, List, Optional
 import urllib
-
-from eventstore_grpc import options
+import grpc
+from eventstore_grpc import options, discovery
 
 
 class ConnectionStringError(ValueError):
     pass
 
 
+class ConnectionConfiguration:
+    """A Connection Configuration."""
+
+    def __init__(
+        self,
+        node_options: options.ConnectionTypeOptions,
+        channel_credential_options: options.ChannelCredentialOptions,
+    ):
+        """Initializes the ConnectionConfiguration."""
+        self._connection_type_options = node_options
+        self._channel_credential_options = channel_credential_options
+
+    @property
+    def credentials(self):
+        if self._channel_credential_options.insecure:
+            return None
+        else:
+            return grpc.ssl_channel_credentials(
+                root_certificates=self._channel_credential_options.root_certificate,
+                private_key=self._channel_credential_options.private_key,
+            )
+
+    @property
+    def endpoints(self):
+        if isinstance(self._connection_type_options, options.SingleNodeOptions):
+            endpoints = [self._connection_type_options.endpoint]
+        elif isinstance(self._connection_type_options, options.DNSClusterOptions):
+            endpoints = [self._connection_type_options.discover]
+        elif isinstance(self._connection_type_options, options.GossipClusterOptions):
+            endpoints = self._connection_type_options.endpoints
+        else:
+            endpoints = []
+        return [f"{elm['host']}:{elm['port']}" for elm in endpoints]
+
+    @property
+    def endpoint(self):
+        if isinstance(
+            self._connection_type_options,
+            (options.DNSClusterOptions, options.GossipClusterOptions),
+        ):
+            return discovery.discover_endpoint(
+                self.endpoints,
+                self.credentials,
+                node_preference=self._connection_type_options.node_preference,
+            )
+        else:
+            return self.endpoints[0]
+
+    @property
+    def channel(self):
+        if self._channel_credential_options.insecure:
+            return grpc.insecure_channel(self.endpoint)
+        else:
+            credentials = self.credentials
+            return grpc.secure_channel(self.endpoint, credentials)
+
+    @classmethod
+    def from_connection_string(cls, connection_string: str):
+        return cls(*parse(connection_string))
+
+
+class Connection:
+    """A Connection Object."""
+
+    def __init__(self, configuration: ConnectionConfiguration):
+        """Initializes the Connection object."""
+        self._configuration = configuration
+
+    @property
+    def channel(self):
+        return self._configuration.channel
+
+    @classmethod
+    def from_connection_string(cls, connection_string: str):
+        return cls(ConnectionConfiguration.from_connection_string(connection_string))
+
+
 def parse(
     conn_str: str,
 ) -> Tuple[options.ConnectionTypeOptions, options.ChannelCredentialOptions]:
+    """Parses a connection string."""
     mode, nodes, params = split_parts(conn_str)
     nodes = parse_nodes(nodes)
     params = parse_search_params(params)

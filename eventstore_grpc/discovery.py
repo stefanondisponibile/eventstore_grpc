@@ -16,6 +16,7 @@ def discover_endpoint(
     discovery_interval: int = 100,  # used to delay what? Each iter?
     max_discovery_attempts: int = 10,
     gossip_timeout: int = 5,
+    node_preference: str = "RANDOM",
     settings: Dict = {},
 ) -> str:
     discover_attempts = 0
@@ -28,8 +29,7 @@ def discover_endpoint(
                 members = list_cluster_members(
                     candidate, credentials, create_deadline(gossip_timeout)
                 )
-                preference = settings.get("node_preference", "random")
-                endpoint = determine_best_node(preference, members)
+                endpoint = determine_best_node(node_preference, members)
                 if endpoint:
                     return f"{endpoint['address']}:{endpoint['port']}"
             except Exception as err:
@@ -58,11 +58,11 @@ def is_follower(member: gossip_pb2.MemberInfo) -> bool:
 def determine_best_node(preference, members: List[gossip_pb2.MemberInfo]):
     sorted_nodes = list(filter(in_allowed_states, members))
     final_member = None
-    if preference == "leader":
+    if preference.lower() == "leader":
         final_member = random.choice([elm for elm in sorted_nodes if is_leader(elm)])
-    elif preference == "follower":
+    elif preference.lower() == "follower":
         final_member = random.choice([elm for elm in sorted_nodes if is_follower(elm)])
-    elif preference == "random":
+    elif preference.lower() == "random":
         final_member = random.choice(sorted_nodes)
 
     if final_member and final_member["http_end_point"]:

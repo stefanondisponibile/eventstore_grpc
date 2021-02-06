@@ -19,6 +19,7 @@ class RequestsStream:
         handler: Optional[Callable] = None,
         queue: Optional[Iterable] = None,
         persistent: bool = False,
+        timeout: int = 5
     ):
         self._handle_task = handler
         self._tasks = q.Queue()
@@ -28,6 +29,7 @@ class RequestsStream:
                 self._queue.put(request)
         self._results = []
         self._persistent = persistent
+        self._timeout = timeout
         self._stop = threading.Event()
 
     def __iter__(self):
@@ -38,7 +40,7 @@ class RequestsStream:
 
         while next_element is None:
             try:
-                next_element = self._queue.get_nowait()
+                next_element = self._queue.get(block=True, timeout=self._timeout)
             except Exception:
                 if self._stop.is_set():
                     print("\033[38;5;196mStopping requests streaming.\033[0m")
