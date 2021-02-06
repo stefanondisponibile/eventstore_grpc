@@ -48,18 +48,18 @@ def in_allowed_states(member: Dict[str, str]) -> bool:
 
 
 def is_leader(member: gossip_pb2.MemberInfo) -> bool:
-    return member.state == gossip_pb2.MemberInfo.VNodeState.Leader
+    return member["state"] == gossip_pb2.MemberInfo.VNodeState.Leader
 
 
 def is_follower(member: gossip_pb2.MemberInfo) -> bool:
-    return member.state == gossip_pb2.MemberInfo.VNodeState.Follower
+    return member["state"] == gossip_pb2.MemberInfo.VNodeState.Follower
 
 
 def determine_best_node(preference, members: List[gossip_pb2.MemberInfo]):
     sorted_nodes = list(filter(in_allowed_states, members))
     final_member = None
     if preference == "leader":
-        final_member = next([elm for elm in sorted_nodes if is_leader(elm)], None)
+        final_member = random.choice([elm for elm in sorted_nodes if is_leader(elm)])
     elif preference == "follower":
         final_member = random.choice([elm for elm in sorted_nodes if is_follower(elm)])
     elif preference == "random":
