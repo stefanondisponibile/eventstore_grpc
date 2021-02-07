@@ -1,9 +1,6 @@
 """
 Connection String.
-
-https://github.com/grpc/grpc/blob/master/doc/naming.md
-https://uri.thephpleague.com/uri/4.0/components/overview/
-esdb+discover://pippo1.pluto:2113,pippo2.pluto:2113,pippo3.pluto:2113?Tls=true
+esdb+discover://foo.bar:2113,foo2.bar2:2113,foo3.bar3:2113?Tls=true
 """
 
 from typing import Tuple, Dict, List, Optional
