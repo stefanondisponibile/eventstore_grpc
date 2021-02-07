@@ -51,7 +51,7 @@ The `./certs/ca/ca.crt` is the certificate that the gRPC client needs, so make s
 ## TODOs:
 - [X] Implement `$all` stream operations 👷.
 - [X] Implement `projections` operations 👷‍♀️.
-- [ ] Implement `persistent/subscription` operations 👷🏿.
+- [X] Implement `persistent/subscription` operations 👷🏿.
 - [ ] Consider using [`src` code structure](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure) 🤔.
 - [ ] Write [`setup.py`](./setup.py) 🙄.
 - [ ] Write tests 🧪.
