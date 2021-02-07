@@ -8,13 +8,13 @@ from google.protobuf import json_format
 import random
 import base64
 
-conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./certs/ca/ca.crt&nodePreference=LEADER"
+conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./certs/ca/ca.crt&nodePreference=RANDOM"
 client = EventStoreDBClient(conn_str)
 
 # In case you need authentication for a specific user...
 credentials = None
 default_user = {"username": "admin", "password": "changeit"}
-credentials = base_options.as_credentials(**default_user, requires_leader=True)
+credentials = base_options.as_credentials(**default_user)
 
 client.delete_stream("some-stream", expected_version="ANY")
 
@@ -75,10 +75,16 @@ def persistent_handler(task):
 try:
     client.create_persistent_subscription(stream="some-stream", group_name="some-group", credentials=credentials)
 except Exception as err:
-    print(err.code())
+    print(f"\033[38;5;226mNo need to create persistent subscription.\033[0m")
 # time.sleep(3)
 
-client.subscribe_persistent(stream="some-stream", group_name="some-group", handler=persistent_handler, buffer_size=200, credentials=credentials)
+client.subscribe_persistent(
+    stream="some-stream",
+    group_name="some-group",
+    handler=persistent_handler,
+    buffer_size=200,
+    credentials=credentials,
+)
 
 for i in range(n_events):
     # time.sleep(2)

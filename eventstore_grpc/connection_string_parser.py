@@ -63,6 +63,26 @@ class ConnectionConfiguration:
             )
         else:
             return self.endpoints[0]
+    
+    @property
+    def cluster_members(self):
+        members = None
+        for candidate in self.endpoints:
+            try:
+                members = discovery.list_cluster_members(candidate, self.credentials)
+            except:
+                continue
+        return members
+
+    @property
+    def leader(self):
+        leaders = [elm for elm in self.cluster_members if elm.get("state") == 8]
+        if not leaders:
+            return None
+        leader = leaders[0]
+        address = leader["http_end_point"]["address"]
+        port = leader["http_end_point"]["port"]
+        return f"{address}:{port}"
 
     @property
     def channel(self):

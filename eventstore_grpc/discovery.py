@@ -76,7 +76,7 @@ def create_deadline(seconds: int):
     return datetime.datetime.now() + datetime.timedelta(seconds=seconds)
 
 
-def list_cluster_members(uri: str, credentials: grpc.ChannelCredentials, deadline):
+def list_cluster_members(uri: str, credentials: grpc.ChannelCredentials, deadline = None):
     if credentials is None:
         credentials = grpc.ssl_channel_credentials()
     with grpc.secure_channel(uri, credentials) as channel:
