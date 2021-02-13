@@ -21,13 +21,14 @@ class ClientBase(abc.ABC):
         Args:
             connection_string: the string to connect to the gRPC channel.
         """
+        self._connection_string = connection_string
         self._connection = connection_string_parser.Connection.from_connection_string(
             connection_string
         )
         self.channel = self._connection.channel
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.connection_string}')"
+        return f"{self.__class__.__name__}('{self._connection_string}')"
 
     def close(self):
         if getattr(self, "_subscriptions_manager", None):
