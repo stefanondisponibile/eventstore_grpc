@@ -1,2 +1,3 @@
 from eventstore_grpc.client import EventStoreDBClient
 from eventstore_grpc.event_data import JSONEventData
+from eventstore_grpc.options.base_options import as_credentials
