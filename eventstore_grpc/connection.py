@@ -215,6 +215,8 @@ def parse_nodes(nodes: str) -> List[Dict[str, str]]:
         if "@" in host:
             credentials, host = host.split("@")
             username, password = credentials.split(":")
+        if port is not None and "/" in port:
+            raise ConnectionStringError(f"Path are not supported: {node}")
         targets.append(
             {"host": host, "port": port, "username": username, "password": password}
         )
