@@ -4,7 +4,7 @@ Client.
 
 import abc
 import grpc
-from eventstore_grpc import mixins, connection_string_parser
+from eventstore_grpc import mixins, connection
 from eventstore_grpc import options, discovery
 from typing import List, Union
 
@@ -22,7 +22,7 @@ class ClientBase(abc.ABC):
             connection_string: the string to connect to the gRPC channel.
         """
         self._connection_string = connection_string
-        self._connection = connection_string_parser.Connection.from_connection_string(
+        self._connection = connection.Connection.from_connection_string(
             connection_string
         )
         self.channel = self._connection.channel
