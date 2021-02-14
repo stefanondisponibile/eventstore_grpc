@@ -5,6 +5,7 @@ esdb+discover://foo.bar:2113,foo2.bar2:2113,foo3.bar3:2113?Tls=true
 
 from typing import Tuple, Dict, List, Optional
 import urllib
+import re
 import grpc
 from eventstore_grpc import options, discovery
 
@@ -201,7 +202,7 @@ def parse_nodes(nodes: str) -> List[Dict[str, str]]:
     nodes = nodes.split(",")
     targets = []
     for i, node in enumerate(nodes):
-        host_and_port = node.split(":")
+        host_and_port = re.split(r":(?=\d+)", node)
         if len(host_and_port) == 2:
             host, port = host_and_port
         elif len(host_and_port) > 2:
@@ -212,8 +213,8 @@ def parse_nodes(nodes: str) -> List[Dict[str, str]]:
         username = None
         password = None
         if "@" in host:
-            # Identity is not supported.
-            username, password = parse_credentials(host)
+            credentials, host = host.split("@")
+            username, password = credentials.split(":")
         targets.append(
             {"host": host, "port": port, "username": username, "password": password}
         )
