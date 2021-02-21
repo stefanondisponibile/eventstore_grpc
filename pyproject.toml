@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "eventstore_grpc"
+version = "0.1.0"
+description = "EventStoreDB gRPC client."
+authors = ["Stefano Frassetto <frassetto.stefano@gmail.com>"]
+maintainers = ["Stefano Frassetto <frassetto.stefano@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/stefanondisponibile/eventstore_grpc"
+repository = "https://github.com/stefanondisponibile/eventstore_grpc"
+documentation = "https://github.com/stefanondisponibile/eventstore_grpc"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Topic :: Database"
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.2"
+pytest-docker-compose = "^3.2.1"
+pytest-cov = "^2.11.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = """
+    --import-mode=importlib \
+    --docker-compose=./tests/docker-compose.yml \
+    --docker-compose-remove-volumes \
+    --cov=eventstore_grpc \
+    --cov-report term-missing \
+    -v
+"""
+testpaths = [
+    "tests"
+]
