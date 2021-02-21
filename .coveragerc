@@ -1,0 +1,2 @@
+[run]
+omit = eventstore_grpc/proto/*
