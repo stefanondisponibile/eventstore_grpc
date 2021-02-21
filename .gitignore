@@ -1,6 +1,6 @@
 # Custom
 .vscode
-certs/*
+**/certs/*
 !certs/.gitkeep
 poetry.lock
 
