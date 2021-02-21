@@ -42,7 +42,7 @@ def build_proposed_message_request(event: EventData):
     """Builds AppendReq Proposed Message."""
     request = streams_pb2.AppendReq()
     message = streams_pb2.AppendReq.ProposedMessage()
-    message.id.string = str(uuid.uuid4())
+    message.id.string = str(getattr(event, "event_id", uuid.uuid4()))
     message.metadata["type"] = event.type
     message.metadata["content-type"] = event.data_content_type
     message.data = event.serialized_data

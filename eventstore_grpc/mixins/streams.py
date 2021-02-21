@@ -45,7 +45,7 @@ class Streams:
             {"from_revision": from_revision}
         )  # TODO: Also the functional api should use from_revision as a param. (and maybe all the options?)
         stub = streams_pb2_grpc.StreamsStub(self.channel)
-        result = read.read_stream(
+        result = read.read_from_stream(
             stub, stream=stream, count=count, options=options, **kwargs
         )
         return result
