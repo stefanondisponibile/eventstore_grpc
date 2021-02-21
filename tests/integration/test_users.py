@@ -17,25 +17,30 @@ def test_create_user(secure_client, credentials):
     assert isinstance(result, users_pb2.CreateResp)
 
 
-# TODO: How does updating a user work?
-# def test_update_user(secure_client, credentials):
-#     login_name = "updatable-user"
-#     password = "v3rys3cr3t"
-#     full_name = "Updatable User"
-#     groups = []
-#     secure_client.create_user(
-#         login_name=login_name,
-#         password=password,
-#         full_name=full_name,
-#         groups=groups,
-#         credentials=credentials,
-#     )
-#     result = secure_client.update_user(
-#         login_name=login_name,
-#         groups=["updatables"],
-#         credentials=credentials,
-#     )
-#     assert isinstance(result, users_pb2.UpdateResp)
+def test_update_user(secure_client, credentials):
+    login_name = "updatable-user"
+    password = "v3rys3cr3t"
+    full_name = "Updatable User"
+    groups = []
+    secure_client.create_user(
+        login_name=login_name,
+        password=password,
+        full_name=full_name,
+        groups=groups,
+        credentials=credentials,
+    )
+    result = secure_client.update_user(
+        login_name=login_name,
+        password = password,
+        full_name=full_name,
+        groups=["updatables"],
+        credentials=credentials,
+    )
+    details = secure_client.get_user_details(
+        login_name=login_name, credentials=credentials
+    )
+    assert next(details).user_details.groups == ["updatables"]
+    assert isinstance(result, users_pb2.UpdateResp)
 
 
 def test_delete_user(secure_client, credentials):
@@ -98,9 +103,9 @@ def test_get_user_details(secure_client, credentials):
         groups=groups,
         credentials=credentials,
     )
-    result = next(secure_client.get_user_details(
-        login_name=login_name, credentials=credentials
-    )).user_details
+    result = next(
+        secure_client.get_user_details(login_name=login_name, credentials=credentials)
+    ).user_details
     assert result.login_name == login_name and result.full_name == full_name
 
 
@@ -121,9 +126,10 @@ def test_change_user_password(secure_client, credentials):
         login_name=login_name,
         current_password=password,
         new_password=new_password,
-        credentials=credentials
+        credentials=credentials,
     )
     assert isinstance(result, users_pb2.ChangePasswordResp)
+
 
 def test_reset_user_password(secure_client, credentials):
     login_name = "reset-user-password"
@@ -139,8 +145,6 @@ def test_reset_user_password(secure_client, credentials):
         credentials=credentials,
     )
     result = secure_client.reset_user_password(
-        login_name=login_name,
-        new_password=new_password,
-        credentials=credentials
+        login_name=login_name, new_password=new_password, credentials=credentials
     )
     assert isinstance(result, users_pb2.ResetPasswordResp)

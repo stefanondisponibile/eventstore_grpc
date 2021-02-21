@@ -27,5 +27,6 @@ def update(
     if groups is not None:
         for group in groups:
             options.groups.append(group)
+    request.options.CopyFrom(options)
     response = stub.Update(request, **kwargs)
     return response
