@@ -28,7 +28,7 @@ class Users:
             password=password,
             full_name=full_name,
             groups=groups,
-            **kwargs
+            **kwargs,
         )
         return result
 
@@ -38,7 +38,7 @@ class Users:
         password: Optional[str] = None,
         full_name: Optional[str] = None,
         groups: Optional[List[str]] = None,
-        **kwargs
+        **kwargs,
     ) -> users_pb2.UpdateResp:
         """Updates an existing user information."""
         stub = users_pb2_grpc.UsersStub(self.channel)
@@ -90,12 +90,12 @@ class Users:
             login_name=login_name,
             current_password=current_password,
             new_password=new_password,
-            **kwargs
+            **kwargs,
         )
         return result
 
     def reset_user_password(
-        self, login_name: str, new_password: str
+        self, login_name: str, new_password: str, **kwargs
     ) -> users_pb2.ResetPasswordResp:
         """Resets a user's password."""
         stub = users_pb2_grpc.UsersStub(self.channel)
