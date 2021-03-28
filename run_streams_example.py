@@ -2,6 +2,8 @@ from eventstore_grpc import EventStoreDBClient, JSONEventData, constants
 from eventstore_grpc.options import base_options
 from pprint import pprint
 import uuid
+from eventstore_grpc.proto import streams_pb2
+import time
 
 conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./tests/certs/ca/ca.crt"
 client = EventStoreDBClient(conn_str)
@@ -43,6 +45,9 @@ delete_result = client.delete_stream(stream=stream, expected_version=constants.A
 print("*** Delete Result ***")
 pprint(delete_result)
 
+print("*** Waiting a few seconds... ***")
+time.sleep(5)
+
 print("\n*** Trying to read from the same stream again. ***")
 result = client.read_from_stream(
     stream=stream,
@@ -50,4 +55,7 @@ result = client.read_from_stream(
     from_revision=constants.START,
     options={"direction": constants.FORWARDS},
 )
-pprint(next(result))
+result = next(result)
+pprint(result)
+print(type(result))
+print(f"Is it a ReadResp.StreamNotFound message? => {result.HasField('stream_not_found')}")
