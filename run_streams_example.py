@@ -12,7 +12,7 @@ default_user = {"username": "admin", "password": "changeit"}
 credentials = base_options.as_credentials(**default_user)
 
 event_1_id = str(uuid.uuid4())
-stream = "some-stream-to-read-from-3"
+stream = f"some-stream-to-read-from-{uuid.uuid4()}"
 expected_version = constants.ANY
 event_1 = JSONEventData(
     type="first-event",
