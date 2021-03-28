@@ -7,7 +7,7 @@ from eventstore_grpc.options import base_options
 from eventstore_grpc import EventStoreDBClient, JSONEventData
 
 
-conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./certs/ca/ca.crt"
+conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./tests/certs/ca/ca.crt"
 default_user = {"username": "admin", "password": "changeit"}
 credentials = base_options.as_credentials(**default_user)
 

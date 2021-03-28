@@ -1,7 +1,7 @@
 from eventstore_grpc import EventStoreDBClient
 from eventstore_grpc.options import base_options
 
-conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./certs/ca/ca.crt"
+conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./tests/certs/ca/ca.crt"
 client = EventStoreDBClient(conn_str)
 
 # In case you need authentication for a specific user...

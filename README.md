@@ -30,29 +30,21 @@ You will probably need an EventStoreDB (cluster) to work with.
 The most easy way is (probably) docker-compose:
 
 ```bash
-docker-compose -f eventstore.master.docker-compose.yaml up -d
+cd tests
+docker-compose up -d
 ```
 
 You may want to have a look at the logs...
 ```bash
-docker-compose -f eventstore.master.docker-compose.yaml logs --tail 10 -f
+docker-compose --tail 10 -f
 ```
 
 ...or shut everything down...
 ```bash
-docker-compose -f eventstore.master.docker-compose.yaml down --volumes  # omit the --volumes flag to keep 'em.
+docker-compose down --volumes  # omit the --volumes flag to keep 'em.
 ```
 
 
 Running the container will populate the `./certs` directory with the certificates needed for communication.
 
 The `./certs/ca/ca.crt` is the certificate that the gRPC client needs, so make sure to pass it as a `rootCertificate=<your-path>` connection string option (or you may want to install the certificate in your system as an alternative).
-
-## TODOs:
-- [X] Implement `$all` stream operations 👷.
-- [X] Implement `projections` operations 👷‍♀️.
-- [X] Implement `persistent/subscription` operations 👷🏿.
-- [ ] Consider using [`src` code structure](https://blog.ionelmc.ro/2014/05/25/python-packaging/#the-structure) 🤔.
-- [ ] Write [`setup.py`](./setup.py) 🙄.
-- [ ] Write tests 🧪.
-- [ ] Docs, CI/CD, pre-commit, etc... 💡.
