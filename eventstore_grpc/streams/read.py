@@ -114,7 +114,7 @@ def read_from_all(
     options.uuid_option.CopyFrom(uuid_option)
     options.no_filter.CopyFrom(shared_pb2.Empty())
     default_direction = (
-        "backwards" if from_position.upper() == constants.END else "forwards"
+        "backwards" if isinstance(from_position, str) and from_position.upper() == constants.END else "forwards"
     )
     direction = direction or default_direction
     if direction == "forwards":
