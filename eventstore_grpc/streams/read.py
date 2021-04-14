@@ -97,10 +97,11 @@ def read_from_all(
     uuid_option = streams_pb2.ReadReq.Options.UUIDOption()
     uuid_option.string.CopyFrom(shared_pb2.Empty())
     all_options = streams_pb2.ReadReq.Options.AllOptions()
-    if from_position.upper() == constants.START:
-        all_options.start.CopyFrom(shared_pb2.Empty())
-    elif from_position.upper() == constants.END:
-        all_options.end.CopyFrom(shared_pb2.Empty())
+    if isinstance(from_position, str):  # TODO: consider a better way of handling this.
+        if from_position.upper() == constants.START:
+            all_options.start.CopyFrom(shared_pb2.Empty())
+        elif from_position.upper() == constants.END:
+            all_options.end.CopyFrom(shared_pb2.Empty())
     elif isinstance(from_position, dict):
         pos = streams_pb2.ReadReq.Options.Position()
         pos.commit_position = from_position["commit_position"]
