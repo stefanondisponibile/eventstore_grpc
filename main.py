@@ -1,18 +1,3 @@
-# [EventStoreDB](https://www.eventstore.com/) Client.
-
-> ⚠️ Under development ⚠️
-
-## Quickstart
-
-1. Start an eventstore instance (without authentication):
-
-```bash
-docker-compose up
-```
-
-2. Run some code:
-
-```python
 import logging
 
 from eventstore_grpc.client import EventStore
@@ -34,5 +19,3 @@ if __name__ == "__main__":
     result = es.persistent.create_persistent_subscription(
         stream="foo", group_name="bar"
     )
-
-```
