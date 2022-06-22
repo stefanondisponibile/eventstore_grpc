@@ -48,3 +48,8 @@ def build_connection_string() -> Callable:
         return cs
 
     return fn
+
+
+@pytest.fixture
+def connection_string(build_connection_string: Callable) -> str:
+    return build_connection_string()
