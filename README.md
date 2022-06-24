@@ -21,8 +21,14 @@ from google.protobuf.json_format import MessageToDict
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == "__main__":
-    cs = "esdb://localhost:2113"
-    es = EventStore.from_connection_string(cs)
+    es = EventStore(
+        hosts="localhost:2113",
+        discover=True,
+        tls=True,
+        username="admin",
+        password="changeit",
+        tls_ca_file="certs/ca/ca.crt",
+    )
     cluster_info = es.gossip.get_cluster_info()
     events = es.streams.read_from_all()
     for event in events:
