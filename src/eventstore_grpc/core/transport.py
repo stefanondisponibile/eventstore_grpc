@@ -66,15 +66,10 @@ class Transport:
     def _get_target_node(self) -> str:
         """Gets the target node, using discovery when needed."""
         if self.multinode_cluster:
-            target = discovery.discover_endpoint(
+            return discovery.discover_endpoint(
                 self._hosts,
-                credentials=self._get_credentials() if self.tls else None,
+                credentials=self.credentials if self.tls else None,
             )
-            for host in self._hosts:
-                if host == target:
-                    return host
-            else:
-                raise RuntimeError("Couldn't choose a Node with discovery.")
         else:
             return self._hosts[-1]
 

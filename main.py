@@ -8,7 +8,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == "__main__":
     es = EventStore(
-        hosts="localhost:2113",
+        hosts=["localhost:2113", "localhost:2111", "localhost:2112"],
         discover=True,
         tls=True,
         username="admin",
