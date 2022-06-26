@@ -36,7 +36,6 @@ def discover_endpoint(
                 print(err)
                 print(f"Failed to get cluster list from {candidate}")
                 raise err
-                continue
     raise Exception("Couldn't match an endpoint.")
 
 
