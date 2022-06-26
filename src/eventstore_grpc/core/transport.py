@@ -38,10 +38,10 @@ class Transport:
 
     def _new_channel(self) -> grpc.Channel:
         """Returns a new grpc channel."""
-        if not self._tls and not any([self._auth._username, self._auth._password]):
-            return grpc.insecure_channel(self.target)
-        else:
-            return grpc.secure_channel(self.target, credentials=self.credentials)
+        if not self._tls:
+            if not self._auth or not any([self._auth.username, self._auth.password]):
+                return grpc.insecure_channel(self.target)
+        return grpc.secure_channel(self.target, credentials=self.credentials)
 
     @property
     def credentials(self) -> grpc.ChannelCredentials:
