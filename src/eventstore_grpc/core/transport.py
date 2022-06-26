@@ -9,6 +9,7 @@ import grpc
 from .settings import KeepAlive
 from .auth import Auth
 from eventstore_grpc import discovery
+from unittest.mock import MagicMock
 
 log = logging.getLogger(__name__)
 
