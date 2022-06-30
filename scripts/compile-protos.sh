@@ -22,7 +22,8 @@ python -m grpc_tools.protoc \
 python -m grpc_tools.protoc \
     --proto_path=$SRC_DIR/$GRPC \
     --python_out=$TMP_DIR \
-    --grpc_python_out=$TMP_DIR protos/$GRPC/*.proto
+    --mypy_out=$TMP_DIR \
+    --grpc_python_out=$TMP_DIR protos/$GRPC/*.proto \
 
 sed -i 's/^import \(.\+\) as/from eventstore_grpc.proto import \1 as/' $TMP_DIR/*.py
 

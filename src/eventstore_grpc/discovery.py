@@ -40,62 +40,45 @@ def discover_endpoint(
 
 
 def in_allowed_states(member: Dict[str, str]) -> bool:
-    if member["state"] == gossip_pb2.MemberInfo.VNodeState.Shutdown:
+    if member.state == gossip_pb2.MemberInfo.VNodeState.Shutdown:
         return False
     else:
         return True
 
 
 def is_leader(member: gossip_pb2.MemberInfo) -> bool:
-    return member["state"] == gossip_pb2.MemberInfo.VNodeState.Leader
+    return member.state == gossip_pb2.MemberInfo.VNodeState.Leader
 
 
 def is_follower(member: gossip_pb2.MemberInfo) -> bool:
-    return member["state"] == gossip_pb2.MemberInfo.VNodeState.Follower
+    return member.state == gossip_pb2.MemberInfo.VNodeState.Follower
 
 
-def determine_best_node(preference, members: List[gossip_pb2.MemberInfo]):
-    sorted_nodes = list(filter(in_allowed_states, members))
+def determine_best_node(
+    preference: str, members: List[gossip_pb2.MemberInfo]
+) -> gossip_pb2.MemberInfo:
+    sorted_nodes = [elm for elm in members if in_allowed_states(elm)]
     final_member = None
     if preference.lower() == "leader":
-        final_member = random.choice([elm for elm in sorted_nodes if is_leader(elm)])
+        return random.choice([elm for elm in sorted_nodes if is_leader(elm)])
     elif preference.lower() == "follower":
-        final_member = random.choice([elm for elm in sorted_nodes if is_follower(elm)])
+        return random.choice([elm for elm in sorted_nodes if is_follower(elm)])
     elif preference.lower() == "random":
-        final_member = random.choice(sorted_nodes)
-
-    if final_member and final_member["http_end_point"]:
-        return {
-            "address": final_member["http_end_point"]["address"],
-            "port": final_member["http_end_point"]["port"],
-        }
+        return random.choice(sorted_nodes)
+    else:
+        return final_member
 
 
 def create_deadline(seconds: int):
     return datetime.datetime.now() + datetime.timedelta(seconds=seconds)
 
 
-def list_cluster_members(uri: str, credentials: grpc.ChannelCredentials, deadline=None):
+def list_cluster_members(
+    uri: str, credentials: grpc.ChannelCredentials, deadline: datetime.datetime = None
+):
     if credentials is None:
         credentials = grpc.ssl_channel_credentials()
     with grpc.secure_channel(uri, credentials) as channel:
         stub = gossip_pb2_grpc.GossipStub(channel)
         info = gossip.read(stub)
-        members = []
-        for grpc_member in info.members:
-            http_end_point = None
-            grpc_http_end_point = grpc_member.http_end_point
-            if grpc_member.HasField("http_end_point"):
-                http_end_point = {
-                    "address": grpc_http_end_point.address,
-                    "port": grpc_http_end_point.port,
-                }
-            member = {
-                "instance_id": grpc_member.instance_id.string,
-                "timestamp": grpc_member.time_stamp,
-                "state": grpc_member.state,
-                "is_alive": grpc_member.is_alive,
-                "http_end_point": http_end_point,
-            }
-            members.append(member)
-    return members
+    return info.members
