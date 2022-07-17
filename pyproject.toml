@@ -33,6 +33,7 @@ mypy = "^0.961"
 flake8 = "^4.0.1"
 grpcio-tools = "*"
 ipython = "^8.4.0"
+grpcio-testing = "^1.47.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

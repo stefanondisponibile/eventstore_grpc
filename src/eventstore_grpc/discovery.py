@@ -9,7 +9,6 @@ import datetime
 from eventstore_grpc import gossip
 import random
 
-
 def discover_endpoint(
     candidates: List,
     credentials: grpc.ChannelCredentials = None,
