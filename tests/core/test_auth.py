@@ -81,3 +81,17 @@ class TestAuth:
         am = auth.Auth(username=username, password=password)
         crd = am._get_call_credentials()
         assert crd._credentials._metadata_plugin._metadata_plugin._token == am.token
+
+    def test_setting_username(self) -> None:
+        am = auth.Auth(username="old-username", password="password")
+        am.username = "new-username"
+        assert am.username == "new-username"
+
+    def test_setting_password(self) -> None:
+        am = auth.Auth(username="username", password="old-password")
+        am.password = "new-password"
+        assert am.password == "new-password"
+
+    def test_getting_credentials_when_no_credentials(self) -> None:
+        am = auth.Auth()
+        assert am.credentials is None

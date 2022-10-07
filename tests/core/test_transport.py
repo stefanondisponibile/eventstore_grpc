@@ -35,10 +35,17 @@ def test_transport_init(hosts: Union[str, list[str]]) -> None:
     assert isinstance(t.channel, grpc.Channel)
     if isinstance(hosts, str):
         assert hosts == t.target
+        assert [hosts] == t.hosts
         assert t.multinode_cluster is False
     else:
         assert hosts[-1] == t.target
+        assert hosts == t.hosts
         if len(hosts) > 1:
             assert t.multinode_cluster is True
         else:
             assert t.multinode_cluster is False
+
+
+def test_transport_should_raise_when_no_hosts() -> None:
+    with pytest.raises(ValueError):
+        transport.Transport(hosts=[])
