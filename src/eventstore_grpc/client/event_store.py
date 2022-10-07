@@ -32,9 +32,9 @@ class EventStore(ClientBase):
         else:
             keep_alive = KeepAlive()
             if keep_alive_interval:
-                keep_alive.interval = keep_alive.interval
+                keep_alive.interval = keep_alive_interval
             if keep_alive_timeout:
-                keep_alive.timeout = keep_alive.timeout
+                keep_alive.timeout = keep_alive_timeout
 
         if not tls and tls_ca_file:
             raise ValueError(f"tls is {tls} but you specified a ca_file: {tls_ca_file}")
