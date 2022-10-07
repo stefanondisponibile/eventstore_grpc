@@ -42,3 +42,8 @@ if __name__ == "__main__":
     )
 
 ```
+
+
+## Misc
+
+* [How to run EventStore with Docker](https://developers.eventstore.com/server/v21.10/installation.html#docker)
