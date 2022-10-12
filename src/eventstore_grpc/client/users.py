@@ -79,7 +79,7 @@ class Users(ClientBase):
         """Gets details about a user."""
         stub = users_pb2_grpc.UsersStub(self.channel)
         result = users.details(stub, login_name=login_name, **kwargs)
-        return result
+        return next(result)
 
     def change_user_password(
         self, login_name: str, current_password: str, new_password: str, **kwargs

@@ -44,3 +44,6 @@ addopts = "--cov --cov-report=html"
 testpaths = [
     "tests"
 ]
+markers = [
+    "integration: Integration tests."
+]

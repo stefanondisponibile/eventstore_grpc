@@ -28,9 +28,10 @@ def discover_endpoint(
                 members = list_cluster_members(
                     candidate, credentials, create_deadline(gossip_timeout)
                 )
-                endpoint = determine_best_node(node_preference, members)
-                if endpoint:
-                    return f"{endpoint['address']}:{endpoint['port']}"
+                member_info = determine_best_node(node_preference, members)
+                if member_info:
+                    endpoint = member_info.http_end_point
+                    return f"{endpoint.address}:{endpoint.port}"
             except Exception as err:
                 print(err)
                 print(f"Failed to get cluster list from {candidate}")
