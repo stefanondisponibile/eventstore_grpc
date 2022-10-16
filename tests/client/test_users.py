@@ -28,6 +28,7 @@ def client(transport: Transport) -> users.Users:
 def test_create_users(client: users.Users, request_params: dict) -> None:
     result = client.create_user(**request_params)
     assert isinstance(result, users.users_pb2.CreateResp)
+    client.delete_user(login_name=request_params["login_name"])
 
 
 @pytest.mark.integration
@@ -59,6 +60,7 @@ def test_update_user(client: users.Users, create_params: dict) -> None:
             update_params[k] = create_params[k]
     result = client.update_user(**update_params)
     assert isinstance(result, users.users_pb2.UpdateResp)
+    client.delete_user(login_name=create_params["login_name"])
 
 
 def test_update_with_no_updates(client: users.Users) -> None:
@@ -86,6 +88,7 @@ def test_enable_user(client: users.Users) -> None:
     )
     result = client.enable_user(login_name=login_name)
     assert isinstance(result, users.users_pb2.EnableResp)
+    client.delete_user(login_name=login_name)
 
 
 def test_disable_user(client: users.Users) -> None:
@@ -97,6 +100,7 @@ def test_disable_user(client: users.Users) -> None:
     )
     result = client.disable_user(login_name=login_name)
     assert isinstance(result, users.users_pb2.DisableResp)
+    client.delete_user(login_name=login_name)
 
 
 def test_get_user_details(client: users.Users) -> None:
@@ -115,6 +119,7 @@ def test_get_user_details(client: users.Users) -> None:
     assert user_details.login_name == login_name
     assert user_details.full_name == full_name
     assert user_details.disabled == False
+    client.delete_user(login_name=login_name)
 
 
 def test_change_user_password(client: users.Users) -> None:
@@ -134,6 +139,7 @@ def test_change_user_password(client: users.Users) -> None:
         login_name=login_name, current_password=password, new_password=new_password
     )
     assert isinstance(result, users.users_pb2.ChangePasswordResp)
+    client.delete_user(login_name=login_name)
 
 
 def test_reset_user_password(client: users.Users) -> None:
@@ -150,3 +156,4 @@ def test_reset_user_password(client: users.Users) -> None:
         login_name=login_name, new_password=new_password
     )
     assert isinstance(result, users.users_pb2.ResetPasswordResp)
+    client.delete_user(login_name=login_name)

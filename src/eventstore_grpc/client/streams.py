@@ -5,7 +5,7 @@ Streams Mixins.
 from typing import Union, List, Dict
 from eventstore_grpc.streams import append, read, delete, tombstone
 from eventstore_grpc import event_data, constants
-from eventstore_grpc.proto import streams_pb2_grpc
+from eventstore_grpc.proto import streams_pb2_grpc, streams_pb2
 from eventstore_grpc.core import ClientBase
 
 class Streams(ClientBase):
@@ -18,7 +18,7 @@ class Streams(ClientBase):
         events: Union[event_data.EventData, List[event_data.EventData]],
         user_credentials: append.UserCredentials = None,
         **kwargs
-    ):
+    ) -> streams_pb2.AppendResp:
         """Appends new events to a stream."""
         stub = streams_pb2_grpc.StreamsStub(self.channel)
         result = append.append_to_stream(

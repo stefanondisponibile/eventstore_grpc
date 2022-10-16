@@ -16,7 +16,7 @@ def build_options(
     """Builds AppendReq Options."""
     options = streams_pb2.AppendReq.Options()
     stream_identifier = shared_pb2.StreamIdentifier()
-    stream_identifier.streamName = stream.encode()
+    stream_identifier.stream_name = stream.encode()
     if isinstance(expected_version, int):
         options.revision = expected_version
     elif expected_version == constants.NO_STREAM:

@@ -17,7 +17,7 @@ def delete_stream(
     request = streams_pb2.DeleteReq()
     options = streams_pb2.DeleteReq.Options()
     stream_identifier = shared_pb2.StreamIdentifier()
-    stream_identifier.streamName = stream.encode()
+    stream_identifier.stream_name = stream.encode()
     if expected_version == constants.NO_STREAM:
         options.no_stream.CopyFrom(shared_pb2.Empty())
     elif expected_version == constants.ANY:

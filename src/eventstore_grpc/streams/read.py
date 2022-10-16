@@ -56,7 +56,7 @@ def read_from_stream(
     request = streams_pb2.ReadReq()
     req_options = streams_pb2.ReadReq.Options()
     identifier = shared_pb2.StreamIdentifier()
-    identifier.streamName = stream.encode()
+    identifier.stream_name = stream.encode()
     uuid_option = streams_pb2.ReadReq.Options.UUIDOption()
     uuid_option.string.CopyFrom(shared_pb2.Empty())
     stream_options = streams_pb2.ReadReq.Options.StreamOptions()

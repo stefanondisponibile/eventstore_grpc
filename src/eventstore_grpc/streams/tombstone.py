@@ -16,7 +16,9 @@ def tombstone_stream(
     """Tombstone."""
     request = streams_pb2.TombstoneReq()
     options = streams_pb2.TombstoneReq.Options()
-    expected_stream_revision = None
+    options.stream_identifier.CopyFrom(
+        shared_pb2.StreamIdentifier(stream_name=stream.encode("UTF-8"))
+    )
     if expected_version == constants.ANY:
         options.any.CopyFrom(shared_pb2.Empty())
     elif expected_version == constants.NO_STREAM:
