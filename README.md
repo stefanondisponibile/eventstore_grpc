@@ -43,6 +43,11 @@ if __name__ == "__main__":
 
 ```
 
+## Development
+
+### Tests
+
+To run the test locally start EventStore DB with `docker compose up`, then just run `pytest`.
 
 ## Misc
 
