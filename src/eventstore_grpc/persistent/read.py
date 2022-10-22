@@ -11,7 +11,7 @@ def options_request(
     request = persistent_pb2.ReadReq()
     options = persistent_pb2.ReadReq.Options()
     identifier = shared_pb2.StreamIdentifier()
-    identifier.streamName = stream.encode()
+    identifier.stream_name = stream.encode()
     uuid_option = persistent_pb2.ReadReq.Options.UUIDOption()
     uuid_option.string.CopyFrom(shared_pb2.Empty())
     options.stream_identifier.CopyFrom(identifier)
@@ -41,7 +41,7 @@ def nack_request(
         raise ValueError(f"Invalid ReadResp: {read_resp}")
     request = persistent_pb2.ReadReq()
     nack = persistent_pb2.ReadReq.Nack()
-    nack.ids.append(reqd_resp.event.event.id)
+    nack.ids.append(read_resp.event.event.id)
     action = action or "Unknown"
     reason = reason or "Unknown"
     nack.action = persistent_pb2.ReadReq.Nack.Action[action]

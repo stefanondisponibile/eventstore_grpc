@@ -2,14 +2,12 @@
 
 import logging
 from typing import Optional, Union
-from urllib.parse import urlparse
 
 import grpc
 
 from .settings import KeepAlive
 from .auth import Auth
 from eventstore_grpc import discovery
-from unittest.mock import MagicMock
 
 log = logging.getLogger(__name__)
 
@@ -70,6 +68,7 @@ class Transport:
             return discovery.discover_endpoint(
                 self._hosts,
                 credentials=self.credentials if self.tls else None,
+                node_preference="LEADER",
             )
         else:
             return self._hosts[-1]

@@ -23,7 +23,7 @@ a default mechanism in case of different exceptions.
 from __future__ import annotations
 import grpc
 import uuid
-from typing import Sequence, Optional, Callable, Iterable, Union
+from typing import Optional, Callable, Dict, Union
 from eventstore_grpc import constants
 from eventstore_grpc.subscriptions.subscription import Subscription
 from eventstore_grpc.subscriptions.requests_stream import RequestsStream

@@ -11,7 +11,7 @@ def delete_persistent_subscription(
     request = persistent_pb2.DeleteReq()
     options = persistent_pb2.DeleteReq.Options()
     identifier = shared_pb2.StreamIdentifier()
-    identifier.streamName = stream.encode()
+    identifier.stream_name = stream.encode()
     options.stream_identifier.CopyFrom(identifier)
     options.group_name = group
     request.options.CopyFrom(options)

@@ -71,7 +71,8 @@ class Subscription(threading.Thread):
     def run(self, *args, **kwargs):
         """Runs the thread activity."""
         log.debug(f"{self.name:^10} activity started.")
-        self._responses_stream = self._stub.Read(self.grpc_request, **self.call_options)
+        req = self.grpc_request
+        self._responses_stream = self._stub.Read(req, **self.call_options)
         try:
             for response in self._responses_stream:
                 if self.revoked:

@@ -52,6 +52,8 @@ class Persistent(ClientBase):
 
     def update_persistent_subscription(
         self,
+        group_name: str,
+        stream: str,
         resolve_link_to_s: bool = False,
         from_revision: Union[str, int] = constants.START,
         extra_statistics: bool = False,
@@ -69,6 +71,8 @@ class Persistent(ClientBase):
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
         result = persistent.update_persistent_subscription(
             stub,
+            group=group_name,
+            stream=stream,
             resolve_link_to_s=resolve_link_to_s,
             from_revision=from_revision,
             extra_statistics=extra_statistics,

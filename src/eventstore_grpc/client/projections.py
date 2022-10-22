@@ -142,7 +142,7 @@ class Projections(ClientBase):
     ) -> Iterable[projections_pb2.StatisticsResp]:
         """Gets projection statistics."""
         stub = projections_pb2_grpc.ProjectionsStub(self.channel)
-        result = projections.get_projection_statistics(stiub, name=name, **kwargs)
+        result = projections.get_projection_statistics(stub, name=name, **kwargs)
         return result
 
     def update_projection(

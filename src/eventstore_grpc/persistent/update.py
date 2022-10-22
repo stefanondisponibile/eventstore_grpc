@@ -7,6 +7,8 @@ from eventstore_grpc import constants
 
 def update_persistent_subscription(
     stub: persistent_pb2_grpc.PersistentSubscriptionsStub,
+    group: str,
+    stream: str,
     resolve_link_to_s: bool = False,
     from_revision: Union[str, int] = constants.START,
     extra_statistics: bool = False,
@@ -28,9 +30,9 @@ def update_persistent_subscription(
     request_settings = persistent_pb2.UpdateReq.Settings()
     request_settings.resolve_links = resolve_link_to_s
     if isinstance(from_revision, int):
-        request_settings.from_revision = from_revision
+        request_settings.revision = from_revision
     elif from_revision == constants.START:
-        request_settings.from_revision = 0
+        request_settings.revision = 0
     request_settings.extra_statistics = extra_statistics
     request_settings.message_timeout_ms = message_timeout_ms
     request_settings.checkpoint_after_ms = checkpoint_after_ms
@@ -51,8 +53,8 @@ def update_persistent_subscription(
         request_settings.named_consumer_strategy = persistent_pb2.CreateReq.Pinned
     elif strategy == "ROUND_ROBIN":
         request_settings.named_consumer_strategy = persistent_pb2.CreateReq.RoundRobin
-    identifier.streamName = stream.encode()
-    options.group_name = group_name
+    identifier.stream_name = stream.encode()
+    options.group_name = group
     options.stream_identifier.CopyFrom(identifier)
     options.settings.CopyFrom(request_settings)
     request.options.CopyFrom(options)

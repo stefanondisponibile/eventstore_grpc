@@ -63,11 +63,13 @@ def test_update_user(client: users.Users, create_params: dict) -> None:
     client.delete_user(login_name=create_params["login_name"])
 
 
+@pytest.mark.integration
 def test_update_with_no_updates(client: users.Users) -> None:
     with pytest.raises(ValueError):
         client.update_user()
 
 
+@pytest.mark.integration
 def test_delete_user(client: users.Users) -> None:
     login_name = "deleted-user-1"
     client.create_user(
@@ -79,6 +81,7 @@ def test_delete_user(client: users.Users) -> None:
     assert isinstance(result, users.users_pb2.DeleteResp)
 
 
+@pytest.mark.integration
 def test_enable_user(client: users.Users) -> None:
     login_name = "enabled-user-1"
     client.create_user(
@@ -91,6 +94,7 @@ def test_enable_user(client: users.Users) -> None:
     client.delete_user(login_name=login_name)
 
 
+@pytest.mark.integration
 def test_disable_user(client: users.Users) -> None:
     login_name = "disabled-user-1"
     client.create_user(
@@ -103,6 +107,7 @@ def test_disable_user(client: users.Users) -> None:
     client.delete_user(login_name=login_name)
 
 
+@pytest.mark.integration
 def test_get_user_details(client: users.Users) -> None:
     login_name = "detailed-user-1"
     full_name = login_name + "-full_name"
@@ -122,6 +127,7 @@ def test_get_user_details(client: users.Users) -> None:
     client.delete_user(login_name=login_name)
 
 
+@pytest.mark.integration
 def test_change_user_password(client: users.Users) -> None:
     login_name = "changepassword-user-1"
     password = login_name + "-password"
@@ -142,6 +148,7 @@ def test_change_user_password(client: users.Users) -> None:
     client.delete_user(login_name=login_name)
 
 
+@pytest.mark.integration
 def test_reset_user_password(client: users.Users) -> None:
     login_name = "resetpassword-user-1"
     password = login_name + "-password"
