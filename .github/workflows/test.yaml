@@ -32,7 +32,7 @@ jobs:
       - name: Start EventStore DB with docker-compose
         run: docker-compose up -d && sleep 20
       - name: Test with pytest
-        run: poetry run pytest --cov=src --cov-report=xml
+        run: poetry run pytest --cov=src --cov-report=xml tests
       - name: Upload coverage
         uses: codecov/codecov-action@v1
         with:
