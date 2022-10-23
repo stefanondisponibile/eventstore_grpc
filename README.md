@@ -1,4 +1,12 @@
-# [EventStoreDB](https://www.eventstore.com/) Client.
+# EventStoreDB GRPC Client.
+
+[![codecov](https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graph/badge.svg?token=O86CZ83P50)](https://codecov.io/gh/stefanondisponibile/eventstore_grpc)
+
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+Use this client to interact with [EventStoreDB]([![codecov](https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graph/badge.svg?token=O86CZ83P50)](https://codecov.io/gh/stefanondisponibile/eventstore_grpc)) via GRPC.
+
+https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graphs/sunburst.svg?token=O86CZ83P50
 
 ## Quickstart
 
@@ -43,10 +51,12 @@ if __name__ == "__main__":
 
 ## Development
 
+`#TODO`
+
 ### Tests
 
 To run the test locally start EventStore DB with `docker compose up`, then just run `pytest`.
 
-## Misc
+## Coverage
 
-* [How to run EventStore with Docker](https://developers.eventstore.com/server/v21.10/installation.html#docker)
+![](https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graphs/sunburst.svg?token=O86CZ83P50)
