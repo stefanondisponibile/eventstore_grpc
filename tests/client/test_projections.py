@@ -109,6 +109,7 @@ def test_list_one_time_projections(
     client: projections.Projections, projection_query: str
 ) -> None:
     client.create_one_time_projection(query=projection_query)
+    time.sleep(2)
     response = client.list_one_time_projections()
     pjs = list(response)
     assert all(isinstance(pj, projections.projections_pb2.StatisticsResp) for pj in pjs)
@@ -146,7 +147,7 @@ def test_get_projection_result(
 ) -> None:
     projection_name = str(uuid.uuid1())
     client.create_continuous_projection(name=projection_name, query=projection_query)
-    time.sleep(0.5)  # let the projection roll
+    time.sleep(2)  # let the projection roll
     response = client.get_projection_result(name=projection_name)
     assert isinstance(response, projections.projections_pb2.ResultResp)
     assert response.result.struct_value.fields["count"].number_value > 0
@@ -160,7 +161,7 @@ def test_get_projection_state(
 ) -> None:
     projection_name = str(uuid.uuid1())
     client.create_continuous_projection(name=projection_name, query=projection_query)
-    time.sleep(0.5)  # let the projection roll
+    time.sleep(2)  # let the projection roll
     response = client.get_projection_state(name=projection_name)
     assert isinstance(response, projections.projections_pb2.StateResp)
     assert response.state.struct_value.fields["count"].number_value > 0
@@ -174,7 +175,7 @@ def test_get_projection_statistics(
 ) -> None:
     projection_name = str(uuid.uuid1())
     client.create_continuous_projection(name=projection_name, query=projection_query)
-    time.sleep(0.5)  # let the projection roll
+    time.sleep(2)  # let the projection roll
     response = client.get_projection_statistics(name=projection_name)
     stats = list(response)
     assert all(
@@ -191,7 +192,7 @@ def test_update_projection(
 ) -> None:
     projection_name = str(uuid.uuid1())
     client.create_continuous_projection(name=projection_name, query=projection_query)
-    time.sleep(1.0)  # let the projection roll
+    time.sleep(2)  # let the projection roll
     response = client.update_projection(
         name=projection_name,
         query=projection_query,
