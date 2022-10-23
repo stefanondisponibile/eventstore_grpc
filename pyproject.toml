@@ -24,6 +24,7 @@ grpcio = "*"
 grpcio-status = "*"
 urllib3 = "^1.26.9"
 mypy-protobuf = "^3.2.0"
+coverage = {version = "^6.5.0", extras = ["toml"]}
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
@@ -48,3 +49,6 @@ markers = [
     "integration: Integration tests.",
     "operations: Operations related tests."
 ]
+
+[tool.coverage.report]
+omit = ["tests/*"]
