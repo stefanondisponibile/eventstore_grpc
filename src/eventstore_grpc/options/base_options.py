@@ -46,6 +46,9 @@ class EventStoreDBMetadataPlugin(grpc.AuthMetadataPlugin):
 
     @staticmethod
     def _compile_token(username: str, password: str):
+        if not username or not password:
+            return None
+
         if username.strip() and password.strip():
             _key = f"{username}:{password}".encode("ascii")
             token = base64.b64encode(_key).decode("ascii")
@@ -60,7 +63,7 @@ class EventStoreDBMetadataPlugin(grpc.AuthMetadataPlugin):
         metadata = []
         compiled_token = self._compile_token(self._username, self._password)
         compiled_requires_leader = self._compile_requires_leader(self._requires_leader)
-        if compiled_token:  # good place to use the walrus op here :)
+        if compiled_token:
             metadata.append(compiled_token)
         if compiled_requires_leader:
             metadata.append(compiled_requires_leader)

@@ -11,7 +11,7 @@ Use this client to interact with [EventStoreDB](https://developers.eventstore.co
 
 ## Quickstart
 
-1. Start an eventstore instance (without authentication):
+1. Start an EventStore DB instance:
 
 ```bash
 docker-compose up

@@ -5,16 +5,6 @@ from eventstore_grpc.core.transport import Transport
 
 
 @pytest.fixture
-def username() -> str:
-    return "admin"
-
-
-@pytest.fixture
-def password() -> str:
-    return "changeit"
-
-
-@pytest.fixture
 def root_certificate() -> str:
     return "certs/ca/ca.crt"
 

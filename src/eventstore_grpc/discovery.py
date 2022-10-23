@@ -9,6 +9,7 @@ import datetime
 from eventstore_grpc import gossip
 import random
 
+
 def discover_endpoint(
     candidates: List,
     credentials: grpc.ChannelCredentials = None,
@@ -36,7 +37,7 @@ def discover_endpoint(
                 print(err)
                 print(f"Failed to get cluster list from {candidate}")
                 raise err
-    raise Exception("Couldn't match an endpoint.")
+    raise Exception("Couldn't match an endpoint.")  # pragma: nocover
 
 
 def in_allowed_states(member: Dict[str, str]) -> bool:
