@@ -1,7 +1,5 @@
 # [EventStoreDB](https://www.eventstore.com/) Client.
 
-> ⚠️ Under development ⚠️
-
 ## Quickstart
 
 1. Start an eventstore instance (without authentication):

@@ -43,6 +43,7 @@ class Subscriptions(ClientBase):
 
     def subscribe_to_all(
         self,
+        from_position: Union[str, int] = constants.START,
         resolve_link_to_s: bool = False,
         filters: Optional[Dict] = None,
         handler: Optional[Callable] = None,
@@ -50,6 +51,7 @@ class Subscriptions(ClientBase):
     ):
         self._initialize_subscriptions_manager()
         subscription_id = self._subscriptions_manager.subscribe_to_all(
+            from_position=from_position,
             resolve_link_to_s=resolve_link_to_s,
             filters=filters,
             handler=handler,

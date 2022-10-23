@@ -174,7 +174,7 @@ def test_get_projection_statistics(
 ) -> None:
     projection_name = str(uuid.uuid1())
     client.create_continuous_projection(name=projection_name, query=projection_query)
-    time.sleep(0.5) # let the projection roll
+    time.sleep(0.5)  # let the projection roll
     response = client.get_projection_statistics(name=projection_name)
     stats = list(response)
     assert all(
@@ -185,18 +185,25 @@ def test_get_projection_statistics(
 
 
 @pytest.mark.integration
+@pytest.mark.parametrize("track_emitted_streams", (True, False, None))
 def test_update_projection(
-    client: projections.Projections, projection_query: str
+    client: projections.Projections, projection_query: str, track_emitted_streams: bool
 ) -> None:
     projection_name = str(uuid.uuid1())
     client.create_continuous_projection(name=projection_name, query=projection_query)
-    time.sleep(0.5) # let the projection roll
-    response = client.update_projection(name=projection_name, query=projection_query)
+    time.sleep(1.0)  # let the projection roll
+    response = client.update_projection(
+        name=projection_name,
+        query=projection_query,
+        track_emitted_streams=track_emitted_streams,
+    )
     assert isinstance(response, projections.projections_pb2.UpdateResp)
     client.disable_projection(name=projection_name)
     client.delete_projection(name=projection_name)
 
 
 @pytest.mark.integration
-def test_restart_projections_subsystem(client: projections.Projections, projection_query: str) -> None:
-    assert isinstance(client.restart_projections_subsystem(), shared_pb2.Empty) 
+def test_restart_projections_subsystem(
+    client: projections.Projections, projection_query: str
+) -> None:
+    assert isinstance(client.restart_projections_subsystem(), shared_pb2.Empty)

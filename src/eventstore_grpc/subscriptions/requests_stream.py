@@ -33,7 +33,7 @@ class RequestsStream:
         self._stop = threading.Event()
 
     def __iter__(self):
-        return self
+        return self  # pragma: nocover
 
     def __next__(self):
         next_element = None

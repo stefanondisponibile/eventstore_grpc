@@ -91,5 +91,5 @@ class Subscription(threading.Thread):
                     del self._manager._registry[self.name]
                     return self.results
             else:
-                raise err
+                raise err  # pragma: nocover
         return self.results

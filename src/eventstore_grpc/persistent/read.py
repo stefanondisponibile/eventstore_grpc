@@ -24,7 +24,7 @@ def options_request(
 
 def ack_request(read_resp: persistent_pb2.ReadResp):
     if not read_resp.HasField("event"):
-        raise ValueError(f"Invalid ReadResp: {read_resp}")
+        raise ValueError(f"Invalid ReadResp: {read_resp}")  # pragma: nocover
     request = persistent_pb2.ReadReq()
     ack = persistent_pb2.ReadReq.Ack()
     ack.ids.append(read_resp.event.event.id)
@@ -34,17 +34,16 @@ def ack_request(read_resp: persistent_pb2.ReadResp):
 
 def nack_request(
     read_resp: persistent_pb2.ReadResp,
-    action: Optional[str] = None,
+    action: Optional[int] = None,
     reason: Optional[str] = None,
 ):
     if not read_resp.HasField("event"):
-        raise ValueError(f"Invalid ReadResp: {read_resp}")
+        raise ValueError(f"Invalid ReadResp: {read_resp}")  # pragma: nocover
     request = persistent_pb2.ReadReq()
     nack = persistent_pb2.ReadReq.Nack()
     nack.ids.append(read_resp.event.event.id)
-    action = action or "Unknown"
     reason = reason or "Unknown"
-    nack.action = persistent_pb2.ReadReq.Nack.Action[action]
+    nack.action = action or persistent_pb2.ReadReq.Nack.Action.Unknown 
     nack.reason = reason
     request.nack.CopyFrom(nack)
     return request

@@ -41,9 +41,8 @@ class Streams(ClientBase):
     ):
         """Reads events from a stream."""
         options = options or {}
-        options.update(
-            {"from_revision": from_revision}
-        )  # TODO: Also the functional api should use from_revision as a param. (and maybe all the options?)
+        if options.get("from_revision") is None:
+            options["from_revision"] = from_revision
         stub = streams_pb2_grpc.StreamsStub(self.channel)
         result = read.read_from_stream(
             stub, stream=stream, count=count, options=options, **kwargs

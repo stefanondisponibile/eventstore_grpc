@@ -17,7 +17,7 @@ def create_persistent_subscription(
     max_retry_count: int = 10,
     min_checkpoint_count: int = 10,
     max_checkpoint_count: int = 1000,
-    max_subscriber_count: Union[str, int] = 0,
+    max_subscriber_count: int = 0,
     live_buffer_size: int = 20,
     history_buffer_size: int = 500,
     strategy: str = "ROUND_ROBIN",
@@ -39,10 +39,7 @@ def create_persistent_subscription(
     request_settings.max_retry_count = max_retry_count
     request_settings.min_checkpoint_count = min_checkpoint_count
     request_settings.max_checkpoint_count = max_checkpoint_count
-    if isinstance(max_subscriber_count, int):
-        request_settings.max_subscriber_count = max_subscriber_count
-    elif max_checkpoint_count == "UNLIMITED":
-        request_settings.max_subscriber_count = 0
+    request_settings.max_subscriber_count = max_subscriber_count
     request_settings.live_buffer_size = live_buffer_size
     request_settings.history_buffer_size = history_buffer_size
     if strategy == "DISPATCH_TO_SINGLE":

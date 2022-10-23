@@ -76,9 +76,9 @@ def read_from_stream(
     req_options.no_filter.CopyFrom(shared_pb2.Empty())
     default_direction = "backwards" if from_revision == constants.END else "forwards"
     direction = options.get("direction", default_direction)
-    if direction == "forwards":
+    if direction.lower() == "forwards":
         req_options.read_direction = streams_pb2.ReadReq.Options.ReadDirection.Forwards
-    elif direction == "backwards":
+    elif direction.lower() == "backwards":
         req_options.read_direction = streams_pb2.ReadReq.Options.ReadDirection.Backwards
     request.options.CopyFrom(req_options)
     response = stub.Read(request, **kwargs)
@@ -119,9 +119,9 @@ def read_from_all(
         else "forwards"
     )
     direction = direction or default_direction
-    if direction == "forwards":
+    if direction.lower() == "forwards":
         options.read_direction = streams_pb2.ReadReq.Options.ReadDirection.Forwards
-    elif direction == "backwards":
+    elif direction.lower() == "backwards":
         options.read_direction = streams_pb2.ReadReq.Options.ReadDirection.Backwards
     else:
         raise ValueError(f"Invalid direction: {direction}")

@@ -54,10 +54,10 @@ class EventData(abc.ABC):
         self.is_json = is_json
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(**{self.__dict__!r})"
+        return f"{self.__class__.__name__}(**{self.__dict__!r})"  # pragma: nocover
 
     def __str__(self):
-        return f"{self.type} => {self.data}"
+        return f"{self.type} => {self.data}"  # pragma: nocover
 
     @property
     def data_content_type(self):
@@ -70,12 +70,12 @@ class EventData(abc.ABC):
     @property
     @abc.abstractmethod
     def serialized_data(self):
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
     @classmethod
     @abc.abstractmethod
     def deserialize_data(cls, data: str):
-        raise NotImplementedError
+        raise NotImplementedError  # pragma: nocover
 
 
 class JSONEventData(EventData):

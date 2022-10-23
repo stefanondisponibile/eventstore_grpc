@@ -41,7 +41,7 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-addopts = "-vvv --cov --cov-report=html"
+addopts = "-v --cov=src/eventstore_grpc --cov-report=html --cov-append tests"
 testpaths = [
     "tests"
 ]
@@ -51,4 +51,4 @@ markers = [
 ]
 
 [tool.coverage.report]
-omit = ["tests/*"]
+omit = ["tests/*", "src/eventstore_grpc/proto/*"]

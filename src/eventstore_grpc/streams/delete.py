@@ -24,7 +24,7 @@ def delete_stream(
         options.any.CopyFrom(shared_pb2.Empty())
     elif expected_version == constants.STREAM_EXISTS:
         options.stream_exists.CopyFrom(shared_pb2.Empty())
-    elif isinstance(int, expected_version):
+    elif isinstance(expected_version, int):
         options.stream_exists = expected_version
     options.stream_identifier.CopyFrom(stream_identifier)
     request.options.CopyFrom(options)
