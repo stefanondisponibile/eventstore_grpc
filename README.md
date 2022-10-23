@@ -4,9 +4,7 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-Use this client to interact with [EventStoreDB]([![codecov](https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graph/badge.svg?token=O86CZ83P50)](https://codecov.io/gh/stefanondisponibile/eventstore_grpc)) via GRPC.
-
-https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graphs/sunburst.svg?token=O86CZ83P50
+Use this client to interact with [EventStoreDB](https://developers.eventstore.com/) via GRPC.
 
 ## Quickstart
 
