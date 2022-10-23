@@ -1,6 +1,9 @@
-[![codecov](https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graph/badge.svg?token=O86CZ83P50)](https://codecov.io/gh/stefanondisponibile/eventstore_grpc)
-
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+<div align="left">
+    <img src="https://github.com/stefanondisponibile/eventstore_grpc/actions/workflows/test.yaml/badge.svg?event=push" style="text-align: right" />
+    <a target="_blank" href="https://codecov.io/gh/stefanondisponibile/eventstore_grpc"><img src="https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graph/badge.svg?token=O86CZ83P50" style="text-align: right" /></a>
+    <a target="_blank" href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" style="text-align: right" /></a>
+</div>
+<br>
 
 # EventStoreDB GRPC Client.
 
