@@ -83,7 +83,9 @@ def test_enable_projection(
 ) -> None:
     projection_name = str(uuid.uuid1())
     client.create_continuous_projection(name=projection_name, query=projection_query)
+    time.sleep(2)
     client.disable_projection(name=projection_name)
+    time.sleep(2)
     response = client.enable_projection(name=projection_name)
     assert isinstance(response, projections.projections_pb2.EnableResp)
 
