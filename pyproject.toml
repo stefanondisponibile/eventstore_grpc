@@ -45,5 +45,6 @@ testpaths = [
     "tests"
 ]
 markers = [
-    "integration: Integration tests."
+    "integration: Integration tests.",
+    "operations: Operations related tests."
 ]

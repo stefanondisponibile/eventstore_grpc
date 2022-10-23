@@ -10,7 +10,7 @@ def stop_scavenge(
 ) -> operations_pb2.ScavengeResp:
     """Stops scavenge."""
     request = operations_pb2.StopScavengeReq()
-    options = operations_pb2.StartScavengeReq.Options()
+    options = operations_pb2.StopScavengeReq.Options()
     options.scavenge_id = scavenge_id
     request.options.CopyFrom(options)
     response = stub.StopScavenge(request, **kwargs)
