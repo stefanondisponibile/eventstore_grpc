@@ -67,7 +67,7 @@ def determine_best_node(
     elif preference.lower() == "random":
         return random.choice(sorted_nodes)
     else:
-        return final_member
+        return final_member  # pragma: nocover
 
 
 def create_deadline(seconds: int):

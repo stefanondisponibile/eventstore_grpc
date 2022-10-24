@@ -113,7 +113,9 @@ def test_subscribe_persistent_with_raising_handler(
 
 
 @pytest.mark.integration
-@pytest.mark.parametrize("from_position", [0, START, END])
+@pytest.mark.parametrize(
+    "from_position", [0, START, END, {"commit_position": 0, "prepare_position": 0}]
+)
 def test_subscribe_to_all(
     client: subscriptions.Subscriptions, from_position: str | int
 ) -> None:
