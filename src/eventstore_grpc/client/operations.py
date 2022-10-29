@@ -35,7 +35,7 @@ class Operations(ClientBase):
         return result
 
     def shutdown(self, **kwargs) -> shared_pb2.Empty:
-        """Shuts the node down."""  # TODO: or the db?
+        """Shuts the node down."""
         stub = operations_pb2_grpc.OperationsStub(self.channel)
         result = operations.shutdown(stub, **kwargs)
         return result

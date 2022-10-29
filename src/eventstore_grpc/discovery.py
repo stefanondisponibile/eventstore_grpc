@@ -3,22 +3,38 @@ Discovery and gossip helpers.
 """
 
 import grpc
-from typing import Dict, List
+from typing import List
+from collections.abc import Iterable
 from eventstore_grpc.proto import gossip_pb2, gossip_pb2_grpc
-import datetime
 from eventstore_grpc import gossip
 import random
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def discover_endpoint(
     candidates: List,
     credentials: grpc.ChannelCredentials = None,
-    discovery_interval: int = 100,  # used to delay what? Each iter?
     max_discovery_attempts: int = 10,
-    gossip_timeout: int = 5,
-    node_preference: str = "RANDOM",
-    settings: Dict = {},
+    vnode_state: gossip_pb2.MemberInfo.VNodeState = gossip_pb2.MemberInfo.Leader,
 ) -> str:
+    """Discovers an endpoint to connect to.
+
+    Args:
+        candidates: a list of candidates nodes to use for discovery.
+        credentials: the channel credentials to use for listing cluster members.
+        max_discovery_attempts: the maximum number of discovery attempts that will be
+                                made to determine the best node.
+        node_preference: the type of node to prefer.
+
+    Returns:
+        The url of the selected node.
+
+    Raises:
+        Exception: when it's not possible to match any node.
+    """
+
     discover_attempts = 0
 
     while discover_attempts < max_discovery_attempts:
@@ -27,58 +43,53 @@ def discover_endpoint(
         for candidate in candidates:
             try:
                 members = list_cluster_members(
-                    candidate, credentials, create_deadline(gossip_timeout)
+                    candidate,
+                    credentials,
                 )
-                member_info = determine_best_node(node_preference, members)
-                if member_info:
+                member_info = determine_best_node(vnode_state, members)
+                if member_info is not None:
                     endpoint = member_info.http_end_point
                     return f"{endpoint.address}:{endpoint.port}"
             except Exception as err:
-                print(err)
-                print(f"Failed to get cluster list from {candidate}")
+                log.error(f"Failed to get cluster list from: {candidate}")
                 raise err
     raise Exception("Couldn't match an endpoint.")  # pragma: nocover
 
 
-def in_allowed_states(member: Dict[str, str]) -> bool:
-    if member.state == gossip_pb2.MemberInfo.VNodeState.Shutdown:
-        return False
-    else:
-        return True
-
-
-def is_leader(member: gossip_pb2.MemberInfo) -> bool:
-    return member.state == gossip_pb2.MemberInfo.VNodeState.Leader
-
-
-def is_follower(member: gossip_pb2.MemberInfo) -> bool:
-    return member.state == gossip_pb2.MemberInfo.VNodeState.Follower
-
-
 def determine_best_node(
-    preference: str, members: List[gossip_pb2.MemberInfo]
+    preference: gossip_pb2.MemberInfo.VNodeState, members: List[gossip_pb2.MemberInfo]
 ) -> gossip_pb2.MemberInfo:
-    sorted_nodes = [elm for elm in members if in_allowed_states(elm)]
-    final_member = None
-    if preference.lower() == "leader":
-        return random.choice([elm for elm in sorted_nodes if is_leader(elm)])
-    elif preference.lower() == "follower":
-        return random.choice([elm for elm in sorted_nodes if is_follower(elm)])
-    elif preference.lower() == "random":
-        return random.choice(sorted_nodes)
-    else:
-        return final_member  # pragma: nocover
+    """Selects the best node, given a `preference`.
 
+    Args:
+        preference: the type of node that you want to choose (e.g. `leader`).
+        members: a list of nodes (as gossip_pb2.MemeberInfo objects) to choose from.
 
-def create_deadline(seconds: int):
-    return datetime.datetime.now() + datetime.timedelta(seconds=seconds)
+    Returns:
+        The selected node from members, of None if none of the objects satisfies the
+        requested preference.
+    """
+    candidates = [member for member in members if member.state is preference]
+    return random.choice(candidates) if candidates else None
 
 
 def list_cluster_members(
-    uri: str, credentials: grpc.ChannelCredentials, deadline: datetime.datetime = None
-):
-    if credentials is None:
-        credentials = grpc.ssl_channel_credentials()
+    uri: str, credentials: grpc.ChannelCredentials
+) -> Iterable[gossip_pb2.MemberInfo]:
+    """Lists cluster memeber using the provided uri to connect to the cluster.
+
+    You can use this function to get information about the nodes in the cluster.
+    The MemberInfo objects returned can give information like the state of the node
+    (Initializing, Leader, ...), the instance id, is_alive, and the endpoint of
+    the node (address, port).
+
+    Args:
+        uri: the URI that will be used to connect to the node.
+        credentials: the ChannelCredentials to use to connect to the node.
+
+    Returns:
+        The nodes information as gossip_pb2.MemberInfo objects.
+    """
     with grpc.secure_channel(uri, credentials) as channel:
         stub = gossip_pb2_grpc.GossipStub(channel)
         info = gossip.read(stub)

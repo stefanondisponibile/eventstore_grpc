@@ -68,7 +68,6 @@ class Transport:
             return discovery.discover_endpoint(
                 self._hosts,
                 credentials=self.credentials if self.tls else None,
-                node_preference="LEADER",
             )
         else:
             return self._hosts[-1]
