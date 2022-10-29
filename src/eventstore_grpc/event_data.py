@@ -3,7 +3,7 @@ An Event.
 """
 import abc
 import uuid
-from typing import Any, Dict, Callable
+from typing import Any, Dict
 import json
 
 

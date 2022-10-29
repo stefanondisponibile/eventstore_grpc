@@ -13,7 +13,6 @@ class EventStoreDBMetadataPlugin(grpc.AuthMetadataPlugin):
         context: grpc.AuthMetadataContext,
         callback: grpc.AuthMetadataPluginCallback,
     ) -> grpc.AuthMetadataPluginCallback:
-        # TODO: requires_leader?
         metadata = [("authorization", f"Basic {self._token}")]
         return callback(metadata=tuple(metadata), error=None)
 
@@ -27,9 +26,9 @@ class Auth:
         """Initializes the AuthManager.
 
         Args:
-            username (str): a username.
-            password (str): a password.
-            root_certificate (str): the path to the root certificate.
+            username: the username.
+            password: the password.
+            root_certificate: the path to the root certificate.
         """
         self._username = username
         self._password = password

@@ -8,7 +8,7 @@ class ClientBase:
         """Initializes a ClientBase.
 
         Args:
-            transport (Transport): an instance of a Transport Class.
+            transport: an instance of a Transport Class.
         """
         self._transport = transport
 

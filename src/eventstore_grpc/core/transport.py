@@ -18,7 +18,7 @@ class Transport:
         hosts: Union[str, list[str]],
         discover: Optional[bool] = None,
         tls: Optional[bool] = None,
-        keep_alive: Optional[KeepAlive] = None,
+        keep_alive: Optional[KeepAlive] = None,  # TODO: maybe remove?
         auth: Optional[Auth] = None,
     ) -> None:
         """Transport layer."""
@@ -29,18 +29,36 @@ class Transport:
             raise ValueError("You must specify at least one node.")
 
         self._hosts = hosts
+        self._auth = auth
         self._tls = tls
         self._keep_alive = keep_alive
         self._discover = discover
-        self._auth = auth
+        self._channel = self._new_channel()
+
+    def refresh_channel(self) -> "Transport":
+        """Gets a new channel."""
         self._channel = self._new_channel()
 
     def _new_channel(self) -> grpc.Channel:
-        """Returns a new grpc channel."""
-        if not self._tls:
-            if not self._auth or not any([self._auth.username, self._auth.password]):
-                return grpc.insecure_channel(self.target)
+        if self.is_insecure:
+            return grpc.insecure_channel(self.target)
         return grpc.secure_channel(self.target, credentials=self.credentials)
+
+    def _get_target_node(self) -> str:
+        """Gets the target node, using discovery when needed."""
+        if self.multinode_cluster:
+            return discovery.discover_endpoint(
+                self._hosts,
+                credentials=self.credentials if self.tls else None,
+            )
+        else:
+            return self._hosts[-1]
+
+    @property
+    def is_insecure(self) -> bool:
+        return not self._tls and (
+            not self._auth or not any([self._auth.username, self._auth.password])
+        )
 
     @property
     def credentials(self) -> grpc.ChannelCredentials:
@@ -61,16 +79,6 @@ class Transport:
     @property
     def hosts(self) -> list[str]:
         return self._hosts
-
-    def _get_target_node(self) -> str:
-        """Gets the target node, using discovery when needed."""
-        if self.multinode_cluster:
-            return discovery.discover_endpoint(
-                self._hosts,
-                credentials=self.credentials if self.tls else None,
-            )
-        else:
-            return self._hosts[-1]
 
     @property
     def tls(self):
