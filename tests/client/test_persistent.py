@@ -156,3 +156,14 @@ def test_replay_parked(transport: Transport) -> None:
     assert isinstance(response, persistent.persistent_pb2.ReplayParkedResp)
     client.delete_persistent_subscription(group=group_name, stream=stream_name)
     streams_client.delete_stream(stream=stream_name, expected_version=ANY)
+
+
+@pytest.mark.xfail(
+    reason="The List method is listed in the proto file, but unimplemented on the servicer side for now."
+)
+@pytest.mark.integration
+def test_list_persistent(transport: Transport) -> None:
+    client = persistent.Persistent(transport=transport)
+    results = client.list_persistent(list_all=True)
+    for result in results:
+        assert isinstance(result, persistent.persistent_pb2.ListResp)

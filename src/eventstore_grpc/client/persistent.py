@@ -207,3 +207,13 @@ class Persistent(ClientBase):
             stub=stub, group_name=group_name, stream_name=stream_name, stop_at=stop_at
         )
         return result
+
+
+    def list_persistent(
+        self,
+        stream_name: Optional[str] = None,
+        list_all: bool = False,
+    ) -> persistent_pb2.ListResp:
+        stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
+        results = persistent.list_persistent(stub=stub, list_all=True)
+        return results
