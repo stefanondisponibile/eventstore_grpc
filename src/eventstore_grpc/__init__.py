@@ -1,2 +1,2 @@
-from eventstore_grpc.client import EventStore
+from eventstore_grpc.client.event_store import EventStore
 from eventstore_grpc.event_data import JSONEventData

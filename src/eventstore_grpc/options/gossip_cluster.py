@@ -5,9 +5,10 @@ Gossip Cluster Options.
 import dataclasses
 from typing import List
 
-from eventstore_grpc import options
+from eventstore_grpc.options.client import ClientOptions
+from eventstore_grpc.options.discovery import DiscoveryOptions
 
 
 @dataclasses.dataclass
-class GossipClusterOptions(options.ClientOptions, options.DiscoveryOptions):
+class GossipClusterOptions(ClientOptions, DiscoveryOptions):
     endpoints: List[str]

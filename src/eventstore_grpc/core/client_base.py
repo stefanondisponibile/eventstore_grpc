@@ -4,7 +4,7 @@ from .transport import Transport
 
 
 class ClientBase:
-    def __init__(self, transport: Transport) -> None:
+    def __init__(self, transport: "Transport") -> None:
         """Initializes a ClientBase.
 
         Args:

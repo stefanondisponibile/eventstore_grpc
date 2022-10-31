@@ -1,14 +1,12 @@
 from typing import Optional, Union
 
-from eventstore_grpc.client import (
-    Gossip,
-    Operations,
-    Persistent,
-    Projections,
-    Streams,
-    Subscriptions,
-    Users,
-)
+from eventstore_grpc.client.gossip import Gossip
+from eventstore_grpc.client.operations import Operations
+from eventstore_grpc.client.persistent import Persistent
+from eventstore_grpc.client.projections import Projections
+from eventstore_grpc.client.streams import Streams
+from eventstore_grpc.client.subscriptions import Subscriptions
+from eventstore_grpc.client.users import Users
 from eventstore_grpc.core import ClientBase
 from eventstore_grpc.core.auth import Auth
 from eventstore_grpc.core.settings import KeepAlive

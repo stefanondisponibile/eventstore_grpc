@@ -2,20 +2,18 @@ import importlib.resources
 
 import pytest
 
-from eventstore_grpc import client
-from eventstore_grpc.client import (
-    Gossip,
-    Operations,
-    Persistent,
-    Projections,
-    Streams,
-    Subscriptions,
-    Users,
-)
+from eventstore_grpc.client.event_store import EventStore
+from eventstore_grpc.client.gossip import Gossip
+from eventstore_grpc.client.operations import Operations
+from eventstore_grpc.client.persistent import Persistent
+from eventstore_grpc.client.projections import Projections
+from eventstore_grpc.client.streams import Streams
+from eventstore_grpc.client.subscriptions import Subscriptions
+from eventstore_grpc.client.users import Users
 
 
 def test_eventstore_client_basic_init() -> None:
-    event_store = client.EventStore(hosts=["localhost:2113"])
+    event_store = EventStore(hosts=["localhost:2113"])
     assert isinstance(event_store.gossip, Gossip)
     assert isinstance(event_store.operations, Operations)
     assert isinstance(event_store.persistent, Persistent)
@@ -28,7 +26,7 @@ def test_eventstore_client_basic_init() -> None:
 def test_eventstore_init_with_keepalive() -> None:
     ka_interval = 42
     ka_timeout = 24
-    event_store = client.EventStore(
+    event_store = EventStore(
         hosts=["localhost:2113"],
         keep_alive_interval=ka_interval,
         keep_alive_timeout=ka_timeout,
@@ -39,12 +37,12 @@ def test_eventstore_init_with_keepalive() -> None:
 
 def test_should_raise_if_tls_and_no_ca_file() -> None:
     with pytest.raises(ValueError):
-        client.EventStore(hosts=["localhos:2113"], tls_ca_file="some-file.cert")
+        EventStore(hosts=["localhos:2113"], tls_ca_file="some-file.cert")
 
 
 def test_should_set_username_and_password() -> None:
     username, password = "some-username", "some-password"
-    event_store = client.EventStore(
+    event_store = EventStore(
         hosts=["localhost:2113"],
         username=username,
         password=password,
