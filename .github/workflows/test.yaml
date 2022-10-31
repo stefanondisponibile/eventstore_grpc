@@ -27,7 +27,7 @@ jobs:
       - name: Test with pytest
         run: poetry run pytest --cov=src --cov-report=xml tests
       - name: Format code with black and isort
-        run: black src && isort src
+        run: poetry run black --check src && poetry run isort --check src
       - name: Upload coverage
         uses: codecov/codecov-action@v1
         with:
