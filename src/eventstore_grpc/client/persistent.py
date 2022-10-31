@@ -194,7 +194,14 @@ class Persistent(ClientBase):
         stream_name: Optional[str] = None,
         stop_at: Optional[int] = None,
     ) -> persistent_pb2.ReplayParkedResp:
-        """Replays parked events."""
+        """Replays parked events.
+
+
+        Args:
+            group_name: the group name.
+            stream_name: the name of the stream, or None for $all.
+            stop_at: the postition at which to stop.
+        """
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
         result = persistent.replay_parked(
             stub=stub, group_name=group_name, stream_name=stream_name, stop_at=stop_at
