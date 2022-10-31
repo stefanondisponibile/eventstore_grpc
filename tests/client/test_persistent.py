@@ -2,7 +2,13 @@ import pytest
 from eventstore_grpc.core import Transport
 from eventstore_grpc.client import persistent
 from eventstore_grpc.client import streams
-from eventstore_grpc.constants import ANY, START
+from eventstore_grpc.constants import (
+    ANY,
+    START,
+    DISPATCH_TO_SINGLE,
+    ROUND_ROBIN,
+    PINNED,
+)
 from eventstore_grpc.event_data import JSONEventData
 import uuid
 
@@ -35,9 +41,9 @@ def test_create_persistent_subscription(transport: Transport) -> None:
 @pytest.mark.parametrize(
     "from_revision,strategy",
     [
-        (0, "DISPATCH_TO_SINGLE"),
-        (0, "ROUND_ROBIN"),
-        (START, "PINNED"),
+        (0, DISPATCH_TO_SINGLE),
+        (0, ROUND_ROBIN),
+        (START, PINNED),
     ],
 )
 def test_update_persistent_subscription(
@@ -56,8 +62,8 @@ def test_update_persistent_subscription(
     response = client.update_persistent_subscription(
         group_name=group_name,
         stream=stream_name,
-        from_revision=from_revision,
-        strategy=strategy,
+        resolve_link_to_s=True,
+        from_revision=START,
     )
     assert isinstance(response, persistent.persistent_pb2.UpdateResp)
     client.delete_persistent_subscription(stream=stream_name, group=group_name)

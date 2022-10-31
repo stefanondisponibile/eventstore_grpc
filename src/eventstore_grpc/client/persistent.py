@@ -2,10 +2,26 @@
 Persistents Mixin.
 """
 
-from typing import Union
-from eventstore_grpc import constants, persistent
+from email import message
+from multiprocessing.spawn import prepare
+from pydoc import resolve
+from typing import Union, Optional
+from eventstore_grpc import persistent
 from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc
 from eventstore_grpc.core import ClientBase
+from eventstore_grpc.constants import ROUND_ROBIN, END
+
+"""
+# TODO
+we're not covering
+GetInfo
+ReplayParked
+List
+RestartSubsystem
+
+that are listed in the `persistent.proto` file.
+Also, we need to support creating persistent subscription for the $all stream.
+"""
 
 
 class Persistent(ClientBase):
@@ -13,22 +29,60 @@ class Persistent(ClientBase):
 
     def create_persistent_subscription(
         self,
-        stream: str,
-        group_name: str,
+        group_name: str = None,
+        stream: Optional[str] = None,
         resolve_link_to_s: bool = False,
-        from_revision: Union[int, str] = constants.START,
+        from_revision: Union[int, str] = END,
+        commit_position: Optional[int] = None,
+        prepare_position: Optional[int] = None,
         extra_statistics: bool = False,
         message_timeout_ms: int = 30000,
         checkpoint_after_ms: int = 2000,
         max_retry_count: int = 10,
         min_checkpoint_count: int = 10,
         max_checkpoint_count: int = 1000,
-        max_subscriber_count: Union[str, int] = 0,
-        live_buffer_size: int = 20,
+        max_subscriber_count: int = 0,
+        live_buffer_size: int = 500,
         history_buffer_size: int = 500,
-        strategy: str = "ROUND_ROBIN",
+        read_batch_size: int = 20,
+        strategy: str = ROUND_ROBIN,
+        filter_options: Optional[
+            persistent_pb2.CreateReq.AllOptions.FilterOptions
+        ] = None,
         **kwargs
     ) -> persistent_pb2.CreateResp:
+        """Creates a new persistent subscription.
+
+        Args:
+            group_name: a group name for the subscription that will be created.
+            stream: the name of the stream. A persistent subscription to the `$all`
+                    stream will be created if this value is left to `None`.
+            resolve_link_to_s: whether or not to resolve events links to actual events.
+            from_revision: the subscription will start from the revision specified here.
+            extra_statistics: whether to track latency statistics on this subscription.
+            message_timeout_ms: the amount of time after which to consider a message as
+                                timed out and retried.
+            checkpoint_after_ms: the amount of time to try to checkpoint after.
+            max_retry_count: the maximum number of retries (due to timeout) before a
+                             message is considered to be parked.
+            min_checkpoint_count: The minimum number of messages to process before a
+                                  checkpoint may be written.
+            max_checkpoint_count: The maximum number of messages not checkpointed
+                                  before forcing a checkpoint.
+            max_subscriber_count: The maximum number of subscribers allowed.
+            live_buffer_size: the size of the buffer (in-memory) listening to live
+                              messages as they happen before pagin occurs.
+            history_buffer_size: The number of events to cache when paging through
+                                 history.
+            read_batch_size: The number of events read at a time when paging through history.
+            strategy: the strategy that will be used to send events to the subscribers
+                      of the same group.
+            filter_options: an optional FilterOptions instance to use to filter events
+                            in the persistent subscription.
+
+        Returns:
+            A persistent_pb.CreateResp
+        """
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
         result = persistent.create_persistent_subscription(
             stub=stub,
@@ -36,6 +90,8 @@ class Persistent(ClientBase):
             group_name=group_name,
             resolve_link_to_s=resolve_link_to_s,
             from_revision=from_revision,
+            commit_position=commit_position,
+            prepare_position=prepare_position,
             extra_statistics=extra_statistics,
             message_timeout_ms=message_timeout_ms,
             checkpoint_after_ms=checkpoint_after_ms,
@@ -45,36 +101,51 @@ class Persistent(ClientBase):
             max_subscriber_count=max_subscriber_count,
             live_buffer_size=live_buffer_size,
             history_buffer_size=history_buffer_size,
+            read_batch_size=read_batch_size,
             strategy=strategy,
+            filter_options=filter_options,
             **kwargs,
         )
         return result
 
     def update_persistent_subscription(
         self,
-        group_name: str,
-        stream: str,
-        resolve_link_to_s: bool = False,
-        from_revision: Union[str, int] = constants.START,
-        extra_statistics: bool = False,
-        message_timeout_ms: int = 30000,
-        checkpoint_after_ms: int = 2000,
-        max_retry_count: int = 10,
-        min_checkpoint_count: int = 10,
-        max_checkpoint_count: int = 1000,
-        max_subscriber_count: Union[str, int] = 0,
-        live_buffer_size: int = 20,
-        history_buffer_size: int = 500,
-        strategy: str = "ROUND_ROBIN",
+        group_name: Optional[str] = None,
+        stream: Optional[str] = None,
+        resolve_link_to_s: Optional[bool] = None,
+        from_revision: Optional[Union[int, str]] = None,
+        commit_position: Optional[int] = None,
+        prepare_position: Optional[int] = None,
+        extra_statistics: Optional[bool] = None,
+        message_timeout_ms: Optional[int] = None,
+        checkpoint_after_ms: Optional[int] = None,
+        max_retry_count: Optional[int] = None,
+        min_checkpoint_count: Optional[int] = None,
+        max_checkpoint_count: Optional[int] = None,
+        max_subscriber_count: Optional[int] = None,
+        live_buffer_size: Optional[int] = None,
+        history_buffer_size: Optional[int] = None,
+        read_batch_size: Optional[int] = None,
+        strategy: Optional[str] = None,
+        filter_options: Optional[
+            persistent_pb2.CreateReq.AllOptions.FilterOptions
+        ] = None,
         **kwargs
     ) -> persistent_pb2.UpdateResp:
+        """Updates a persistent subscription.
+
+        Args:
+            updates: a dictionary that will be parsed into a UpdateReq message proto.
+        """
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
         result = persistent.update_persistent_subscription(
-            stub,
-            group=group_name,
+            stub=stub,
+            group_name=group_name,
             stream=stream,
             resolve_link_to_s=resolve_link_to_s,
             from_revision=from_revision,
+            commit_position=commit_position,
+            prepare_position=prepare_position,
             extra_statistics=extra_statistics,
             message_timeout_ms=message_timeout_ms,
             checkpoint_after_ms=checkpoint_after_ms,
@@ -84,8 +155,10 @@ class Persistent(ClientBase):
             max_subscriber_count=max_subscriber_count,
             live_buffer_size=live_buffer_size,
             history_buffer_size=history_buffer_size,
-            strategy=strategy,
-            **kwargs,
+            read_batch_size=read_batch_size,
+            named_consumer_strategy=strategy,
+            filter_options=filter_options,
+            **kwargs
         )
         return result
 

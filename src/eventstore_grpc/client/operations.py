@@ -29,7 +29,11 @@ class Operations(ClientBase):
         return result
 
     def set_node_priority(self, priority: int, **kwargs) -> shared_pb2.Empty:
-        """Sets node priority."""
+        """Sets node priority.
+        
+        Args:
+            priority: the priority level for the node you're currently connected to.
+        """
         stub = operations_pb2_grpc.OperationsStub(self.channel)
         result = operations.set_node_priority(stub, priority, **kwargs)
         return result
