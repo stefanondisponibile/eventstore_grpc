@@ -168,3 +168,21 @@ class Persistent(ClientBase):
             stub=stub, stream=stream, group=group
         )
         return result
+
+    def get_info(
+        self,
+        group_name: str,
+        stream_name: Optional[str] = None,
+    ) -> persistent_pb2.GetInfoResp:
+        """Get info about a persistent subscription.
+
+        Args:
+            group: a group name to get info about.
+            stream_name: the name of the stream, or None if it's some $all persistent
+                         subscription.
+        """
+        stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
+        result = persistent.get_info(
+            stub=stub, group_name=group_name, stream_name=stream_name
+        )
+        return result
