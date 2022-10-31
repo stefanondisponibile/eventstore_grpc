@@ -18,7 +18,6 @@ def _build_options_all(
     commit_position: Optional[int] = None,
     prepare_position: Optional[int] = None,
     from_revision: Union[int, str] = None,
-    filter_options: Optional[persistent_pb2.CreateReq.AllOptions.FilterOptions] = None,
 ) -> persistent_pb2.UpdateReq.AllOptions:
     """Builds option for persistent subscription creation to the $all stream."""
     options = persistent_pb2.UpdateReq.AllOptions()
@@ -32,10 +31,10 @@ def _build_options_all(
             options.start.CopyFrom(shared_pb2.Empty())
         elif from_revision.lower() == END.lower():
             options.end.CopyFrom(shared_pb2.Empty())
-    if filter_options is None:
-        options.no_filter.CopyFrom(shared_pb2.Empty())
-    else:
-        options.filter.CopyFrom(filter_options)
+    elif isinstance(from_revision, int):
+        raise ValueError(
+            f"Invalid value for 'from_revision': {from_revision} (can't be `int`, you must specify commit and prepare position for $all)"
+        )
     return options
 
 
@@ -133,7 +132,6 @@ def update_persistent_subscription(
     history_buffer_size: Optional[int] = None,
     read_batch_size: Optional[int] = None,
     named_consumer_strategy: Optional[str] = None,
-    filter_options: Optional[persistent_pb2.CreateReq.AllOptions.FilterOptions] = None,
     **kwargs,
 ) -> persistent_pb2.UpdateResp:
     """Updates a persistent subscription."""
@@ -165,7 +163,6 @@ def update_persistent_subscription(
                 commit_position=commit_position,
                 prepare_position=prepare_position,
                 from_revision=from_revision,
-                filter_options=filter_options,
             )
         )
     else:

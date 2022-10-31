@@ -127,9 +127,6 @@ class Persistent(ClientBase):
         history_buffer_size: Optional[int] = None,
         read_batch_size: Optional[int] = None,
         strategy: Optional[str] = None,
-        filter_options: Optional[
-            persistent_pb2.CreateReq.AllOptions.FilterOptions
-        ] = None,
         **kwargs
     ) -> persistent_pb2.UpdateResp:
         """Updates a persistent subscription.
@@ -157,13 +154,14 @@ class Persistent(ClientBase):
             history_buffer_size=history_buffer_size,
             read_batch_size=read_batch_size,
             named_consumer_strategy=strategy,
-            filter_options=filter_options,
-            **kwargs
+            **kwargs,
         )
         return result
 
     def delete_persistent_subscription(
-        self, stream: str, group: str
+        self,
+        group: str,
+        stream: Optional[str] = None,
     ) -> persistent_pb2.DeleteResp:
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
         result = persistent.delete_persistent_subscription(
