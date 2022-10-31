@@ -25,7 +25,7 @@ jobs:
       - name: Start EventStore DB with docker-compose
         run: docker-compose up -d && sleep 20
       - name: Format code with black and isort
-        run: poetry run black --check src && poetry run isort --check src
+        run: poetry run black --check --exclude pyi src && poetry run isort --check src
       - name: Test with pytest
         run: poetry run pytest --cov=src --cov-report=xml tests
       - name: Upload coverage
