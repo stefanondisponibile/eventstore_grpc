@@ -21,14 +21,19 @@ a default mechanism in case of different exceptions.
 """
 
 from __future__ import annotations
-import grpc
+
+import logging
 import uuid
-from typing import Optional, Callable, Dict, Union
-from eventstore_grpc import constants
-from eventstore_grpc.subscriptions.subscription import Subscription
+from typing import Callable, Dict, Optional, Union
+
+import grpc
+
+from eventstore_grpc import constants, persistent, streams
+from eventstore_grpc.proto import persistent_pb2_grpc, streams_pb2_grpc
 from eventstore_grpc.subscriptions.requests_stream import RequestsStream
-from eventstore_grpc import streams, persistent
-from eventstore_grpc.proto import streams_pb2_grpc, persistent_pb2_grpc
+from eventstore_grpc.subscriptions.subscription import Subscription
+
+log = logging.getLogger(__name__)
 
 
 class SubscriptionsManager:
@@ -159,10 +164,10 @@ class SubscriptionsManager:
     def unsubscribe(self, stream_name: str, timeout: int = 5):
         """Unsubscribes from a stream."""
         if stream_name not in self._registry:
-            print(f"Subscription not found: {stream_name}")
+            log.error(f"Subscription not found: {stream_name}")
             return None
 
         subscription: Subscription = self._registry.pop(stream_name)
         subscription.revoke()
-        print("\033[38;5;190mSubscription revoked.\033[0m")
+        log.info("\033[38;5;190mSubscription revoked.\033[0m")
         return subscription.join(timeout=timeout)

@@ -2,11 +2,13 @@
 Streams Mixins.
 """
 
-from typing import Union, List, Dict
-from eventstore_grpc.streams import append, read, delete, tombstone
-from eventstore_grpc import event_data, constants
-from eventstore_grpc.proto import streams_pb2_grpc, streams_pb2
+from typing import Dict, List, Union
+
+from eventstore_grpc import constants, event_data
 from eventstore_grpc.core import ClientBase
+from eventstore_grpc.proto import streams_pb2, streams_pb2_grpc
+from eventstore_grpc.streams import append, delete, read, tombstone
+
 
 class Streams(ClientBase):
     """Handles streams operations."""

@@ -16,15 +16,15 @@ class GossipStub(object):
             channel: A grpc.Channel.
         """
         self.Update = channel.unary_unary(
-                '/event_store.cluster.Gossip/Update',
-                request_serializer=cluster__pb2.GossipRequest.SerializeToString,
-                response_deserializer=cluster__pb2.ClusterInfo.FromString,
-                )
+            "/event_store.cluster.Gossip/Update",
+            request_serializer=cluster__pb2.GossipRequest.SerializeToString,
+            response_deserializer=cluster__pb2.ClusterInfo.FromString,
+        )
         self.Read = channel.unary_unary(
-                '/event_store.cluster.Gossip/Read',
-                request_serializer=shared__pb2.Empty.SerializeToString,
-                response_deserializer=cluster__pb2.ClusterInfo.FromString,
-                )
+            "/event_store.cluster.Gossip/Read",
+            request_serializer=shared__pb2.Empty.SerializeToString,
+            response_deserializer=cluster__pb2.ClusterInfo.FromString,
+        )
 
 
 class GossipServicer(object):
@@ -33,71 +33,96 @@ class GossipServicer(object):
     def Update(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def Read(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_GossipServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Update': grpc.unary_unary_rpc_method_handler(
-                    servicer.Update,
-                    request_deserializer=cluster__pb2.GossipRequest.FromString,
-                    response_serializer=cluster__pb2.ClusterInfo.SerializeToString,
-            ),
-            'Read': grpc.unary_unary_rpc_method_handler(
-                    servicer.Read,
-                    request_deserializer=shared__pb2.Empty.FromString,
-                    response_serializer=cluster__pb2.ClusterInfo.SerializeToString,
-            ),
+        "Update": grpc.unary_unary_rpc_method_handler(
+            servicer.Update,
+            request_deserializer=cluster__pb2.GossipRequest.FromString,
+            response_serializer=cluster__pb2.ClusterInfo.SerializeToString,
+        ),
+        "Read": grpc.unary_unary_rpc_method_handler(
+            servicer.Read,
+            request_deserializer=shared__pb2.Empty.FromString,
+            response_serializer=cluster__pb2.ClusterInfo.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'event_store.cluster.Gossip', rpc_method_handlers)
+        "event_store.cluster.Gossip", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Gossip(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def Update(request,
+    def Update(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Gossip/Update',
+            "/event_store.cluster.Gossip/Update",
             cluster__pb2.GossipRequest.SerializeToString,
             cluster__pb2.ClusterInfo.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def Read(request,
+    def Read(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Gossip/Read',
+            "/event_store.cluster.Gossip/Read",
             shared__pb2.Empty.SerializeToString,
             cluster__pb2.ClusterInfo.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
 
 class ElectionsStub(object):
@@ -110,45 +135,45 @@ class ElectionsStub(object):
             channel: A grpc.Channel.
         """
         self.ViewChange = channel.unary_unary(
-                '/event_store.cluster.Elections/ViewChange',
-                request_serializer=cluster__pb2.ViewChangeRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/ViewChange",
+            request_serializer=cluster__pb2.ViewChangeRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
         self.ViewChangeProof = channel.unary_unary(
-                '/event_store.cluster.Elections/ViewChangeProof',
-                request_serializer=cluster__pb2.ViewChangeProofRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/ViewChangeProof",
+            request_serializer=cluster__pb2.ViewChangeProofRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
         self.Prepare = channel.unary_unary(
-                '/event_store.cluster.Elections/Prepare',
-                request_serializer=cluster__pb2.PrepareRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/Prepare",
+            request_serializer=cluster__pb2.PrepareRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
         self.PrepareOk = channel.unary_unary(
-                '/event_store.cluster.Elections/PrepareOk',
-                request_serializer=cluster__pb2.PrepareOkRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/PrepareOk",
+            request_serializer=cluster__pb2.PrepareOkRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
         self.Proposal = channel.unary_unary(
-                '/event_store.cluster.Elections/Proposal',
-                request_serializer=cluster__pb2.ProposalRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/Proposal",
+            request_serializer=cluster__pb2.ProposalRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
         self.Accept = channel.unary_unary(
-                '/event_store.cluster.Elections/Accept',
-                request_serializer=cluster__pb2.AcceptRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/Accept",
+            request_serializer=cluster__pb2.AcceptRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
         self.LeaderIsResigning = channel.unary_unary(
-                '/event_store.cluster.Elections/LeaderIsResigning',
-                request_serializer=cluster__pb2.LeaderIsResigningRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/LeaderIsResigning",
+            request_serializer=cluster__pb2.LeaderIsResigningRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
         self.LeaderIsResigningOk = channel.unary_unary(
-                '/event_store.cluster.Elections/LeaderIsResigningOk',
-                request_serializer=cluster__pb2.LeaderIsResigningOkRequest.SerializeToString,
-                response_deserializer=shared__pb2.Empty.FromString,
-                )
+            "/event_store.cluster.Elections/LeaderIsResigningOk",
+            request_serializer=cluster__pb2.LeaderIsResigningOkRequest.SerializeToString,
+            response_deserializer=shared__pb2.Empty.FromString,
+        )
 
 
 class ElectionsServicer(object):
@@ -157,236 +182,333 @@ class ElectionsServicer(object):
     def ViewChange(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def ViewChangeProof(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def Prepare(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def PrepareOk(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def Proposal(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def Accept(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def LeaderIsResigning(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def LeaderIsResigningOk(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_ElectionsServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'ViewChange': grpc.unary_unary_rpc_method_handler(
-                    servicer.ViewChange,
-                    request_deserializer=cluster__pb2.ViewChangeRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
-            'ViewChangeProof': grpc.unary_unary_rpc_method_handler(
-                    servicer.ViewChangeProof,
-                    request_deserializer=cluster__pb2.ViewChangeProofRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
-            'Prepare': grpc.unary_unary_rpc_method_handler(
-                    servicer.Prepare,
-                    request_deserializer=cluster__pb2.PrepareRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
-            'PrepareOk': grpc.unary_unary_rpc_method_handler(
-                    servicer.PrepareOk,
-                    request_deserializer=cluster__pb2.PrepareOkRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
-            'Proposal': grpc.unary_unary_rpc_method_handler(
-                    servicer.Proposal,
-                    request_deserializer=cluster__pb2.ProposalRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
-            'Accept': grpc.unary_unary_rpc_method_handler(
-                    servicer.Accept,
-                    request_deserializer=cluster__pb2.AcceptRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
-            'LeaderIsResigning': grpc.unary_unary_rpc_method_handler(
-                    servicer.LeaderIsResigning,
-                    request_deserializer=cluster__pb2.LeaderIsResigningRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
-            'LeaderIsResigningOk': grpc.unary_unary_rpc_method_handler(
-                    servicer.LeaderIsResigningOk,
-                    request_deserializer=cluster__pb2.LeaderIsResigningOkRequest.FromString,
-                    response_serializer=shared__pb2.Empty.SerializeToString,
-            ),
+        "ViewChange": grpc.unary_unary_rpc_method_handler(
+            servicer.ViewChange,
+            request_deserializer=cluster__pb2.ViewChangeRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
+        "ViewChangeProof": grpc.unary_unary_rpc_method_handler(
+            servicer.ViewChangeProof,
+            request_deserializer=cluster__pb2.ViewChangeProofRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
+        "Prepare": grpc.unary_unary_rpc_method_handler(
+            servicer.Prepare,
+            request_deserializer=cluster__pb2.PrepareRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
+        "PrepareOk": grpc.unary_unary_rpc_method_handler(
+            servicer.PrepareOk,
+            request_deserializer=cluster__pb2.PrepareOkRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
+        "Proposal": grpc.unary_unary_rpc_method_handler(
+            servicer.Proposal,
+            request_deserializer=cluster__pb2.ProposalRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
+        "Accept": grpc.unary_unary_rpc_method_handler(
+            servicer.Accept,
+            request_deserializer=cluster__pb2.AcceptRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
+        "LeaderIsResigning": grpc.unary_unary_rpc_method_handler(
+            servicer.LeaderIsResigning,
+            request_deserializer=cluster__pb2.LeaderIsResigningRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
+        "LeaderIsResigningOk": grpc.unary_unary_rpc_method_handler(
+            servicer.LeaderIsResigningOk,
+            request_deserializer=cluster__pb2.LeaderIsResigningOkRequest.FromString,
+            response_serializer=shared__pb2.Empty.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'event_store.cluster.Elections', rpc_method_handlers)
+        "event_store.cluster.Elections", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Elections(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def ViewChange(request,
+    def ViewChange(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/ViewChange',
+            "/event_store.cluster.Elections/ViewChange",
             cluster__pb2.ViewChangeRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def ViewChangeProof(request,
+    def ViewChangeProof(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/ViewChangeProof',
+            "/event_store.cluster.Elections/ViewChangeProof",
             cluster__pb2.ViewChangeProofRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def Prepare(request,
+    def Prepare(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/Prepare',
+            "/event_store.cluster.Elections/Prepare",
             cluster__pb2.PrepareRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def PrepareOk(request,
+    def PrepareOk(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/PrepareOk',
+            "/event_store.cluster.Elections/PrepareOk",
             cluster__pb2.PrepareOkRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def Proposal(request,
+    def Proposal(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/Proposal',
+            "/event_store.cluster.Elections/Proposal",
             cluster__pb2.ProposalRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def Accept(request,
+    def Accept(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/Accept',
+            "/event_store.cluster.Elections/Accept",
             cluster__pb2.AcceptRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def LeaderIsResigning(request,
+    def LeaderIsResigning(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/LeaderIsResigning',
+            "/event_store.cluster.Elections/LeaderIsResigning",
             cluster__pb2.LeaderIsResigningRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def LeaderIsResigningOk(request,
+    def LeaderIsResigningOk(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/event_store.cluster.Elections/LeaderIsResigningOk',
+            "/event_store.cluster.Elections/LeaderIsResigningOk",
             cluster__pb2.LeaderIsResigningOkRequest.SerializeToString,
             shared__pb2.Empty.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

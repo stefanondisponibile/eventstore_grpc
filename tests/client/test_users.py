@@ -1,4 +1,5 @@
 import pytest
+
 from eventstore_grpc.client import users
 from eventstore_grpc.core.transport import Transport
 

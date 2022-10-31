@@ -2,10 +2,11 @@
 Users Mixins.
 """
 
-from typing import Optional, List
+from typing import List, Optional
+
 from eventstore_grpc import users
-from eventstore_grpc.proto import users_pb2, users_pb2_grpc
 from eventstore_grpc.core import ClientBase
+from eventstore_grpc.proto import users_pb2, users_pb2_grpc
 
 
 class Users(ClientBase):

@@ -1,5 +1,6 @@
 import pytest
 from _pytest.fixtures import FixtureRequest
+
 from eventstore_grpc.core.auth import Auth
 from eventstore_grpc.core.transport import Transport
 

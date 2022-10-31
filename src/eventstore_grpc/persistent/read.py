@@ -1,6 +1,7 @@
 """Persistent Subscriptions Operations."""
 
 from typing import Optional
+
 from eventstore_grpc.proto import persistent_pb2, shared_pb2
 
 
@@ -43,7 +44,7 @@ def nack_request(
     nack = persistent_pb2.ReadReq.Nack()
     nack.ids.append(read_resp.event.event.id)
     reason = reason or "Unknown"
-    nack.action = action or persistent_pb2.ReadReq.Nack.Action.Unknown 
+    nack.action = action or persistent_pb2.ReadReq.Nack.Action.Unknown
     nack.reason = reason
     request.nack.CopyFrom(nack)
     return request

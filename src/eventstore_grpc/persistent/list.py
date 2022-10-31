@@ -1,7 +1,8 @@
 """List persistent subscriptions."""
 
-from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc, shared_pb2
 from typing import Optional
+
+from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc, shared_pb2
 
 
 def list_persistent(
@@ -10,7 +11,7 @@ def list_persistent(
     list_all: bool = False,
     **kwargs,
 ) -> persistent_pb2.ReplayParkedResp:
-    """Gets info about a persistent subscription."""
+    """Lists persistent subscriptions."""
     options = persistent_pb2.ListReq.Options()
     if not list_all:
         stream_option = persistent_pb2.ListReq.StreamOption()

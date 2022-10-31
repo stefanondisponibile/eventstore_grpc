@@ -1,12 +1,14 @@
-from cgitb import handler
-import pytest
-from eventstore_grpc.client import subscriptions, streams, persistent
-from eventstore_grpc.core.transport import Transport
-import uuid
-from eventstore_grpc.constants import ANY, START, END
-from eventstore_grpc.event_data import JSONEventData
 import time
+import uuid
+from cgitb import handler
 from unittest import mock
+
+import pytest
+
+from eventstore_grpc.client import persistent, streams, subscriptions
+from eventstore_grpc.constants import ANY, END, START
+from eventstore_grpc.core.transport import Transport
+from eventstore_grpc.event_data import JSONEventData
 
 
 @pytest.fixture

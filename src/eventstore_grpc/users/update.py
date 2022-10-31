@@ -3,6 +3,7 @@ Updates a User.
 """
 
 from typing import List
+
 from eventstore_grpc.proto import users_pb2, users_pb2_grpc
 
 

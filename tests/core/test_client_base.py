@@ -1,6 +1,6 @@
-from eventstore_grpc.core import client_base
-from eventstore_grpc.core import transport
 import grpc
+
+from eventstore_grpc.core import client_base, transport
 
 
 def test_client_base_init() -> None:

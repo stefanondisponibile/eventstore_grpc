@@ -1,17 +1,18 @@
+import uuid
+
 import pytest
-from eventstore_grpc.core import Transport
-from eventstore_grpc.client import persistent
-from eventstore_grpc.client import streams
+
+from eventstore_grpc.client import persistent, streams
 from eventstore_grpc.constants import (
     ANY,
-    START,
-    END,
     DISPATCH_TO_SINGLE,
-    ROUND_ROBIN,
+    END,
     PINNED,
+    ROUND_ROBIN,
+    START,
 )
+from eventstore_grpc.core import Transport
 from eventstore_grpc.event_data import JSONEventData
-import uuid
 
 
 @pytest.mark.integration

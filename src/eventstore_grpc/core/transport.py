@@ -5,9 +5,10 @@ from typing import Optional, Union
 
 import grpc
 
-from .settings import KeepAlive
-from .auth import Auth
 from eventstore_grpc import discovery
+
+from .auth import Auth
+from .settings import KeepAlive
 
 log = logging.getLogger(__name__)
 

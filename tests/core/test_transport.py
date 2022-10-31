@@ -1,12 +1,14 @@
+import importlib.resources
 from typing import Union
 from unittest.mock import MagicMock
-from eventstore_grpc.core import transport
-from eventstore_grpc.core.settings import KeepAlive
-from eventstore_grpc.core.auth import Auth
-import pytest
-import importlib.resources
+
 import grpc
+import pytest
+
 from eventstore_grpc import discovery
+from eventstore_grpc.core import transport
+from eventstore_grpc.core.auth import Auth
+from eventstore_grpc.core.settings import KeepAlive
 
 
 @pytest.mark.parametrize(

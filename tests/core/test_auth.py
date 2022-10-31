@@ -2,6 +2,7 @@ import base64
 import importlib.resources
 
 import grpc
+
 from eventstore_grpc.core import auth
 
 

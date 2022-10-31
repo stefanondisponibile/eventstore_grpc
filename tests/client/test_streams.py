@@ -1,8 +1,9 @@
-from distutils.filelist import translate_pattern
 import json
 import uuid
+from distutils.filelist import translate_pattern
 
 import pytest
+
 from eventstore_grpc import constants
 from eventstore_grpc.client import streams
 from eventstore_grpc.core.transport import Transport
@@ -92,7 +93,9 @@ def test_delete_stream(transport: Transport, expected_version: int | str) -> Non
         with pytest.raises(Exception):
             client.delete_stream(stream=stream, expected_version=expected_version)
     else:
-        response = client.delete_stream(stream=stream, expected_version=expected_version)
+        response = client.delete_stream(
+            stream=stream, expected_version=expected_version
+        )
         assert isinstance(response, streams.streams_pb2.DeleteResp)
 
 

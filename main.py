@@ -1,7 +1,8 @@
 import logging
 
-from eventstore_grpc.client import EventStore
 from google.protobuf.json_format import MessageToDict
+
+from eventstore_grpc.client import EventStore
 
 logging.basicConfig(level=logging.DEBUG)
 

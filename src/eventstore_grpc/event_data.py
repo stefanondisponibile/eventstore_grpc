@@ -2,9 +2,9 @@
 An Event.
 """
 import abc
+import json
 import uuid
 from typing import Any, Dict
-import json
 
 
 class EventData(abc.ABC):

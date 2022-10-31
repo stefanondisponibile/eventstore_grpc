@@ -1,7 +1,9 @@
-import pytest
-from eventstore_grpc import subscriptions
-from unittest import mock
 import uuid
+from unittest import mock
+
+import pytest
+
+from eventstore_grpc import subscriptions
 
 
 @pytest.fixture

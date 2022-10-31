@@ -3,6 +3,7 @@ Single Node Options.
 """
 
 import dataclasses
+
 from eventstore_grpc import options
 
 

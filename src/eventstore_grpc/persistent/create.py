@@ -1,9 +1,10 @@
 """Create persistent subscription."""
 
-from eventstore_grpc.constants import ROUND_ROBIN, START, END
-from typing import Union, Optional
-from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc, shared_pb2
 import logging
+from typing import Optional, Union
+
+from eventstore_grpc.constants import END, ROUND_ROBIN, START
+from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc, shared_pb2
 
 log = logging.getLogger(__name__)
 

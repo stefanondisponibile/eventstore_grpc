@@ -1,7 +1,9 @@
 from unittest import mock
-from eventstore_grpc.options import base_options
-import pytest
+
 import grpc
+import pytest
+
+from eventstore_grpc.options import base_options
 
 
 def test_should_initialize_base_options_correctly(credentials: dict[str, str]) -> None:

@@ -7,292 +7,378 @@ from google.protobuf import descriptor_pool as _descriptor_pool
 from google.protobuf import message as _message
 from google.protobuf import reflection as _reflection
 from google.protobuf import symbol_database as _symbol_database
+
 # @@protoc_insertion_point(imports)
 
 _sym_db = _symbol_database.Default()
 
 
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
+    b'\n\x0busers.proto\x12\x18\x65vent_store.client.users"\x9d\x01\n\tCreateReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.CreateReq.Options\x1aR\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x0e\n\x06groups\x18\x04 \x03(\t"\x0c\n\nCreateResp"\x9d\x01\n\tUpdateReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.UpdateReq.Options\x1aR\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x0e\n\x06groups\x18\x04 \x03(\t"\x0c\n\nUpdateResp"h\n\tDeleteReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.DeleteReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t"\x0c\n\nDeleteResp"h\n\tEnableReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.EnableReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t"\x0c\n\nEnableResp"j\n\nDisableReq\x12=\n\x07options\x18\x01 \x01(\x0b\x32,.event_store.client.users.DisableReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t"\r\n\x0b\x44isableResp"j\n\nDetailsReq\x12=\n\x07options\x18\x01 \x01(\x0b\x32,.event_store.client.users.DetailsReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t"\xa8\x02\n\x0b\x44\x65tailsResp\x12G\n\x0cuser_details\x18\x01 \x01(\x0b\x32\x31.event_store.client.users.DetailsResp.UserDetails\x1a\xcf\x01\n\x0bUserDetails\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x11\n\tfull_name\x18\x02 \x01(\t\x12\x0e\n\x06groups\x18\x03 \x03(\t\x12P\n\x0clast_updated\x18\x04 \x01(\x0b\x32:.event_store.client.users.DetailsResp.UserDetails.DateTime\x12\x10\n\x08\x64isabled\x18\x05 \x01(\x08\x1a%\n\x08\x44\x61teTime\x12\x19\n\x11ticks_since_epoch\x18\x01 \x01(\x03"\xa8\x01\n\x11\x43hangePasswordReq\x12\x44\n\x07options\x18\x01 \x01(\x0b\x32\x33.event_store.client.users.ChangePasswordReq.Options\x1aM\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x18\n\x10\x63urrent_password\x18\x02 \x01(\t\x12\x14\n\x0cnew_password\x18\x03 \x01(\t"\x14\n\x12\x43hangePasswordResp"\x8c\x01\n\x10ResetPasswordReq\x12\x43\n\x07options\x18\x01 \x01(\x0b\x32\x32.event_store.client.users.ResetPasswordReq.Options\x1a\x33\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x14\n\x0cnew_password\x18\x02 \x01(\t"\x13\n\x11ResetPasswordResp2\xe4\x05\n\x05Users\x12S\n\x06\x43reate\x12#.event_store.client.users.CreateReq\x1a$.event_store.client.users.CreateResp\x12S\n\x06Update\x12#.event_store.client.users.UpdateReq\x1a$.event_store.client.users.UpdateResp\x12S\n\x06\x44\x65lete\x12#.event_store.client.users.DeleteReq\x1a$.event_store.client.users.DeleteResp\x12V\n\x07\x44isable\x12$.event_store.client.users.DisableReq\x1a%.event_store.client.users.DisableResp\x12S\n\x06\x45nable\x12#.event_store.client.users.EnableReq\x1a$.event_store.client.users.EnableResp\x12X\n\x07\x44\x65tails\x12$.event_store.client.users.DetailsReq\x1a%.event_store.client.users.DetailsResp0\x01\x12k\n\x0e\x43hangePassword\x12+.event_store.client.users.ChangePasswordReq\x1a,.event_store.client.users.ChangePasswordResp\x12h\n\rResetPassword\x12*.event_store.client.users.ResetPasswordReq\x1a+.event_store.client.users.ResetPasswordRespB%\n#com.eventstore.dbclient.proto.usersb\x06proto3'
+)
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x0busers.proto\x12\x18\x65vent_store.client.users\"\x9d\x01\n\tCreateReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.CreateReq.Options\x1aR\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x0e\n\x06groups\x18\x04 \x03(\t\"\x0c\n\nCreateResp\"\x9d\x01\n\tUpdateReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.UpdateReq.Options\x1aR\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x11\n\tfull_name\x18\x03 \x01(\t\x12\x0e\n\x06groups\x18\x04 \x03(\t\"\x0c\n\nUpdateResp\"h\n\tDeleteReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.DeleteReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\"\x0c\n\nDeleteResp\"h\n\tEnableReq\x12<\n\x07options\x18\x01 \x01(\x0b\x32+.event_store.client.users.EnableReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\"\x0c\n\nEnableResp\"j\n\nDisableReq\x12=\n\x07options\x18\x01 \x01(\x0b\x32,.event_store.client.users.DisableReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\"\r\n\x0b\x44isableResp\"j\n\nDetailsReq\x12=\n\x07options\x18\x01 \x01(\x0b\x32,.event_store.client.users.DetailsReq.Options\x1a\x1d\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\"\xa8\x02\n\x0b\x44\x65tailsResp\x12G\n\x0cuser_details\x18\x01 \x01(\x0b\x32\x31.event_store.client.users.DetailsResp.UserDetails\x1a\xcf\x01\n\x0bUserDetails\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x11\n\tfull_name\x18\x02 \x01(\t\x12\x0e\n\x06groups\x18\x03 \x03(\t\x12P\n\x0clast_updated\x18\x04 \x01(\x0b\x32:.event_store.client.users.DetailsResp.UserDetails.DateTime\x12\x10\n\x08\x64isabled\x18\x05 \x01(\x08\x1a%\n\x08\x44\x61teTime\x12\x19\n\x11ticks_since_epoch\x18\x01 \x01(\x03\"\xa8\x01\n\x11\x43hangePasswordReq\x12\x44\n\x07options\x18\x01 \x01(\x0b\x32\x33.event_store.client.users.ChangePasswordReq.Options\x1aM\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x18\n\x10\x63urrent_password\x18\x02 \x01(\t\x12\x14\n\x0cnew_password\x18\x03 \x01(\t\"\x14\n\x12\x43hangePasswordResp\"\x8c\x01\n\x10ResetPasswordReq\x12\x43\n\x07options\x18\x01 \x01(\x0b\x32\x32.event_store.client.users.ResetPasswordReq.Options\x1a\x33\n\x07Options\x12\x12\n\nlogin_name\x18\x01 \x01(\t\x12\x14\n\x0cnew_password\x18\x02 \x01(\t\"\x13\n\x11ResetPasswordResp2\xe4\x05\n\x05Users\x12S\n\x06\x43reate\x12#.event_store.client.users.CreateReq\x1a$.event_store.client.users.CreateResp\x12S\n\x06Update\x12#.event_store.client.users.UpdateReq\x1a$.event_store.client.users.UpdateResp\x12S\n\x06\x44\x65lete\x12#.event_store.client.users.DeleteReq\x1a$.event_store.client.users.DeleteResp\x12V\n\x07\x44isable\x12$.event_store.client.users.DisableReq\x1a%.event_store.client.users.DisableResp\x12S\n\x06\x45nable\x12#.event_store.client.users.EnableReq\x1a$.event_store.client.users.EnableResp\x12X\n\x07\x44\x65tails\x12$.event_store.client.users.DetailsReq\x1a%.event_store.client.users.DetailsResp0\x01\x12k\n\x0e\x43hangePassword\x12+.event_store.client.users.ChangePasswordReq\x1a,.event_store.client.users.ChangePasswordResp\x12h\n\rResetPassword\x12*.event_store.client.users.ResetPasswordReq\x1a+.event_store.client.users.ResetPasswordRespB%\n#com.eventstore.dbclient.proto.usersb\x06proto3')
-
-
-
-_CREATEREQ = DESCRIPTOR.message_types_by_name['CreateReq']
-_CREATEREQ_OPTIONS = _CREATEREQ.nested_types_by_name['Options']
-_CREATERESP = DESCRIPTOR.message_types_by_name['CreateResp']
-_UPDATEREQ = DESCRIPTOR.message_types_by_name['UpdateReq']
-_UPDATEREQ_OPTIONS = _UPDATEREQ.nested_types_by_name['Options']
-_UPDATERESP = DESCRIPTOR.message_types_by_name['UpdateResp']
-_DELETEREQ = DESCRIPTOR.message_types_by_name['DeleteReq']
-_DELETEREQ_OPTIONS = _DELETEREQ.nested_types_by_name['Options']
-_DELETERESP = DESCRIPTOR.message_types_by_name['DeleteResp']
-_ENABLEREQ = DESCRIPTOR.message_types_by_name['EnableReq']
-_ENABLEREQ_OPTIONS = _ENABLEREQ.nested_types_by_name['Options']
-_ENABLERESP = DESCRIPTOR.message_types_by_name['EnableResp']
-_DISABLEREQ = DESCRIPTOR.message_types_by_name['DisableReq']
-_DISABLEREQ_OPTIONS = _DISABLEREQ.nested_types_by_name['Options']
-_DISABLERESP = DESCRIPTOR.message_types_by_name['DisableResp']
-_DETAILSREQ = DESCRIPTOR.message_types_by_name['DetailsReq']
-_DETAILSREQ_OPTIONS = _DETAILSREQ.nested_types_by_name['Options']
-_DETAILSRESP = DESCRIPTOR.message_types_by_name['DetailsResp']
-_DETAILSRESP_USERDETAILS = _DETAILSRESP.nested_types_by_name['UserDetails']
-_DETAILSRESP_USERDETAILS_DATETIME = _DETAILSRESP_USERDETAILS.nested_types_by_name['DateTime']
-_CHANGEPASSWORDREQ = DESCRIPTOR.message_types_by_name['ChangePasswordReq']
-_CHANGEPASSWORDREQ_OPTIONS = _CHANGEPASSWORDREQ.nested_types_by_name['Options']
-_CHANGEPASSWORDRESP = DESCRIPTOR.message_types_by_name['ChangePasswordResp']
-_RESETPASSWORDREQ = DESCRIPTOR.message_types_by_name['ResetPasswordReq']
-_RESETPASSWORDREQ_OPTIONS = _RESETPASSWORDREQ.nested_types_by_name['Options']
-_RESETPASSWORDRESP = DESCRIPTOR.message_types_by_name['ResetPasswordResp']
-CreateReq = _reflection.GeneratedProtocolMessageType('CreateReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _CREATEREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.CreateReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _CREATEREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.CreateReq)
-  })
+_CREATEREQ = DESCRIPTOR.message_types_by_name["CreateReq"]
+_CREATEREQ_OPTIONS = _CREATEREQ.nested_types_by_name["Options"]
+_CREATERESP = DESCRIPTOR.message_types_by_name["CreateResp"]
+_UPDATEREQ = DESCRIPTOR.message_types_by_name["UpdateReq"]
+_UPDATEREQ_OPTIONS = _UPDATEREQ.nested_types_by_name["Options"]
+_UPDATERESP = DESCRIPTOR.message_types_by_name["UpdateResp"]
+_DELETEREQ = DESCRIPTOR.message_types_by_name["DeleteReq"]
+_DELETEREQ_OPTIONS = _DELETEREQ.nested_types_by_name["Options"]
+_DELETERESP = DESCRIPTOR.message_types_by_name["DeleteResp"]
+_ENABLEREQ = DESCRIPTOR.message_types_by_name["EnableReq"]
+_ENABLEREQ_OPTIONS = _ENABLEREQ.nested_types_by_name["Options"]
+_ENABLERESP = DESCRIPTOR.message_types_by_name["EnableResp"]
+_DISABLEREQ = DESCRIPTOR.message_types_by_name["DisableReq"]
+_DISABLEREQ_OPTIONS = _DISABLEREQ.nested_types_by_name["Options"]
+_DISABLERESP = DESCRIPTOR.message_types_by_name["DisableResp"]
+_DETAILSREQ = DESCRIPTOR.message_types_by_name["DetailsReq"]
+_DETAILSREQ_OPTIONS = _DETAILSREQ.nested_types_by_name["Options"]
+_DETAILSRESP = DESCRIPTOR.message_types_by_name["DetailsResp"]
+_DETAILSRESP_USERDETAILS = _DETAILSRESP.nested_types_by_name["UserDetails"]
+_DETAILSRESP_USERDETAILS_DATETIME = _DETAILSRESP_USERDETAILS.nested_types_by_name[
+    "DateTime"
+]
+_CHANGEPASSWORDREQ = DESCRIPTOR.message_types_by_name["ChangePasswordReq"]
+_CHANGEPASSWORDREQ_OPTIONS = _CHANGEPASSWORDREQ.nested_types_by_name["Options"]
+_CHANGEPASSWORDRESP = DESCRIPTOR.message_types_by_name["ChangePasswordResp"]
+_RESETPASSWORDREQ = DESCRIPTOR.message_types_by_name["ResetPasswordReq"]
+_RESETPASSWORDREQ_OPTIONS = _RESETPASSWORDREQ.nested_types_by_name["Options"]
+_RESETPASSWORDRESP = DESCRIPTOR.message_types_by_name["ResetPasswordResp"]
+CreateReq = _reflection.GeneratedProtocolMessageType(
+    "CreateReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _CREATEREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.CreateReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _CREATEREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.CreateReq)
+    },
+)
 _sym_db.RegisterMessage(CreateReq)
 _sym_db.RegisterMessage(CreateReq.Options)
 
-CreateResp = _reflection.GeneratedProtocolMessageType('CreateResp', (_message.Message,), {
-  'DESCRIPTOR' : _CREATERESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.CreateResp)
-  })
+CreateResp = _reflection.GeneratedProtocolMessageType(
+    "CreateResp",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _CREATERESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.CreateResp)
+    },
+)
 _sym_db.RegisterMessage(CreateResp)
 
-UpdateReq = _reflection.GeneratedProtocolMessageType('UpdateReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _UPDATEREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.UpdateReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _UPDATEREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.UpdateReq)
-  })
+UpdateReq = _reflection.GeneratedProtocolMessageType(
+    "UpdateReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _UPDATEREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.UpdateReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _UPDATEREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.UpdateReq)
+    },
+)
 _sym_db.RegisterMessage(UpdateReq)
 _sym_db.RegisterMessage(UpdateReq.Options)
 
-UpdateResp = _reflection.GeneratedProtocolMessageType('UpdateResp', (_message.Message,), {
-  'DESCRIPTOR' : _UPDATERESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.UpdateResp)
-  })
+UpdateResp = _reflection.GeneratedProtocolMessageType(
+    "UpdateResp",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _UPDATERESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.UpdateResp)
+    },
+)
 _sym_db.RegisterMessage(UpdateResp)
 
-DeleteReq = _reflection.GeneratedProtocolMessageType('DeleteReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _DELETEREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.DeleteReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _DELETEREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.DeleteReq)
-  })
+DeleteReq = _reflection.GeneratedProtocolMessageType(
+    "DeleteReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _DELETEREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.DeleteReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _DELETEREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.DeleteReq)
+    },
+)
 _sym_db.RegisterMessage(DeleteReq)
 _sym_db.RegisterMessage(DeleteReq.Options)
 
-DeleteResp = _reflection.GeneratedProtocolMessageType('DeleteResp', (_message.Message,), {
-  'DESCRIPTOR' : _DELETERESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.DeleteResp)
-  })
+DeleteResp = _reflection.GeneratedProtocolMessageType(
+    "DeleteResp",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DELETERESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.DeleteResp)
+    },
+)
 _sym_db.RegisterMessage(DeleteResp)
 
-EnableReq = _reflection.GeneratedProtocolMessageType('EnableReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _ENABLEREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.EnableReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _ENABLEREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.EnableReq)
-  })
+EnableReq = _reflection.GeneratedProtocolMessageType(
+    "EnableReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _ENABLEREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.EnableReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _ENABLEREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.EnableReq)
+    },
+)
 _sym_db.RegisterMessage(EnableReq)
 _sym_db.RegisterMessage(EnableReq.Options)
 
-EnableResp = _reflection.GeneratedProtocolMessageType('EnableResp', (_message.Message,), {
-  'DESCRIPTOR' : _ENABLERESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.EnableResp)
-  })
+EnableResp = _reflection.GeneratedProtocolMessageType(
+    "EnableResp",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _ENABLERESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.EnableResp)
+    },
+)
 _sym_db.RegisterMessage(EnableResp)
 
-DisableReq = _reflection.GeneratedProtocolMessageType('DisableReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _DISABLEREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.DisableReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _DISABLEREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.DisableReq)
-  })
+DisableReq = _reflection.GeneratedProtocolMessageType(
+    "DisableReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _DISABLEREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.DisableReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _DISABLEREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.DisableReq)
+    },
+)
 _sym_db.RegisterMessage(DisableReq)
 _sym_db.RegisterMessage(DisableReq.Options)
 
-DisableResp = _reflection.GeneratedProtocolMessageType('DisableResp', (_message.Message,), {
-  'DESCRIPTOR' : _DISABLERESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.DisableResp)
-  })
+DisableResp = _reflection.GeneratedProtocolMessageType(
+    "DisableResp",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _DISABLERESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.DisableResp)
+    },
+)
 _sym_db.RegisterMessage(DisableResp)
 
-DetailsReq = _reflection.GeneratedProtocolMessageType('DetailsReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _DETAILSREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _DETAILSREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsReq)
-  })
+DetailsReq = _reflection.GeneratedProtocolMessageType(
+    "DetailsReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _DETAILSREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _DETAILSREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsReq)
+    },
+)
 _sym_db.RegisterMessage(DetailsReq)
 _sym_db.RegisterMessage(DetailsReq.Options)
 
-DetailsResp = _reflection.GeneratedProtocolMessageType('DetailsResp', (_message.Message,), {
-
-  'UserDetails' : _reflection.GeneratedProtocolMessageType('UserDetails', (_message.Message,), {
-
-    'DateTime' : _reflection.GeneratedProtocolMessageType('DateTime', (_message.Message,), {
-      'DESCRIPTOR' : _DETAILSRESP_USERDETAILS_DATETIME,
-      '__module__' : 'users_pb2'
-      # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsResp.UserDetails.DateTime)
-      })
-    ,
-    'DESCRIPTOR' : _DETAILSRESP_USERDETAILS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsResp.UserDetails)
-    })
-  ,
-  'DESCRIPTOR' : _DETAILSRESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsResp)
-  })
+DetailsResp = _reflection.GeneratedProtocolMessageType(
+    "DetailsResp",
+    (_message.Message,),
+    {
+        "UserDetails": _reflection.GeneratedProtocolMessageType(
+            "UserDetails",
+            (_message.Message,),
+            {
+                "DateTime": _reflection.GeneratedProtocolMessageType(
+                    "DateTime",
+                    (_message.Message,),
+                    {
+                        "DESCRIPTOR": _DETAILSRESP_USERDETAILS_DATETIME,
+                        "__module__": "users_pb2"
+                        # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsResp.UserDetails.DateTime)
+                    },
+                ),
+                "DESCRIPTOR": _DETAILSRESP_USERDETAILS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsResp.UserDetails)
+            },
+        ),
+        "DESCRIPTOR": _DETAILSRESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.DetailsResp)
+    },
+)
 _sym_db.RegisterMessage(DetailsResp)
 _sym_db.RegisterMessage(DetailsResp.UserDetails)
 _sym_db.RegisterMessage(DetailsResp.UserDetails.DateTime)
 
-ChangePasswordReq = _reflection.GeneratedProtocolMessageType('ChangePasswordReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _CHANGEPASSWORDREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.ChangePasswordReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _CHANGEPASSWORDREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.ChangePasswordReq)
-  })
+ChangePasswordReq = _reflection.GeneratedProtocolMessageType(
+    "ChangePasswordReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _CHANGEPASSWORDREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.ChangePasswordReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _CHANGEPASSWORDREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.ChangePasswordReq)
+    },
+)
 _sym_db.RegisterMessage(ChangePasswordReq)
 _sym_db.RegisterMessage(ChangePasswordReq.Options)
 
-ChangePasswordResp = _reflection.GeneratedProtocolMessageType('ChangePasswordResp', (_message.Message,), {
-  'DESCRIPTOR' : _CHANGEPASSWORDRESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.ChangePasswordResp)
-  })
+ChangePasswordResp = _reflection.GeneratedProtocolMessageType(
+    "ChangePasswordResp",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _CHANGEPASSWORDRESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.ChangePasswordResp)
+    },
+)
 _sym_db.RegisterMessage(ChangePasswordResp)
 
-ResetPasswordReq = _reflection.GeneratedProtocolMessageType('ResetPasswordReq', (_message.Message,), {
-
-  'Options' : _reflection.GeneratedProtocolMessageType('Options', (_message.Message,), {
-    'DESCRIPTOR' : _RESETPASSWORDREQ_OPTIONS,
-    '__module__' : 'users_pb2'
-    # @@protoc_insertion_point(class_scope:event_store.client.users.ResetPasswordReq.Options)
-    })
-  ,
-  'DESCRIPTOR' : _RESETPASSWORDREQ,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.ResetPasswordReq)
-  })
+ResetPasswordReq = _reflection.GeneratedProtocolMessageType(
+    "ResetPasswordReq",
+    (_message.Message,),
+    {
+        "Options": _reflection.GeneratedProtocolMessageType(
+            "Options",
+            (_message.Message,),
+            {
+                "DESCRIPTOR": _RESETPASSWORDREQ_OPTIONS,
+                "__module__": "users_pb2"
+                # @@protoc_insertion_point(class_scope:event_store.client.users.ResetPasswordReq.Options)
+            },
+        ),
+        "DESCRIPTOR": _RESETPASSWORDREQ,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.ResetPasswordReq)
+    },
+)
 _sym_db.RegisterMessage(ResetPasswordReq)
 _sym_db.RegisterMessage(ResetPasswordReq.Options)
 
-ResetPasswordResp = _reflection.GeneratedProtocolMessageType('ResetPasswordResp', (_message.Message,), {
-  'DESCRIPTOR' : _RESETPASSWORDRESP,
-  '__module__' : 'users_pb2'
-  # @@protoc_insertion_point(class_scope:event_store.client.users.ResetPasswordResp)
-  })
+ResetPasswordResp = _reflection.GeneratedProtocolMessageType(
+    "ResetPasswordResp",
+    (_message.Message,),
+    {
+        "DESCRIPTOR": _RESETPASSWORDRESP,
+        "__module__": "users_pb2"
+        # @@protoc_insertion_point(class_scope:event_store.client.users.ResetPasswordResp)
+    },
+)
 _sym_db.RegisterMessage(ResetPasswordResp)
 
-_USERS = DESCRIPTOR.services_by_name['Users']
+_USERS = DESCRIPTOR.services_by_name["Users"]
 if _descriptor._USE_C_DESCRIPTORS == False:
 
-  DESCRIPTOR._options = None
-  DESCRIPTOR._serialized_options = b'\n#com.eventstore.dbclient.proto.users'
-  _CREATEREQ._serialized_start=42
-  _CREATEREQ._serialized_end=199
-  _CREATEREQ_OPTIONS._serialized_start=117
-  _CREATEREQ_OPTIONS._serialized_end=199
-  _CREATERESP._serialized_start=201
-  _CREATERESP._serialized_end=213
-  _UPDATEREQ._serialized_start=216
-  _UPDATEREQ._serialized_end=373
-  _UPDATEREQ_OPTIONS._serialized_start=117
-  _UPDATEREQ_OPTIONS._serialized_end=199
-  _UPDATERESP._serialized_start=375
-  _UPDATERESP._serialized_end=387
-  _DELETEREQ._serialized_start=389
-  _DELETEREQ._serialized_end=493
-  _DELETEREQ_OPTIONS._serialized_start=117
-  _DELETEREQ_OPTIONS._serialized_end=146
-  _DELETERESP._serialized_start=495
-  _DELETERESP._serialized_end=507
-  _ENABLEREQ._serialized_start=509
-  _ENABLEREQ._serialized_end=613
-  _ENABLEREQ_OPTIONS._serialized_start=117
-  _ENABLEREQ_OPTIONS._serialized_end=146
-  _ENABLERESP._serialized_start=615
-  _ENABLERESP._serialized_end=627
-  _DISABLEREQ._serialized_start=629
-  _DISABLEREQ._serialized_end=735
-  _DISABLEREQ_OPTIONS._serialized_start=117
-  _DISABLEREQ_OPTIONS._serialized_end=146
-  _DISABLERESP._serialized_start=737
-  _DISABLERESP._serialized_end=750
-  _DETAILSREQ._serialized_start=752
-  _DETAILSREQ._serialized_end=858
-  _DETAILSREQ_OPTIONS._serialized_start=117
-  _DETAILSREQ_OPTIONS._serialized_end=146
-  _DETAILSRESP._serialized_start=861
-  _DETAILSRESP._serialized_end=1157
-  _DETAILSRESP_USERDETAILS._serialized_start=950
-  _DETAILSRESP_USERDETAILS._serialized_end=1157
-  _DETAILSRESP_USERDETAILS_DATETIME._serialized_start=1120
-  _DETAILSRESP_USERDETAILS_DATETIME._serialized_end=1157
-  _CHANGEPASSWORDREQ._serialized_start=1160
-  _CHANGEPASSWORDREQ._serialized_end=1328
-  _CHANGEPASSWORDREQ_OPTIONS._serialized_start=1251
-  _CHANGEPASSWORDREQ_OPTIONS._serialized_end=1328
-  _CHANGEPASSWORDRESP._serialized_start=1330
-  _CHANGEPASSWORDRESP._serialized_end=1350
-  _RESETPASSWORDREQ._serialized_start=1353
-  _RESETPASSWORDREQ._serialized_end=1493
-  _RESETPASSWORDREQ_OPTIONS._serialized_start=1442
-  _RESETPASSWORDREQ_OPTIONS._serialized_end=1493
-  _RESETPASSWORDRESP._serialized_start=1495
-  _RESETPASSWORDRESP._serialized_end=1514
-  _USERS._serialized_start=1517
-  _USERS._serialized_end=2257
+    DESCRIPTOR._options = None
+    DESCRIPTOR._serialized_options = b"\n#com.eventstore.dbclient.proto.users"
+    _CREATEREQ._serialized_start = 42
+    _CREATEREQ._serialized_end = 199
+    _CREATEREQ_OPTIONS._serialized_start = 117
+    _CREATEREQ_OPTIONS._serialized_end = 199
+    _CREATERESP._serialized_start = 201
+    _CREATERESP._serialized_end = 213
+    _UPDATEREQ._serialized_start = 216
+    _UPDATEREQ._serialized_end = 373
+    _UPDATEREQ_OPTIONS._serialized_start = 117
+    _UPDATEREQ_OPTIONS._serialized_end = 199
+    _UPDATERESP._serialized_start = 375
+    _UPDATERESP._serialized_end = 387
+    _DELETEREQ._serialized_start = 389
+    _DELETEREQ._serialized_end = 493
+    _DELETEREQ_OPTIONS._serialized_start = 117
+    _DELETEREQ_OPTIONS._serialized_end = 146
+    _DELETERESP._serialized_start = 495
+    _DELETERESP._serialized_end = 507
+    _ENABLEREQ._serialized_start = 509
+    _ENABLEREQ._serialized_end = 613
+    _ENABLEREQ_OPTIONS._serialized_start = 117
+    _ENABLEREQ_OPTIONS._serialized_end = 146
+    _ENABLERESP._serialized_start = 615
+    _ENABLERESP._serialized_end = 627
+    _DISABLEREQ._serialized_start = 629
+    _DISABLEREQ._serialized_end = 735
+    _DISABLEREQ_OPTIONS._serialized_start = 117
+    _DISABLEREQ_OPTIONS._serialized_end = 146
+    _DISABLERESP._serialized_start = 737
+    _DISABLERESP._serialized_end = 750
+    _DETAILSREQ._serialized_start = 752
+    _DETAILSREQ._serialized_end = 858
+    _DETAILSREQ_OPTIONS._serialized_start = 117
+    _DETAILSREQ_OPTIONS._serialized_end = 146
+    _DETAILSRESP._serialized_start = 861
+    _DETAILSRESP._serialized_end = 1157
+    _DETAILSRESP_USERDETAILS._serialized_start = 950
+    _DETAILSRESP_USERDETAILS._serialized_end = 1157
+    _DETAILSRESP_USERDETAILS_DATETIME._serialized_start = 1120
+    _DETAILSRESP_USERDETAILS_DATETIME._serialized_end = 1157
+    _CHANGEPASSWORDREQ._serialized_start = 1160
+    _CHANGEPASSWORDREQ._serialized_end = 1328
+    _CHANGEPASSWORDREQ_OPTIONS._serialized_start = 1251
+    _CHANGEPASSWORDREQ_OPTIONS._serialized_end = 1328
+    _CHANGEPASSWORDRESP._serialized_start = 1330
+    _CHANGEPASSWORDRESP._serialized_end = 1350
+    _RESETPASSWORDREQ._serialized_start = 1353
+    _RESETPASSWORDREQ._serialized_end = 1493
+    _RESETPASSWORDREQ_OPTIONS._serialized_start = 1442
+    _RESETPASSWORDREQ_OPTIONS._serialized_end = 1493
+    _RESETPASSWORDRESP._serialized_start = 1495
+    _RESETPASSWORDRESP._serialized_end = 1514
+    _USERS._serialized_start = 1517
+    _USERS._serialized_end = 2257
 # @@protoc_insertion_point(module_scope)

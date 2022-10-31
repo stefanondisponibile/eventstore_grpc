@@ -1,6 +1,7 @@
 """Delete persisten subscription."""
 
 from typing import Optional
+
 from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc, shared_pb2
 
 

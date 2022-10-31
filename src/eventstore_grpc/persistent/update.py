@@ -1,15 +1,16 @@
 """Update persistent subscription."""
 
-from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc, shared_pb2
-from typing import Optional, Union
-from eventstore_grpc.constants import (
-    ROUND_ROBIN,
-    PINNED,
-    DISPATCH_TO_SINGLE,
-    START,
-    END,
-)
 import logging
+from typing import Optional, Union
+
+from eventstore_grpc.constants import (
+    DISPATCH_TO_SINGLE,
+    END,
+    PINNED,
+    ROUND_ROBIN,
+    START,
+)
+from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc, shared_pb2
 
 log = logging.getLogger(__name__)
 

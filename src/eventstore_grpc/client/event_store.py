@@ -10,9 +10,9 @@ from eventstore_grpc.client import (
     Users,
 )
 from eventstore_grpc.core import ClientBase
-from eventstore_grpc.core.transport import Transport
-from eventstore_grpc.core.settings import KeepAlive
 from eventstore_grpc.core.auth import Auth
+from eventstore_grpc.core.settings import KeepAlive
+from eventstore_grpc.core.transport import Transport
 
 
 class EventStore(ClientBase):

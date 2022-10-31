@@ -1,4 +1,7 @@
+import importlib.resources
+
 import pytest
+
 from eventstore_grpc import client
 from eventstore_grpc.client import (
     Gossip,
@@ -9,7 +12,6 @@ from eventstore_grpc.client import (
     Subscriptions,
     Users,
 )
-import importlib.resources
 
 
 def test_eventstore_client_basic_init() -> None:

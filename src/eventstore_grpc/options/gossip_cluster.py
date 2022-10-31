@@ -2,8 +2,9 @@
 Gossip Cluster Options.
 """
 
-from typing import List
 import dataclasses
+from typing import List
+
 from eventstore_grpc import options
 
 

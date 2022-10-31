@@ -2,13 +2,15 @@
 Discovery and gossip helpers.
 """
 
-import grpc
-from typing import List
-from collections.abc import Iterable
-from eventstore_grpc.proto import gossip_pb2, gossip_pb2_grpc
-from eventstore_grpc import gossip
-import random
 import logging
+import random
+from collections.abc import Iterable
+from typing import List
+
+import grpc
+
+from eventstore_grpc import gossip
+from eventstore_grpc.proto import gossip_pb2, gossip_pb2_grpc
 
 log = logging.getLogger(__name__)
 

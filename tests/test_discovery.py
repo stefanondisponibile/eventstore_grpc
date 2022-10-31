@@ -3,6 +3,7 @@ from unittest import mock
 
 import pytest
 from _pytest.monkeypatch import MonkeyPatch
+
 from eventstore_grpc import discovery
 from eventstore_grpc.proto import gossip_pb2
 
@@ -37,7 +38,9 @@ def test_discover_endpoint_when_error(monkeypatch: MonkeyPatch) -> None:
 class TestDetermineBestNode:
     def test_preference_leader(self, members: list[gossip_pb2.MemberInfo]) -> None:
         preference = gossip_pb2.MemberInfo.Leader
-        best_node = discovery.determine_best_node(preference=preference, members=members)
+        best_node = discovery.determine_best_node(
+            preference=preference, members=members
+        )
         assert members[0] is best_node
 
     def test_preference_follower(self, members: list[gossip_pb2.MemberInfo]) -> None:

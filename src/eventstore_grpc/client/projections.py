@@ -3,9 +3,10 @@ Projections Mixin.
 """
 
 from typing import Iterable, Optional
+
 from eventstore_grpc import projections
-from eventstore_grpc.proto import projections_pb2, projections_pb2_grpc, shared_pb2
 from eventstore_grpc.core import ClientBase
+from eventstore_grpc.proto import projections_pb2, projections_pb2_grpc, shared_pb2
 
 
 class Projections(ClientBase):

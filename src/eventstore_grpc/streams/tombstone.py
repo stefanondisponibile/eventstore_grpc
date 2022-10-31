@@ -3,8 +3,9 @@ Tombstone stream.
 """
 
 from typing import Union
-from eventstore_grpc.proto import streams_pb2, streams_pb2_grpc, shared_pb2
+
 from eventstore_grpc import constants
+from eventstore_grpc.proto import shared_pb2, streams_pb2, streams_pb2_grpc
 
 
 def tombstone_stream(

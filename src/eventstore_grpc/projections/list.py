@@ -1,6 +1,7 @@
 """List projections."""
 
 from typing import Iterable
+
 from eventstore_grpc.proto import projections_pb2, projections_pb2_grpc, shared_pb2
 
 

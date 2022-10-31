@@ -2,11 +2,14 @@
 Requests Streaming Iterator.
 """
 
-import threading
+import logging
 import queue as q
-from typing import Union, Callable, Iterable, Optional
-from eventstore_grpc import streams, persistent
-import time
+import threading
+from typing import Callable, Iterable, Optional, Union
+
+from eventstore_grpc import persistent, streams
+
+log = logging.getLogger(__name__)
 
 
 class RequestsStream:
@@ -43,24 +46,24 @@ class RequestsStream:
                 next_element = self._queue.get(block=True, timeout=self._timeout)
             except Exception:
                 if self._stop.is_set():
-                    print("\033[38;5;196mStopping requests streaming.\033[0m")
+                    log.info("\033[38;5;196mStopping requests streaming.\033[0m")
                     raise StopIteration
         self._queue.task_done()
-        print(f"\033[38;5;45m---- to server --->\033[0m")
-        print(f"\033[38;5;45m{next_element}\033[0m")
-        print("\033[38;5;45m<-------------------\033[0m")
+        log.debug(f"\033[38;5;45m---- to server --->\033[0m")
+        log.debug(f"\033[38;5;45m{next_element}\033[0m")
+        log.debug("\033[38;5;45m<-------------------\033[0m")
         return next_element
 
     def handle_task(self, task):
-        print("\033[38;5;79m<---- from server --\033[0m")
-        print(f"\033[38;5;79m{task}\033[0m")
-        print("\033[38;5;79m------------------->\033[0m")
+        log.debug("\033[38;5;79m<---- from server --\033[0m")
+        log.debug(f"\033[38;5;79m{task}\033[0m")
+        log.debug("\033[38;5;79m------------------->\033[0m")
         if self._handle_task is not None:
             with RequestsStream._lock:
                 try:
                     result = self._handle_task(task)
                 except Exception as err:
-                    print(err)
+                    log.error(err)
                     if self._persistent:
                         if task.HasField("event"):
                             self._queue.put(persistent.nack_request(task))

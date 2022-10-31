@@ -3,9 +3,9 @@ Gossip Mixins.
 """
 
 from eventstore_grpc import gossip
-from eventstore_grpc.proto.gossip_pb2 import ClusterInfo
-from eventstore_grpc.proto import gossip_pb2_grpc
 from eventstore_grpc.core import ClientBase
+from eventstore_grpc.proto import gossip_pb2_grpc
+from eventstore_grpc.proto.gossip_pb2 import ClusterInfo
 
 
 class Gossip(ClientBase):

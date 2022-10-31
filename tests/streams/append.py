@@ -1,7 +1,8 @@
-from eventstore_grpc.streams import append
-from eventstore_grpc.proto import streams_pb2, shared_pb2
 import pytest
-from eventstore_grpc.constants import ANY, STREAM_EXISTS, NO_STREAM
+
+from eventstore_grpc.constants import ANY, NO_STREAM, STREAM_EXISTS
+from eventstore_grpc.proto import shared_pb2, streams_pb2
+from eventstore_grpc.streams import append
 
 
 @pytest.mark.parametrize(

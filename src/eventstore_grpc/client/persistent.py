@@ -6,11 +6,12 @@ from email import message
 from multiprocessing.spawn import prepare
 from optparse import Option
 from pydoc import resolve
-from typing import Union, Optional
+from typing import Optional, Union
+
 from eventstore_grpc import persistent
-from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc
+from eventstore_grpc.constants import END, ROUND_ROBIN
 from eventstore_grpc.core import ClientBase
-from eventstore_grpc.constants import ROUND_ROBIN, END
+from eventstore_grpc.proto import persistent_pb2, persistent_pb2_grpc
 
 """
 # TODO
@@ -196,7 +197,6 @@ class Persistent(ClientBase):
     ) -> persistent_pb2.ReplayParkedResp:
         """Replays parked events.
 
-
         Args:
             group_name: the group name.
             stream_name: the name of the stream, or None for $all.
@@ -208,12 +208,19 @@ class Persistent(ClientBase):
         )
         return result
 
-
     def list_persistent(
         self,
         stream_name: Optional[str] = None,
         list_all: bool = False,
     ) -> persistent_pb2.ListResp:
+        """List persistent subscriptions.
+
+        Args:
+            stream_name: the name of the stream.
+            list_all: whether to list all the persistent subscriptions available.
+        """
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
-        results = persistent.list_persistent(stub=stub, list_all=True)
+        results = persistent.list_persistent(
+            stub=stub, stream_name=stream_name, list_all=True
+        )
         return results

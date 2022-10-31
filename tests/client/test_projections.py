@@ -1,9 +1,11 @@
-import time
-from eventstore_grpc.core.transport import Transport
-from eventstore_grpc.client import projections
-import pytest
 import textwrap
+import time
 import uuid
+
+import pytest
+
+from eventstore_grpc.client import projections
+from eventstore_grpc.core.transport import Transport
 from eventstore_grpc.proto import shared_pb2
 
 

@@ -26,6 +26,8 @@ urllib3 = "^1.26.9"
 mypy-protobuf = "^3.2.0"
 coverage = {version = "^6.5.0", extras = ["toml"]}
 pytest-mock = "^3.10.0"
+pre-commit = "^2.20.0"
+isort = "^5.10.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.2"
@@ -53,3 +55,6 @@ markers = [
 
 [tool.coverage.report]
 omit = ["tests/*", "src/eventstore_grpc/proto/*"]
+
+[tool.isort]
+profile = "black"

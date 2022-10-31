@@ -1,10 +1,12 @@
+import uuid
+from unittest import mock
+
 import pytest
+
 from eventstore_grpc.client import operations
+from eventstore_grpc.client.operations import operations as ops
 from eventstore_grpc.core.transport import Transport
 from eventstore_grpc.proto import shared_pb2
-from eventstore_grpc.client.operations import operations as ops
-from unittest import mock
-import uuid
 
 
 @pytest.fixture

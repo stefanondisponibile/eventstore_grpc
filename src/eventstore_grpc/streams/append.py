@@ -3,10 +3,11 @@ Append Events to Streams.
 """
 
 import uuid
-from typing import Union, List, Dict, Iterator
+from typing import Dict, Iterator, List, Union
+
 from eventstore_grpc import constants
-from eventstore_grpc.proto import streams_pb2, streams_pb2_grpc, shared_pb2
 from eventstore_grpc.event_data import EventData
+from eventstore_grpc.proto import shared_pb2, streams_pb2, streams_pb2_grpc
 
 
 def build_options(

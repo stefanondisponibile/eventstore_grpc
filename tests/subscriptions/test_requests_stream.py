@@ -1,5 +1,6 @@
-from eventstore_grpc.subscriptions import requests_stream
 from unittest import mock
+
+from eventstore_grpc.subscriptions import requests_stream
 
 
 def test_collect() -> None:

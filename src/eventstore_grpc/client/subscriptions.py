@@ -2,10 +2,14 @@
 Subscriptions Mixin.
 """
 
-from typing import Union, Optional, Dict, Callable
-from eventstore_grpc import constants, subscriptions
+import logging
 import signal
+from typing import Callable, Dict, Optional, Union
+
+from eventstore_grpc import constants, subscriptions
 from eventstore_grpc.core import ClientBase
+
+log = logging.getLogger(__name__)
 
 
 class Subscriptions(ClientBase):
@@ -20,7 +24,7 @@ class Subscriptions(ClientBase):
             signal.signal(signal.SIGTERM, self.kill)
 
     def kill(self, signum, frame):
-        print("\033[38;5;120mGracefully shutting down...\033[0m")
+        log.info("\033[38;5;120mGracefully shutting down...\033[0m")
         self.unsubscribe_all()
 
     def subscribe_to_stream(

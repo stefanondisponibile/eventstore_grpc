@@ -3,8 +3,8 @@ Operations Mixins.
 """
 
 from eventstore_grpc import operations
-from eventstore_grpc.proto import operations_pb2, operations_pb2_grpc, shared_pb2
 from eventstore_grpc.core import ClientBase
+from eventstore_grpc.proto import operations_pb2, operations_pb2_grpc, shared_pb2
 
 
 class Operations(ClientBase):
@@ -30,7 +30,7 @@ class Operations(ClientBase):
 
     def set_node_priority(self, priority: int, **kwargs) -> shared_pb2.Empty:
         """Sets node priority.
-        
+
         Args:
             priority: the priority level for the node you're currently connected to.
         """

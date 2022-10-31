@@ -1,6 +1,7 @@
 """https://developers.eventstore.com/clients/dotnet/5.0/security.html#authentication-and-authorization"""
 
 import base64
+
 import grpc
 
 
