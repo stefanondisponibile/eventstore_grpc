@@ -117,7 +117,7 @@ def test_delete_persistent_subscription(transport: Transport) -> None:
 
 
 @pytest.mark.xfail(
-    reason="The GetInfo method is listed in the proto file, but unimplemented on the servicer side."
+    reason="The GetInfo method is listed in the proto file, but unimplemented on the servicer side for now."
 )
 @pytest.mark.integration
 def test_get_info(transport: Transport) -> None:
@@ -133,5 +133,26 @@ def test_get_info(transport: Transport) -> None:
     client.create_persistent_subscription(group_name=group_name, stream=stream_name)
     response = client.get_info(group_name=group_name, stream_name=stream_name)
     assert isinstance(response, persistent.persistent_pb2.GetInfoResp)
+    client.delete_persistent_subscription(group=group_name, stream=stream_name)
+    streams_client.delete_stream(stream=stream_name, expected_version=ANY)
+
+
+@pytest.mark.xfail(
+    reason="The ReplayParked method is listed in the proto file, but unimplemented on the servicer side for now."
+)
+@pytest.mark.integration
+def test_replay_parked(transport: Transport) -> None:
+    stream_name = str(uuid.uuid1())
+    group_name = str(uuid.uuid1())
+    streams_client = streams.Streams(transport=transport)
+    streams_client.append_to_stream(
+        stream=stream_name,
+        expected_version=ANY,
+        events=JSONEventData(type="some-evemt", data={"some": "data"}),
+    )
+    client = persistent.Persistent(transport=transport)
+    client.create_persistent_subscription(group_name=group_name, stream=stream_name)
+    response = client.replay_parked(group_name=group_name, stream_name=stream_name)
+    assert isinstance(response, persistent.persistent_pb2.ReplayParkedResp)
     client.delete_persistent_subscription(group=group_name, stream=stream_name)
     streams_client.delete_stream(stream=stream_name, expected_version=ANY)

@@ -4,6 +4,7 @@ Persistents Mixin.
 
 from email import message
 from multiprocessing.spawn import prepare
+from optparse import Option
 from pydoc import resolve
 from typing import Union, Optional
 from eventstore_grpc import persistent
@@ -184,5 +185,18 @@ class Persistent(ClientBase):
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
         result = persistent.get_info(
             stub=stub, group_name=group_name, stream_name=stream_name
+        )
+        return result
+
+    def replay_parked(
+        self,
+        group_name: str,
+        stream_name: Optional[str] = None,
+        stop_at: Optional[int] = None,
+    ) -> persistent_pb2.ReplayParkedResp:
+        """Replays parked events."""
+        stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
+        result = persistent.replay_parked(
+            stub=stub, group_name=group_name, stream_name=stream_name, stop_at=stop_at
         )
         return result
