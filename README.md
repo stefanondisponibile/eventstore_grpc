@@ -12,7 +12,7 @@ Use this client to interact with [EventStoreDB](https://developers.eventstore.co
 ## Quickstart
 
 You will need to install the library first.
-Right now you can do it with `poetry install` (the library will be soon published on pip).
+Right now you can do it with `poetry install` (the library will be soon published on PyPi).
 
 ```bash
 docker compose down \
