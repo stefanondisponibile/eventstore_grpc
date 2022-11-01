@@ -58,3 +58,7 @@ omit = ["tests/*", "src/eventstore_grpc/proto/*"]
 
 [tool.isort]
 profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = true
+exclude = ['src/eventstore_grpc/proto/.*']

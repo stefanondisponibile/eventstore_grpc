@@ -9,10 +9,10 @@ from eventstore_grpc.proto import users_pb2, users_pb2_grpc
 
 def update(
     stub: users_pb2_grpc.UsersStub,
-    login_name: str = None,
-    password: str = None,
-    full_name: str = None,
-    groups: List[str] = None,
+    login_name: str | None = None,
+    password: str | None = None,
+    full_name: str | None = None,
+    groups: List[str] | None = None,
     **kwargs
 ) -> users_pb2.UpdateResp:
     """Updates a user."""

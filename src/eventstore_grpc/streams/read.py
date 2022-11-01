@@ -12,7 +12,7 @@ from eventstore_grpc.proto import shared_pb2, streams_pb2, streams_pb2_grpc
 def read_from_stream(
     stub: streams_pb2_grpc.StreamsStub,
     stream: str,
-    count: int,
+    count: int | None,
     options: Dict,  # TODO: use from_revision as a parameter.
     **kwargs,
 ) -> Iterator[streams_pb2.ReadResp]:
@@ -89,7 +89,7 @@ def read_from_stream(
 def read_from_all(
     stub: streams_pb2_grpc.StreamsStub,
     from_position: Union[Dict[str, int], str] = constants.START,
-    count: int = None,
+    count: int | None = None,
     direction: str = None,
     **kwargs,
 ):

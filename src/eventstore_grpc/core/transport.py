@@ -39,6 +39,7 @@ class Transport:
     def refresh_channel(self) -> "Transport":
         """Gets a new channel."""
         self._channel = self._new_channel()
+        return self
 
     def _new_channel(self) -> grpc.Channel:
         if self.is_insecure:
@@ -62,8 +63,10 @@ class Transport:
         )
 
     @property
-    def credentials(self) -> grpc.ChannelCredentials:
-        return self._auth.credentials
+    def credentials(self) -> grpc.ChannelCredentials | None:
+        if self._auth is not None:
+            return self._auth.credentials
+        return None
 
     @property
     def target(self) -> str:
@@ -86,9 +89,9 @@ class Transport:
         return self._tls
 
     @property
-    def keep_alive(self) -> KeepAlive:
+    def keep_alive(self) -> KeepAlive | None:
         return self._keep_alive
 
     @property
-    def discover(self) -> bool:
+    def discover(self) -> bool | None:
         return self._discover

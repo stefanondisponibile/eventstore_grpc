@@ -59,7 +59,8 @@ def discover_endpoint(
 
 
 def determine_best_node(
-    preference: gossip_pb2.MemberInfo.VNodeState, members: List[gossip_pb2.MemberInfo]
+    preference: gossip_pb2.MemberInfo.VNodeState,
+    members: Iterable[gossip_pb2.MemberInfo],
 ) -> gossip_pb2.MemberInfo:
     """Selects the best node, given a `preference`.
 

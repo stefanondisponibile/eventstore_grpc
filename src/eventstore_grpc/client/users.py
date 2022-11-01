@@ -44,7 +44,7 @@ class Users(ClientBase):
     ) -> users_pb2.UpdateResp:
         """Updates an existing user information."""
         stub = users_pb2_grpc.UsersStub(self.channel)
-        updates = {}
+        updates: dict[str, str | list[str]] = {}
         if login_name is not None:
             updates["login_name"] = login_name
         if password is not None:
@@ -55,7 +55,7 @@ class Users(ClientBase):
             updates["groups"] = groups
         if not updates:
             raise ValueError("No updates.")
-        result = users.update(stub, **updates, **kwargs)
+        result = users.update(stub, **updates, **kwargs)  # type: ignore
         return result
 
     def delete_user(self, login_name: str, **kwargs) -> users_pb2.DeleteResp:
@@ -80,7 +80,7 @@ class Users(ClientBase):
         """Gets details about a user."""
         stub = users_pb2_grpc.UsersStub(self.channel)
         result = users.details(stub, login_name=login_name, **kwargs)
-        return next(result)
+        return next(result)  # type: ignore
 
     def change_user_password(
         self, login_name: str, current_password: str, new_password: str, **kwargs

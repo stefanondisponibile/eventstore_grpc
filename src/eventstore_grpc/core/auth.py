@@ -44,7 +44,7 @@ class Auth:
             self._call_credentials = self._get_call_credentials()
 
     @property
-    def username(self) -> str:
+    def username(self) -> str | None:
         return self._username
 
     @username.setter
@@ -54,7 +54,7 @@ class Auth:
             self._call_credentials = self._get_call_credentials()
 
     @property
-    def password(self) -> str:
+    def password(self) -> str | None:
         return self._password
 
     @password.setter
@@ -64,7 +64,7 @@ class Auth:
             self._call_credentials = self._get_call_credentials()
 
     @property
-    def token(self) -> str:
+    def token(self) -> str | None:
         """Base64 encoded username:passsword."""
         if not self._username and not self._password:
             return None
@@ -86,12 +86,18 @@ class Auth:
         return None
 
     def _get_channel_credentials(self) -> grpc.ChannelCredentials:
+        if self._root_certificate is None:
+            raise ValueError(
+                f"Can't _get_channel_credentials if _root_certificate is None."
+            )
         with open(self._root_certificate, "rb") as f:
             rc = f.read()
 
         return grpc.ssl_channel_credentials(root_certificates=rc)
 
     def _get_call_credentials(self) -> grpc.CallCredentials:
+        if self.token is None:
+            raise ValueError("Can't _get_call_credentials if token is None.")
         return grpc.metadata_call_credentials(
             EventStoreDBMetadataPlugin(token=self.token)
         )

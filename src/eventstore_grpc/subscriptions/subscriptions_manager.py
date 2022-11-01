@@ -25,6 +25,7 @@ from __future__ import annotations
 import logging
 import uuid
 from typing import Callable, Dict, Optional, Union
+from uuid import UUID
 
 import grpc
 
@@ -40,7 +41,7 @@ class SubscriptionsManager:
     """A Subscription Manager."""
 
     def __init__(self, channel: grpc.Channel):
-        self._registry = {}
+        self._registry: dict[str, Subscription] = {}
         self._channel = channel
         self._streams_stub = streams_pb2_grpc.StreamsStub(self._channel)
         self._persistent_stub = persistent_pb2_grpc.PersistentSubscriptionsStub(
@@ -57,17 +58,16 @@ class SubscriptionsManager:
         raise NotImplementedError
 
     def register(
-        self, subscription: Subscription, id_: Optional[str] = None
-    ) -> Union[uuid.UUID, str]:
+        self, subscription: Subscription, id_: str | UUID | None = None
+    ) -> str:
         """Registers a subscription to the registry."""
-        if id_ is None:
-            id_ = uuid.uuid4()
+        id_ = id_ or uuid.uuid4()
 
         if id_ in self._registry:
             raise ValueError(f"Already Registered: {id_}")
 
-        self._registry[id_] = subscription
-        return id_
+        self._registry[str(id_)] = subscription
+        return str(id_)
 
     def subscribe_to_stream(
         self,
@@ -101,7 +101,7 @@ class SubscriptionsManager:
 
     def subscribe_to_all(
         self,
-        from_position: Union[str, int] = constants.START,
+        from_position: str | dict[str, int] = constants.START,
         resolve_link_to_s: bool = False,
         filters: Optional[Dict] = None,
         handler: Optional[Callable] = None,

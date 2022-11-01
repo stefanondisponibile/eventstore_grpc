@@ -21,7 +21,7 @@ class BaseOptions:
 
 def as_metadata(
     credentials: Optional[Dict[str, str]] = None, requires_leader: Optional[bool] = None
-) -> Optional[List[Optional[Tuple[str, str]]]]:
+) -> Optional[List[Tuple[str, str]]]:
     """Returns a valid grpc "metadata" object."""
     metadata = []
     if credentials is not None:

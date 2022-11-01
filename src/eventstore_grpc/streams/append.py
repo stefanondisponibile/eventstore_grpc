@@ -75,7 +75,7 @@ def append_to_stream(
     stream: str,
     expected_version: Union[str, int],
     events: Union[EventData, List[EventData]],
-    user_credentials: UserCredentials,
+    user_credentials: UserCredentials | None,  # TODO: remove?
     **kwargs,
 ) -> streams_pb2.AppendResp:
     """Appends an Event to an Event Stream.

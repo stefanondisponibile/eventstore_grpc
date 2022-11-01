@@ -41,7 +41,7 @@ def _build_options_all(
 
 def _build_options_stream(
     stream: str,
-    from_revision: Union[int, str],
+    from_revision: int | str | None,
 ) -> persistent_pb2.UpdateReq.StreamOptions:
     """Builds option for persistent subscription creation to some stream."""
     options = persistent_pb2.UpdateReq.StreamOptions(
@@ -116,8 +116,8 @@ def _build_settings(
 
 def update_persistent_subscription(
     stub: persistent_pb2_grpc.PersistentSubscriptionsStub,
-    group_name: str,
-    stream: Optional[str] = None,
+    group_name: str | None,
+    stream: str | None = None,
     resolve_link_to_s: Optional[bool] = None,
     from_revision: Optional[Union[int, str]] = None,
     commit_position: Optional[int] = None,

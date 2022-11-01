@@ -98,8 +98,8 @@ def _build_options_stream(
 
 def create_persistent_subscription(
     stub: persistent_pb2_grpc.PersistentSubscriptionsStub,
-    group_name: str,
-    stream: Optional[str] = None,
+    group_name: str | None,
+    stream: str | None = None,
     resolve_link_to_s: bool = False,
     from_revision: Union[int, str] = START,
     commit_position: Optional[int] = None,

@@ -25,12 +25,12 @@ class RequestsStream:
         timeout: int = 5,
     ):
         self._handle_task = handler
-        self._tasks = q.Queue()
-        self._queue = q.Queue()
+        self._tasks: q.Queue = q.Queue()
+        self._queue: q.Queue = q.Queue()
         if queue is not None:
             for request in queue:
                 self._queue.put(request)
-        self._results = []
+        self._results: list = []
         self._persistent = persistent
         self._timeout = timeout
         self._stop = threading.Event()
