@@ -11,9 +11,13 @@ import typing_extensions
 DESCRIPTOR: google.protobuf.descriptor.FileDescriptor
 
 class _Code:
-    ValueType = typing.NewType('ValueType', builtins.int)
+    ValueType = typing.NewType("ValueType", builtins.int)
     V: typing_extensions.TypeAlias = ValueType
-class _CodeEnumTypeWrapper(google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Code.ValueType], builtins.type):
+
+class _CodeEnumTypeWrapper(
+    google.protobuf.internal.enum_type_wrapper._EnumTypeWrapper[_Code.ValueType],
+    builtins.type,
+):
     DESCRIPTOR: google.protobuf.descriptor.EnumDescriptor
     OK: _Code.ValueType  # 0
     """Not an error; returned on success
@@ -195,6 +199,7 @@ class Code(_Code, metaclass=_CodeEnumTypeWrapper):
     `OUT_OF_RANGE` over `FAILED_PRECONDITION` if both codes apply.
     Similarly prefer `NOT_FOUND` or `ALREADY_EXISTS` over `FAILED_PRECONDITION`.
     """
+
     pass
 
 OK: Code.ValueType  # 0
@@ -369,4 +374,3 @@ HTTP Mapping: 500 Internal Server Error
 """
 
 global___Code = Code
-

@@ -21,6 +21,7 @@ class Status(google.protobuf.message.Message):
     You can find out more about this error model and how to work with it in the
     [API Design Guide](https://cloud.google.com/apis/design/errors).
     """
+
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
     CODE_FIELD_NUMBER: builtins.int
     MESSAGE_FIELD_NUMBER: builtins.int
@@ -40,12 +41,21 @@ class Status(google.protobuf.message.Message):
         message types for APIs to use.
         """
         pass
-    def __init__(self,
+    def __init__(
+        self,
         *,
         code: code_pb2.Code.ValueType = ...,
         message: typing.Text = ...,
         details: typing.Optional[google.protobuf.any_pb2.Any] = ...,
-        ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["details",b"details"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["code",b"code","details",b"details","message",b"message"]) -> None: ...
+    ) -> None: ...
+    def HasField(
+        self, field_name: typing_extensions.Literal["details", b"details"]
+    ) -> builtins.bool: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "code", b"code", "details", b"details", "message", b"message"
+        ],
+    ) -> None: ...
+
 global___Status = Status

@@ -17,35 +17,56 @@ class StatsReq(google.protobuf.message.Message):
     REFRESH_TIME_PERIOD_IN_MS_FIELD_NUMBER: builtins.int
     use_metadata: builtins.bool
     refresh_time_period_in_ms: builtins.int
-    def __init__(self,
+    def __init__(
+        self,
         *,
         use_metadata: builtins.bool = ...,
         refresh_time_period_in_ms: builtins.int = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["refresh_time_period_in_ms",b"refresh_time_period_in_ms","use_metadata",b"use_metadata"]) -> None: ...
+    ) -> None: ...
+    def ClearField(
+        self,
+        field_name: typing_extensions.Literal[
+            "refresh_time_period_in_ms",
+            b"refresh_time_period_in_ms",
+            "use_metadata",
+            b"use_metadata",
+        ],
+    ) -> None: ...
+
 global___StatsReq = StatsReq
 
 class StatsResp(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
     class StatsEntry(google.protobuf.message.Message):
         DESCRIPTOR: google.protobuf.descriptor.Descriptor
         KEY_FIELD_NUMBER: builtins.int
         VALUE_FIELD_NUMBER: builtins.int
         key: typing.Text
         value: typing.Text
-        def __init__(self,
+        def __init__(
+            self,
             *,
             key: typing.Text = ...,
             value: typing.Text = ...,
-            ) -> None: ...
-        def ClearField(self, field_name: typing_extensions.Literal["key",b"key","value",b"value"]) -> None: ...
+        ) -> None: ...
+        def ClearField(
+            self,
+            field_name: typing_extensions.Literal["key", b"key", "value", b"value"],
+        ) -> None: ...
 
     STATS_FIELD_NUMBER: builtins.int
     @property
-    def stats(self) -> google.protobuf.internal.containers.ScalarMap[typing.Text, typing.Text]: ...
-    def __init__(self,
+    def stats(
+        self,
+    ) -> google.protobuf.internal.containers.ScalarMap[typing.Text, typing.Text]: ...
+    def __init__(
+        self,
         *,
         stats: typing.Optional[typing.Mapping[typing.Text, typing.Text]] = ...,
-        ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["stats",b"stats"]) -> None: ...
+    ) -> None: ...
+    def ClearField(
+        self, field_name: typing_extensions.Literal["stats", b"stats"]
+    ) -> None: ...
+
 global___StatsResp = StatsResp
