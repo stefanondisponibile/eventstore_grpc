@@ -24,10 +24,12 @@ jobs:
         run: poetry install --no-interaction
       - name: Start EventStore DB with docker-compose
         run: docker-compose up -d && sleep 20
-      - name: Format code with black and isort
-        run: poetry run black --check --exclude pyi src && poetry run isort --check src
-      - name: Test with pytest
+      - name: Run tests
         run: poetry run pytest --cov=src --cov-report=xml tests
+      - name: Sort imports with isort  
+        run: poetry run isort --check src
+      - name: Format code with Black
+        run: poetry run black --check src
       - name: Upload coverage
         uses: codecov/codecov-action@v1
         with:
