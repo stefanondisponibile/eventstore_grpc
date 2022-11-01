@@ -36,6 +36,8 @@ jobs:
         run: poetry run isort --check src
       - name: Format code with Black
         run: poetry run black --check src
+      - name: mypy
+        run: poetry run mypy src
       - name: Upload coverage
         uses: codecov/codecov-action@v3
         with:
