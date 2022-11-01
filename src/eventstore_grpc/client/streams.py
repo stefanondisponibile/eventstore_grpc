@@ -16,8 +16,8 @@ class Streams(ClientBase):
     def append_to_stream(
         self,
         stream: str,
-        expected_version: Union[str, int],
         events: Union[event_data.EventData, List[event_data.EventData]],
+        expected_version: Union[str, int] = constants.ANY,
         user_credentials: append.UserCredentials = None,
         **kwargs
     ) -> streams_pb2.AppendResp:
@@ -68,7 +68,9 @@ class Streams(ClientBase):
         )
         return result
 
-    def delete_stream(self, stream: str, expected_version: Union[int, str], **kwargs):
+    def delete_stream(
+        self, stream: str, expected_version: Union[int, str] = constants.ANY, **kwargs
+    ):
         """Deletes a stream."""
         stub = streams_pb2_grpc.StreamsStub(self.channel)
         result = delete.delete_stream(
