@@ -1,6 +1,12 @@
 name: Test
 run-name: ${{github.event_name}} by ${{github.actor}} triggered tests on ${{github.ref}}
-on: [push]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - develop
+      - releases/**
 jobs:
   build:
     runs-on: ubuntu-latest
