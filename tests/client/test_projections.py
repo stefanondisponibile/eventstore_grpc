@@ -113,7 +113,7 @@ def test_list_one_time_projections(
     client: projections.Projections, projection_query: str
 ) -> None:
     client.create_one_time_projection(query=projection_query)
-    time.sleep(2)
+    time.sleep(5)
     response = client.list_one_time_projections()
     pjs = list(response)
     assert all(isinstance(pj, projections.projections_pb2.StatisticsResp) for pj in pjs)
