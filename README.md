@@ -19,7 +19,7 @@ docker compose down \
   && docker compose up -d \
   && echo 'Wait for EventStoreDB to be ready...' \
   && sleep 10 \
-  && python scripts/example.py \
+  && poetry run python scripts/example.py \
   && docker compose down
 ```
 
