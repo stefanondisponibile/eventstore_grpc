@@ -9,10 +9,17 @@
 
 Use this client to interact with [EventStoreDB](https://developers.eventstore.com/) via GRPC.
 
+[Documenation](https://stefanondisponibile.github.io/eventstore_grpc/).
+
 ## Quickstart
 
-You will need to install the library first.
-Right now you can do it with `poetry install` (the library will be soon published on PyPi).
+### Installation
+
+```bash
+pip install eventstore_grpc
+```
+
+Try it!
 
 ```bash
 docker compose down \
@@ -24,10 +31,6 @@ docker compose down \
 ```
 
 See [the example](scripts/example.py).
-
-## Development
-
-`#TODO`
 
 ### Tests
 
