@@ -131,11 +131,8 @@ class Persistent(ClientBase):
         strategy: Optional[str] = None,
         **kwargs
     ) -> persistent_pb2.UpdateResp:
-        """Updates a persistent subscription.
+        """Updates a persistent subscription."""
 
-        Args:
-            updates: a dictionary that will be parsed into a UpdateReq message proto.
-        """
         stub = persistent_pb2_grpc.PersistentSubscriptionsStub(self.channel)
         result = persistent.update_persistent_subscription(
             stub=stub,
@@ -179,7 +176,7 @@ class Persistent(ClientBase):
         """Get info about a persistent subscription.
 
         Args:
-            group: a group name to get info about.
+            group_name: a group name to get info about.
             stream_name: the name of the stream, or None if it's some $all persistent
                          subscription.
         """

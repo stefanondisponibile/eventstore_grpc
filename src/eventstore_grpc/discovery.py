@@ -28,7 +28,6 @@ def discover_endpoint(
         credentials: the channel credentials to use for listing cluster members.
         max_discovery_attempts: the maximum number of discovery attempts that will be
                                 made to determine the best node.
-        node_preference: the type of node to prefer.
 
     Returns:
         The url of the selected node.

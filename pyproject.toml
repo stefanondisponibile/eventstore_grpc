@@ -23,7 +23,6 @@ protobuf = "^4.21.6"
 grpcio = "^1.54.2"
 grpcio-status = "^1.0.0"
 urllib3 = "^1.26.9"
-mypy-protobuf = "^3.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.3.1"
@@ -38,6 +37,13 @@ isort = "^5.10.1"
 pre-commit = "^2.20.0"
 pytest-mock = "^3.10.0"
 coverage = {version = "^6.5.0", extras = ["toml"]}
+mypy-protobuf = "^3.2.0"
+mkdocs = "^1.4.3"
+mkdocs-unidata = "^2.0.3"
+mkdocs-material = "^9.1.15"
+mkdocstrings = {version = "^0.22.0", extras = ["python"]}
+pygments = "^2.15.1"
+mkdocs-gen-files = "^0.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

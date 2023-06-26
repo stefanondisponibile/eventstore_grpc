@@ -40,7 +40,7 @@ class EventStore(ClientBase):
             tls_ca_file: the filepath to the certificate to use for tls encryption.
 
         Raises:
-            ValueError
+            ValueError: when something goes wrong with the values you passed.
         """
         if not any([keep_alive_interval, keep_alive_timeout]):
             keep_alive = None
