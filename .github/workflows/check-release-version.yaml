@@ -1,0 +1,49 @@
+---
+name: Check Release version
+on:
+    pull_request:
+        types:
+            - labeled
+        branches:
+            - main
+jobs:
+    check-version:
+        if: ${{ github.event.label.name == 'release' }}
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v4
+            - uses: snok/install-poetry@v1.3.3
+            - name: Configure
+              run: pip install semver
+            - name: Get current version
+              id: current_version
+              run: echo "result=v$(poetry version --short)" >> "$GITHUB_OUTPUT"
+            - uses: actions/github-script@v4
+              name: Get previous version (latest release)
+              id: previous_version
+              with:
+                script: |
+                    const { data: releases } = await github.repos.listReleases({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                    });
+                    if (!releases.length) {
+                      return 'v0.0.0';
+                    }
+                    const latestRelease = releases[0];
+                    console.log(`Latest Release: ${latestRelease.tag_name}`);
+                    return latestRelease.tag_name;
+                result-encoding: string
+            - name: Compare versions
+              id: comparison
+              run: python -c "import semver;print('result={}'.format(semver.compare('${{steps.current_version.outputs.result}}'[1:], '${{steps.previous_version.outputs.result}}'[1:])))" >> "$GITHUB_OUTPUT"
+            - name: Add comment
+              if: steps.comparison.outputs.result != '1'
+              uses: peter-evans/create-or-update-comment@v2
+              with:
+                issue-number: ${{ github.event.pull_request.number }}
+                body: |
+                  You labeled this PR as a _release_, but the **current** version of your package (**`${{ steps.current_version.outputs.result }}`**) isn't higher than the **previous** release (**`${{ steps.previous_version.outputs.result }}`**).
+
+                  You might want to bump the version before merging! :sparkles:

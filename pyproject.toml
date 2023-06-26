@@ -8,10 +8,21 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/stefanondisponibile/eventstore_grpc"
 repository = "https://github.com/stefanondisponibile/eventstore_grpc"
-documentation = "https://github.com/stefanondisponibile/eventstore_grpc"
+documentation = "https://stefanondisponibile.github.io/eventstore_grpc/"
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
-    "Topic :: Database"
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python",
+    "Topic :: Internet",
+    "Topic :: Database",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Development Status :: 4 - Beta",
 ]
 packages = [
     {include = "eventstore_grpc", from = "src"}

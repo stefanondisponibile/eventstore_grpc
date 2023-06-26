@@ -1,0 +1,52 @@
+---
+name: Tag and Release
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+jobs:
+  tag:
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{secrets.PAT}}
+      - uses: actions/setup-python@v4
+      - uses: snok/install-poetry@v1.3.3
+      - name: Configure
+        run: pip install semver
+      - name: Get current version
+        id: current_version
+        run: echo "result=v$(poetry version --short)" >> "$GITHUB_OUTPUT"
+      - uses: actions/github-script@v4
+        name: Get previous version (latest release)
+        id: previous_version
+        with:
+          script: |
+            const { data: releases } = await github.repos.listReleases({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+            });
+            if (!releases.length) {
+              return 'v0.0.0';
+            }
+            const latestRelease = releases[0];
+            console.log(`Latest Release: ${latestRelease.tag_name}`);
+            return latestRelease.tag_name;
+          result-encoding: string
+      - name: Compare versions
+        id: comparison
+        run: python -c "import semver;print('result={}'.format(semver.compare('${{steps.current_version.outputs.result}}'[1:], '${{steps.previous_version.outputs.result}}'[1:])))" >> "$GITHUB_OUTPUT"
+      - name: Tag Release
+        if: steps.comparison.outputs.result == '1'
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com" && \
+          git config user.name "github-actions[bot]" && \
+          git tag \
+            -a "${{steps.current_version.outputs.result}}" \
+            -m "Release ${{steps.current_version.outputs.result}}" \
+            ${{github.event.pull_request.merge_commit_sha}} && \
+          git push --tags

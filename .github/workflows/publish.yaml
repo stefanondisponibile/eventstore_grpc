@@ -1,0 +1,45 @@
+---
+name: Release
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v4
+        name: Setup Python
+      - uses: snok/install-poetry@v1.3.3
+        name: Install Poetry
+      - name: Configure Poetry
+        run: |
+          poetry config repositories.testpypi https://test.pypi.org/legacy/ \
+          && poetry config pypi-token.testpypi ${{ secrets.TESTPYPI_TOKEN }} \
+          && poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+      - name: Install dependencies
+        run: poetry install --no-interaction
+      - name: Run tests
+        run: poetry run pytest
+      - name: Build package
+        run: poetry build
+      - name: Publish package to Test PyPi
+        run: poetry publish -n -vvv --skip-existing --repository testpypi
+      - name: Publish package to official PyPi
+        run: poetry publish -n -vvv
+      - name: Build documentation
+        run: poetry run mkdocs
+      - name: Publish documentation
+        run: poetry run mkdocs gh-deploy --force --clean --verbose
+      - uses: softprops/action-gh-release@v1
+        name: Create GitHub release
+        with:
+          draft: false
+          fail_on_unmatched_files: true
+          files: dist/*
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
