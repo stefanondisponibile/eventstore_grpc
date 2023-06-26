@@ -24,6 +24,8 @@ jobs:
           && poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
       - name: Install dependencies
         run: poetry install --no-interaction
+      - name: Start EventStore DB with docker-compose
+        run: docker-compose up -d && sleep 20
       - name: Run tests
         run: poetry run pytest
       - name: Build package
