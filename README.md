@@ -1,50 +1,41 @@
-# [EventStoreDB](https://www.eventstore.com/) Client.
+<div align="left">
+    <img src="https://github.com/stefanondisponibile/eventstore_grpc/actions/workflows/test.yaml/badge.svg?event=push" style="text-align: right" />
+    <a target="_blank" href="https://codecov.io/gh/stefanondisponibile/eventstore_grpc"><img src="https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graph/badge.svg?token=O86CZ83P50" style="text-align: right" /></a>
+    <a target="_blank" href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" style="text-align: right" /></a>
+</div>
+<br>
 
-> ⚠️ Still under development ⚠️
+# EventStoreDB GRPC Client.
 
-## How to use.
+Use this client to interact with [EventStoreDB](https://developers.eventstore.com/) via GRPC.
 
-```python
-from eventstore_grpc import EventStoreDBClient
-from eventstore_grpc.options import base_options
+[Documenation](https://stefanondisponibile.github.io/eventstore_grpc/).
 
-conn_str = "esdb://localhost:2111,localhost:2112,localhost:2113?tls&rootCertificate=./certs/ca/ca.crt"
-client = EventStoreDBClient(conn_str)
+## Quickstart
 
-# In case you needed authentication for a specific user...
-credentials = None
-default_user = {"username": "admin", "password": "changeit"}
-credentials = base_options.as_credentials(**default_user)
-
-# Each client's method passes **kwargs down to the grpc method.
-if credentials:
-    cluster_info = client.get_cluster_info(credentials=credentials)
-else:
-    cluster_info = client.get_cluster_info()
-
-print(cluster_info)
-```
-
-## Development.
-You will probably need an EventStoreDB (cluster) to work with.
-The most easy way is (probably) docker-compose:
+### Installation
 
 ```bash
-cd tests
-docker-compose up -d
+pip install eventstore_grpc
 ```
 
-You may want to have a look at the logs...
+Try it!
+
 ```bash
-docker-compose --tail 10 -f
+docker compose down \
+  && docker compose up -d \
+  && echo 'Wait for EventStoreDB to be ready...' \
+  && sleep 10 \
+  && poetry run python scripts/example.py \
+  && docker compose down
 ```
 
-...or shut everything down...
-```bash
-docker-compose down --volumes  # omit the --volumes flag to keep 'em.
-```
+See [the example](scripts/example.py).
 
+### Tests
 
-Running the container will populate the `./certs` directory with the certificates needed for communication.
+To run the test locally start EventStore DB with `docker compose up`, then just run `pytest`.
 
-The `./certs/ca/ca.crt` is the certificate that the gRPC client needs, so make sure to pass it as a `rootCertificate=<your-path>` connection string option (or you may want to install the certificate in your system as an alternative).
+## Coverage
+
+![](https://codecov.io/gh/stefanondisponibile/eventstore_grpc/branch/develop/graphs/sunburst.svg?token=O86CZ83P50)

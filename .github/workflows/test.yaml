@@ -1,0 +1,63 @@
+name: Test the package
+on:
+    push:
+      branches:
+        - master
+        - develop
+      paths-ignore:
+        - .gitignore
+        - .github/**/*
+        - docs/**/*
+        - mkdocs.yml
+        - LICENSE
+        - CHANGELOG.md
+        - README.md
+    pull_request:
+      types:
+        - opened
+        - edited
+        - reopened
+        - synchronize
+      paths-ignore:
+        - .gitignore
+        - .github/**/*
+        - docs/**/*
+        - mkdocs.yml
+        - LICENSE
+        - CHANGELOG.md
+        - README.md
+jobs:
+    test:
+      strategy:
+        matrix:
+          python-version: ["3.10"]
+          os-version: ["ubuntu-latest"]
+      runs-on: ${{ matrix.os-version }}
+      steps:
+        - uses: actions/checkout@v3
+          with:
+            ref: ${{ github.sha }}
+        - uses: actions/setup-python@v4
+          name: Setup Python (${{ matrix.python-version }})
+          with:
+            python-version: ${{ matrix.python-version }}
+        - uses: snok/install-poetry@v1.3.3
+          name: Install poetry
+        - name: Setup
+          run: poetry install --no-interaction
+        - name: Start EventStore DB with docker-compose
+          run: docker-compose up -d && sleep 20
+        - name: Run tests
+          run: poetry run pytest --cov=src --cov-report=xml tests
+        - name: Sort imports with isort  
+          run: poetry run isort --check src
+        - name: Format code with Black
+          run: poetry run black --check src
+        - name: mypy
+          run: poetry run mypy src
+        - name: Upload coverage
+          uses: codecov/codecov-action@v3
+          with:
+            file: ./coverage.xml
+            fail_ci_if_error: true
+            verbose: true

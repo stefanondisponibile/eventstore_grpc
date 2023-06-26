@@ -1,0 +1,38 @@
+site_name: EvenStore Python GRPC
+site_description: A Python client to interact with EventStore via GRPC
+site_url: https://stefanondisponibile.github.io/eventstore_grpc/
+repo_url: https://github.com/stefanondisponibile/eventstore_grpc
+theme:
+  name: material
+  palette:
+    scheme: default
+    primary: green
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - navigation.path
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+plugins: 
+  - search
+  - gen-files:
+      scripts:
+      - docs/gen_ref_pages.py
+  - mkdocstrings:
+      handlers:
+          python:
+            options:
+              docstring_style: google
+extra_css:
+- css/termynal.css
+extra_javascript:
+- js/termynal.js
+- js/custom.js

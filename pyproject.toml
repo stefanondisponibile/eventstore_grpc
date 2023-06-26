@@ -8,33 +8,74 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/stefanondisponibile/eventstore_grpc"
 repository = "https://github.com/stefanondisponibile/eventstore_grpc"
-documentation = "https://github.com/stefanondisponibile/eventstore_grpc"
+documentation = "https://stefanondisponibile.github.io/eventstore_grpc/"
 classifiers = [
-    "Development Status :: 2 - Pre-Alpha",
-    "Topic :: Database"
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: System Administrators",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python",
+    "Topic :: Internet",
+    "Topic :: Database",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Development Status :: 4 - Beta",
+]
+packages = [
+    {include = "eventstore_grpc", from = "src"}
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
+protobuf = "^4.21.6"
+grpcio = "^1.54.2"
+grpcio-status = "^1.0.0"
+urllib3 = "^1.26.9"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.2"
-pytest-docker-compose = "^3.2.1"
+pytest = "^7.3.1"
 pytest-cov = "^2.11.1"
+black = "^22.3.0"
+mypy = "^0.961"
+flake8 = "^4.0.1"
+grpcio-tools = "^1.54.2"
+ipython = "^8.4.0"
+grpcio-testing = "^1.47.0"
+isort = "^5.10.1"
+pre-commit = "^2.20.0"
+pytest-mock = "^3.10.0"
+coverage = {version = "^6.5.0", extras = ["toml"]}
+mypy-protobuf = "^3.2.0"
+mkdocs = "^1.4.3"
+mkdocs-unidata = "^2.0.3"
+mkdocs-material = "^9.1.15"
+mkdocstrings = {version = "^0.22.0", extras = ["python"]}
+pygments = "^2.15.1"
+mkdocs-gen-files = "^0.5.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-addopts = """
-    --import-mode=importlib \
-    --docker-compose=./tests/docker-compose.yml \
-    --docker-compose-remove-volumes \
-    --cov=eventstore_grpc \
-    --cov-report term-missing \
-    -v
-"""
+addopts = "-v --cov=src/eventstore_grpc --cov-report=html --cov-append"
 testpaths = [
     "tests"
 ]
+markers = [
+    "integration: Integration tests.",
+    "operations: Operations related tests."
+]
+
+[tool.coverage.report]
+omit = ["tests/*", "src/eventstore_grpc/proto/*"]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+ignore_missing_imports = true
+exclude = ['src/eventstore_grpc/proto/.*']
