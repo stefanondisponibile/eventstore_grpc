@@ -5,7 +5,7 @@ on:
     types:
       - closed
     branches:
-      - main
+      - master
 jobs:
   tag:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'release')

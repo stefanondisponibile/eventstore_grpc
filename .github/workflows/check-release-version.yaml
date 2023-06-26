@@ -5,7 +5,7 @@ on:
         types:
             - labeled
         branches:
-            - main
+            - master
 jobs:
     check-version:
         if: ${{ github.event.label.name == 'release' }}

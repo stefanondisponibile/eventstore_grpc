@@ -2,7 +2,7 @@ name: Test the package
 on:
     push:
       branches:
-        - main
+        - master
         - develop
       paths-ignore:
         - .gitignore
