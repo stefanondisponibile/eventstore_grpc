@@ -1,6 +1,6 @@
 # EventStore Python GRPC
 
-Interact with [EventStore](https://developers.eventstore.com/) via GRPC.
+Interact with [EventStoreDB](https://developers.eventstore.com/) via GRPC.
 
 ## Installation
 
