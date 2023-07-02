@@ -1,6 +1,6 @@
 import json
 import uuid
-from distutils.filelist import translate_pattern
+from typing import Any
 
 import pytest
 
@@ -41,6 +41,20 @@ def test_append_to_stream(transport: Transport, expected_version: int | str) -> 
         assert isinstance(result.success, streams.streams_pb2.AppendResp.Success)
         assert isinstance(result.success.current_revision, int)
         client.delete_stream(stream=stream, expected_version=constants.ANY)
+
+
+@pytest.mark.integration
+@pytest.mark.parametrize("event_id", ("40db443a-6244-472b-87c1-e8e87c8a3abf",))
+def test_append_to_stream_with_custom_id(transport: Transport, event_id: Any) -> None:
+    client = streams.Streams(transport=transport)
+    stream = "some-stream"
+    data = {"data-key": "data-value"}
+    event = JSONEventData(type="some-event-occurred", data=data, event_id=event_id)
+    result = client.append_to_stream(stream=stream, events=event)
+    assert isinstance(result, streams.streams_pb2.AppendResp)
+    assert isinstance(result.success, streams.streams_pb2.AppendResp.Success)
+    assert isinstance(result.success.current_revision, int)
+    client.delete_stream(stream=stream, expected_version=constants.ANY)
 
 
 @pytest.mark.integration

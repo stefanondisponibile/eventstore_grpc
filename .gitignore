@@ -1,7 +1,6 @@
 # Custom
 .vscode
-# **/certs/*
-# !certs/.gitkeep
+certs
 poetry.lock
 
 # Byte-compiled / optimized / DLL files
