@@ -21,7 +21,6 @@ class EventData(abc.ABC):
         of the event to the stream.
     * `type`: an event type should be supplied for each event. This is a unique string
         used to identify the type of event you are saving.
-
         It is common to see the explicit event code type name used as the type as
         it makes serializing and de-serializing of the event easy. However we recommend
         against this as it couples the storage to the type and will make it more
@@ -58,6 +57,20 @@ class EventData(abc.ABC):
 
     def __str__(self):
         return f"{self.type} => {self.data}"  # pragma: nocover
+    
+    @staticmethod
+    def _validate_event_id(event_id: Any) -> None:
+        if not isinstance(event_id, uuid.UUID):
+            return uuid.UUID(str(event_id))  # raises ValueError
+        return event_id
+
+    @property
+    def event_id(self) -> uuid.UUID:
+        return self._event_id
+
+    @event_id.setter
+    def event_id(self, value: Any) -> None:
+        self._event_id = self._validate_event_id(value)
 
     @property
     def data_content_type(self):
