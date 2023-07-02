@@ -1,6 +1,7 @@
 # Custom
 .vscode
 certs
+docker-compose-eventstore-3nodes.yaml
 poetry.lock
 
 # Byte-compiled / optimized / DLL files
