@@ -57,7 +57,7 @@ class EventData(abc.ABC):
 
     def __str__(self):
         return f"{self.type} => {self.data}"  # pragma: nocover
-    
+
     @staticmethod
     def _validate_event_id(event_id: Any) -> None:
         if not isinstance(event_id, uuid.UUID):
