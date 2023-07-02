@@ -21,7 +21,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
-plugins: 
+  - admonition
+  - pymdownx.details
+plugins:
   - search
   - gen-files:
       scripts:

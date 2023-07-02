@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "eventstore_grpc"
-version = "0.1.0"
+version = "0.1.1"
 description = "EventStoreDB gRPC client."
 authors = ["Stefano Frassetto <frassetto.stefano@gmail.com>"]
 maintainers = ["Stefano Frassetto <frassetto.stefano@gmail.com>"]
@@ -8,7 +8,7 @@ license = "MIT"
 readme = "README.md"
 homepage = "https://github.com/stefanondisponibile/eventstore_grpc"
 repository = "https://github.com/stefanondisponibile/eventstore_grpc"
-documentation = "https://stefanondisponibile.github.io/eventstore_grpc/"
+documentation = "https://stefanondisponibile.github.io/eventstore_grpc"
 classifiers = [
     "Intended Audience :: Information Technology",
     "Intended Audience :: System Administrators",

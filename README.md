@@ -9,7 +9,7 @@
 
 Use this client to interact with [EventStoreDB](https://developers.eventstore.com/) via GRPC.
 
-[Documenation](https://stefanondisponibile.github.io/eventstore_grpc/).
+[Documentation](https://stefanondisponibile.github.io/eventstore_grpc).
 
 ## Quickstart
 
