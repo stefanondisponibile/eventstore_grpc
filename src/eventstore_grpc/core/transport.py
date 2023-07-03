@@ -50,13 +50,9 @@ class Transport:
 
     def _resolve_gossip_seed(self) -> list[str]:
         """Resolves the gossip seed using DNS records."""
-        if self.multinode_cluster:
-            raise ValueError("Nothing to resolve if you have the hosts already.")
         domain = self.hosts[-1]
         default_port = 2112
         seed = [f"{el.address}:{default_port}" for el in dns.resolver.resolve(domain)]
-        if not seed:
-            raise Exception(f"Couldn't resolve {domain} to any address.")
         return seed
 
     def _get_target_node(self) -> str:
@@ -79,7 +75,6 @@ class Transport:
     def credentials(self) -> grpc.ChannelCredentials | None:
         if self._auth is not None:
             return self._auth.credentials
-        return None
 
     @property
     def target(self) -> str:
