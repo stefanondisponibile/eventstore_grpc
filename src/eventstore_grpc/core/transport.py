@@ -32,7 +32,7 @@ class Transport:
             raise ValueError("You must specify at least one node.")
 
         self._hosts = hosts
-        self._auth = auth
+        self._auth = auth or Auth()
         self._tls = tls
         self._keep_alive = keep_alive
         self._discover = discover
@@ -72,9 +72,8 @@ class Transport:
         )
 
     @property
-    def credentials(self) -> grpc.ChannelCredentials | None:
-        if self._auth is not None:
-            return self._auth.credentials
+    def credentials(self) -> grpc.ChannelCredentials:
+        return self._auth.credentials
 
     @property
     def target(self) -> str:
