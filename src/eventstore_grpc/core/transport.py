@@ -3,6 +3,8 @@
 import logging
 from typing import Optional, Union
 
+import dns.exception
+import dns.resolver
 import grpc
 
 from eventstore_grpc import discovery
@@ -46,11 +48,22 @@ class Transport:
             return grpc.insecure_channel(self.target)
         return grpc.secure_channel(self.target, credentials=self.credentials)
 
+    def _resolve_gossip_seed(self) -> list[str]:
+        """Resolves the gossip seed using DNS records."""
+        if self.multinode_cluster:
+            raise ValueError("Nothing to resolve if you have the hosts already.")
+        domain = self.hosts[-1]
+        default_port = 2112
+        seed = [f"{el.address}:{default_port}" for el in dns.resolver.resolve(domain)]
+        if not seed:
+            raise Exception(f"Couldn't resolve {domain} to any address.")
+        return seed
+
     def _get_target_node(self) -> str:
         """Gets the target node, using discovery when needed."""
-        if self.multinode_cluster:
+        if self.multinode_cluster or self._discover:
             return discovery.discover_endpoint(
-                self._hosts,
+                self._resolve_gossip_seed() if self._discover else self._hosts,
                 credentials=self.credentials if self.tls else None,
             )
         else:

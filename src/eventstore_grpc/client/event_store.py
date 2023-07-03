@@ -19,10 +19,10 @@ class EventStore(ClientBase):
     def __init__(
         self,
         hosts: Union[str, list[str]],
-        discover: Optional[bool] = None,  # TODO: maybe remove?
+        discover: Optional[bool] = None,
         tls: Optional[bool] = None,  # TODO: maybe remove and keep just tls_ca_file.
-        keep_alive_interval: Optional[int] = None,  # TODO: do we need this?
-        keep_alive_timeout: Optional[int] = None,  # TODO: do we need this?
+        keep_alive_interval: Optional[int] = None,  # TODO: add it to the channel
+        keep_alive_timeout: Optional[int] = None,  # TODO: add it to the channel
         username: Optional[str] = None,
         password: Optional[str] = None,
         tls_ca_file: Optional[str] = None,
@@ -31,7 +31,7 @@ class EventStore(ClientBase):
 
         Args:
             hosts: either a single host url, or multiple ones, as a list.
-            discover: whether or not to use discovery.
+            discover: whether or not to use DNS discovery.
             tls: whether or not to use tls encryption.
             keep_alive_interval: the number of seconds for the keep alive interval.
             keep_alive_timeout: the number of seconds for the keep alive timeout.
