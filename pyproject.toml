@@ -34,6 +34,7 @@ protobuf = "^4.21.6"
 grpcio = "^1.54.2"
 grpcio-status = "^1.0.0"
 urllib3 = "^1.26.9"
+dnspython = "^2.3.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.3.1"

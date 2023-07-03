@@ -3,6 +3,8 @@
 import logging
 from typing import Optional, Union
 
+import dns.exception
+import dns.resolver
 import grpc
 
 from eventstore_grpc import discovery
@@ -30,7 +32,7 @@ class Transport:
             raise ValueError("You must specify at least one node.")
 
         self._hosts = hosts
-        self._auth = auth
+        self._auth = auth or Auth()
         self._tls = tls
         self._keep_alive = keep_alive
         self._discover = discover
@@ -46,11 +48,18 @@ class Transport:
             return grpc.insecure_channel(self.target)
         return grpc.secure_channel(self.target, credentials=self.credentials)
 
+    def _resolve_gossip_seed(self) -> list[str]:
+        """Resolves the gossip seed using DNS records."""
+        domain = self.hosts[-1]
+        default_port = 2112
+        seed = [f"{el.address}:{default_port}" for el in dns.resolver.resolve(domain)]
+        return seed
+
     def _get_target_node(self) -> str:
         """Gets the target node, using discovery when needed."""
-        if self.multinode_cluster:
+        if self.multinode_cluster or self._discover:
             return discovery.discover_endpoint(
-                self._hosts,
+                self._resolve_gossip_seed() if self._discover else self._hosts,
                 credentials=self.credentials if self.tls else None,
             )
         else:
@@ -63,10 +72,8 @@ class Transport:
         )
 
     @property
-    def credentials(self) -> grpc.ChannelCredentials | None:
-        if self._auth is not None:
-            return self._auth.credentials
-        return None
+    def credentials(self) -> grpc.ChannelCredentials:
+        return self._auth.credentials
 
     @property
     def target(self) -> str:
