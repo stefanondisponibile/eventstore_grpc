@@ -44,9 +44,10 @@ class Transport:
         return self
 
     def _new_channel(self) -> grpc.Channel:
+        options = self.keep_alive.get_channel_options() if self._keep_alive else None
         if self.is_insecure:
-            return grpc.insecure_channel(self.target)
-        return grpc.secure_channel(self.target, credentials=self.credentials)
+            return grpc.insecure_channel(self.target, options=options)
+        return grpc.secure_channel(self.target, options=options, credentials=self.credentials)
 
     def _resolve_gossip_seed(self) -> list[str]:
         """Resolves the gossip seed using DNS records."""
